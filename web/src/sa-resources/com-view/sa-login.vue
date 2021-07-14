@@ -138,7 +138,7 @@ export default {
             // 开始登录
             this.sa.ok2('登录成功，欢迎你：管理员');
 			setTimeout(function () {
-				this.isShow = false;
+                this.isShow = false;
 				sessionStorage.setItem("token", "123456")
 			}.bind(this), 800);
         }

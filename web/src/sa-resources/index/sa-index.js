@@ -18,7 +18,7 @@ export default {
 	},
 	data: function() {
 		// 首页
-		var homeTab = {
+		let homeTab = {
 			id: 'home',	// 唯一标识 
 			name: '首页',
 			view: ()=> import('./../com-view/sa-home.vue'),
@@ -109,7 +109,7 @@ export default {
 			if(icon_target) {
 				icon_target.setAttribute('href', icon_url);
 			}
-		}
+		},
 	},
 	computed: {
 	},
@@ -954,7 +954,7 @@ export default {
 		this.initWindow();
 		this.SaAdminInIt(this.sa_admin, this.sa);
 	},
-	
+
 };
 
 

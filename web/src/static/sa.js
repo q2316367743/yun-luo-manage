@@ -16,7 +16,7 @@ let sa = {
 (function(){
 	// 公司开发环境
 	let cfg_dev = {
-		api_url: 'http://localhost:8990/manage/',	// 所有ajax请求接口父地址
+		api_url: 'http://localhost:8990/api/',	// 所有ajax请求接口父地址
 		web_url: 'http://localhost/assets/blog/'		// 此项目前台地址 (此配置项非必须)
 	}
 	// 服务器测试环境
