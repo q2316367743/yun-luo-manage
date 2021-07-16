@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 结果集
  *
- * @author qiao shengda
+ * @author Esion
  * @since 2021/7/15
  */
 public class Result implements Serializable {

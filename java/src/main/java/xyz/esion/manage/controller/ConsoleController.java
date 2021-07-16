@@ -7,12 +7,12 @@ import xyz.esion.manage.global.Result;
 /**
  * 命令行接口
  *
- * @author qiao shengda
+ * @author Esion
  * @since 2021/7/16
  */
 @RestController
 @RequestMapping("api/console")
-public class RuntimeController {
+public class ConsoleController {
 
     @PostMapping("execForStr")
     public Result execForStr(@RequestBody String command){

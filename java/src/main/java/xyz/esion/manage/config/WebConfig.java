@@ -2,13 +2,17 @@ package xyz.esion.manage.config;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.io.file.FileReader;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +30,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -37,6 +42,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author Esion
@@ -125,14 +131,36 @@ public class WebConfig implements WebMvcConfigurer {
     public void initDatabase() throws SQLException {
         Connection connection = null;
         try {
-            File f = new File("./disk.db");
+            File f = new File("./manage.db");
             if (f.exists()) {
                 log.debug("存在数据库");
                 return;
             }
             // 执行建表命令
             connection = dataSource.getConnection();
-            Statement statement = connection.createStatement();
+            List<String> manage = new FileReader("manage.sql").readLines();
+            List<String> sqls = new ArrayList<>();
+            StringBuilder temp = new StringBuilder();
+            for (String line : manage) {
+                if (line.startsWith("#")){
+                    continue;
+                }
+                if (line.endsWith(";")){
+                    temp.append(" ").append(line);
+                    sqls.add(temp.toString());
+                    temp.delete(0, temp.length());
+                    continue;
+                }
+                temp.append(" ").append(line);
+            }
+            // 如果最后一行没有加分号
+            if (temp.length() > 0){
+                sqls.add(temp.toString());
+            }
+            for (String sql : sqls) {
+                log.debug("sql：{}", sql);
+                SqlExecutor.execute(connection, sql);
+            }
             log.debug("数据库创建成功");
         } catch (Exception exception) {
             exception.printStackTrace();
