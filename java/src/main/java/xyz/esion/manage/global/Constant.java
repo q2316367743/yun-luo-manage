@@ -8,6 +8,4 @@ import cn.hutool.json.JSONObject;
  */
 public class Constant {
 
-    public static JSONObject system;
-
 }
