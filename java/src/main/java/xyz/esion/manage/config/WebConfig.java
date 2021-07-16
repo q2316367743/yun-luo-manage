@@ -230,4 +230,7 @@ public class WebConfig implements WebMvcConfigurer {
         return new DecimalFormat("#.##TB").format(tbNumber);
     }
 
+    public WebConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }
