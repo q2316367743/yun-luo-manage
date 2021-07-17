@@ -8,21 +8,16 @@ import lombok.Data;
 
 /**
  * 
- * @TableName t_database
+ * @TableName t_field
  */
-@TableName(value ="t_database")
+@TableName(value ="t_field")
 @Data
-public class Database implements Serializable {
+public class Field implements Serializable {
     /**
      * 
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId
     private String id;
-
-    /**
-     * 
-     */
-    private String nickname;
 
     /**
      * 
@@ -32,49 +27,43 @@ public class Database implements Serializable {
     /**
      * 
      */
-    private String host;
+    private String type;
 
     /**
      * 
      */
-    private Integer port;
+    private String isNull;
 
     /**
      * 
      */
-    private String parameter;
+    private String keyType;
 
     /**
      * 
      */
-    private String username;
+    private String defaultValue;
 
     /**
      * 
      */
-    private String password;
+    private String extra;
 
     /**
      * 
      */
-    private Integer status;
+    private String databaseId;
 
     /**
      * 
      */
-    private Integer type;
+    private String tableId;
 
     /**
      * 
      */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-
-    /**
-     * 
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
 
     /**
      * 
