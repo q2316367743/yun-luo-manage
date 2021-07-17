@@ -25,6 +25,11 @@ create table t_table(
 create table t_field(
     id varchar(32) primary key,
     name varchar(255) default '' not null,
+    type varchar(16) default '' not null,
+    is_null varchar(16) default '' not null,
+    key_type varchar(16) default '' not null,
+    default_value varchar(255) default '' not null,
+    extra varchar(16) default '' not null,
     database_id varchar(32) default 0 not null,
     table_id varchar(32) default 0 not null,
     constraint fk_database_field foreign key(database_id) references t_database(id),
