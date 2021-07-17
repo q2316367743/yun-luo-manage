@@ -1,6 +1,7 @@
 package xyz.esion.manage.controller;
 
 import cn.hutool.json.JSONObject;
+import cn.hutool.system.oshi.OshiUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import oshi.SystemInfo;
@@ -27,7 +28,15 @@ public class SystemController {
 
     @RequestMapping
     public Result get(){
-        return Result.success().item(Constant.system);
+        JSONObject item = new JSONObject();
+        item.set("cup", OshiUtil.getCpuInfo());
+        item.set("hardware", OshiUtil.getHardware());
+        item.set("os", OshiUtil.getOs());
+        item.set("memory", OshiUtil.getMemory());
+        item.set("processor", OshiUtil.getProcessor());
+        item.set("disk", OshiUtil.getHardware().getDiskStores());
+        item.set("network", OshiUtil.getHardware().getNetworkIFs());
+        return Result.success().item(item);
     }
 
 
