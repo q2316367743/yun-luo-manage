@@ -1,13 +1,9 @@
 package xyz.esion.manage.controller;
 
-import cn.hutool.core.lang.Dict;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.entity.Database;
 import xyz.esion.manage.global.Result;
 import xyz.esion.manage.service.DatabaseService;
-import xyz.esion.manage.view.DatabaseView;
-
-import java.util.List;
 
 /**
  * 数据库管理

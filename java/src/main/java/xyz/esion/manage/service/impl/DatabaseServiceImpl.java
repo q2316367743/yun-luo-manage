@@ -1,13 +1,17 @@
 package xyz.esion.manage.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Dict;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import xyz.esion.manage.entity.Database;
 import xyz.esion.manage.mapper.DatabaseMapper;
 import xyz.esion.manage.service.DatabaseService;
-import xyz.esion.manage.status.DatabaseStatus;
-import xyz.esion.manage.view.DatabaseView;
+import xyz.esion.manage.model.database.DatabaseBase;
+import xyz.esion.manage.view.DatabaseInfoView;
+import xyz.esion.manage.view.DatabaseListView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,7 +26,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     /**
      * 存放内存中数据库连接，状态，连接字符串
      * */
-    private final static Map<String, DatabaseStatus> DATABASE_STATUS_MAP = new ConcurrentHashMap<>();
+    private final static Map<String, DatabaseBase> DATABASE_STATUS_MAP = new ConcurrentHashMap<>();
 
     /**
      * 本身数据库存放的信息
@@ -35,8 +39,19 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public List<Database> list() {
-        return null;
+    public List<DatabaseListView> list() {
+        // 查询数据库
+        List<Database> databases = databaseMapper.selectList(new QueryWrapper<>());
+        List<DatabaseListView> result = new ArrayList<>();
+        for (Database database : databases) {
+            DatabaseListView databaseListView = BeanUtil.copyProperties(database, DatabaseListView.class);
+            DatabaseBase databaseBase = DATABASE_STATUS_MAP.get(database.getId());
+            if (databaseBase != null){
+                databaseListView.setStatus(databaseBase.getStatus());
+            }
+            result.add(databaseListView);
+        }
+        return result;
     }
 
     @Override
@@ -65,7 +80,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public DatabaseView info(String id) {
+    public DatabaseInfoView info(String id) {
         return null;
     }
 

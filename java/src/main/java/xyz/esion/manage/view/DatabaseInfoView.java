@@ -1,12 +1,15 @@
 package xyz.esion.manage.view;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
  * @author Esion
  * @since 2021/7/16
  */
-public class DatabaseView {
+@Data
+public class DatabaseInfoView {
 
     private String id;
 

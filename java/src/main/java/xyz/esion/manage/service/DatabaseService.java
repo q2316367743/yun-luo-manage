@@ -2,11 +2,16 @@ package xyz.esion.manage.service;
 
 import cn.hutool.core.lang.Dict;
 import xyz.esion.manage.entity.Database;
-import xyz.esion.manage.view.DatabaseView;
+import xyz.esion.manage.view.DatabaseInfoView;
+import xyz.esion.manage.view.DatabaseListView;
 
 import java.util.List;
 
 /**
+ * <p>本地数据库只记录数据库基本信息；</p>
+ * <p>连接信息，数据库详细信息都记录在内存中</p>
+ *
+ *
  * @author Esion
  * @since 2021/7/16
  */
@@ -25,7 +30,7 @@ public interface DatabaseService {
      *
      * @return 全部的数据库信息
      * */
-    List<Database> list();
+    List<DatabaseListView> list();
 
     /**
      * 更新一个数据库信息
@@ -74,6 +79,6 @@ public interface DatabaseService {
      * @param id 数据库ID
      * @return 详细信息
      * */
-    DatabaseView info(String id);
+    DatabaseInfoView info(String id);
 
 }

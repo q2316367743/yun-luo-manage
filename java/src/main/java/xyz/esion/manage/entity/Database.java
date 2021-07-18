@@ -9,6 +9,8 @@ import lombok.Data;
 /**
  * 
  * @TableName t_database
+ * @author Esion
+ * @since 2021/7/17
  */
 @TableName(value ="t_database")
 @Data
@@ -40,7 +42,7 @@ public class Database implements Serializable {
     private Integer port;
 
     /**
-     * 
+     * 其他参数
      */
     private String parameter;
 
@@ -55,12 +57,9 @@ public class Database implements Serializable {
     private String password;
 
     /**
-     * 
-     */
-    private Integer status;
-
-    /**
-     * 
+     * 数据库类型
+     *
+     * @see xyz.esion.manage.enumeration.DatabaseTypeEnum
      */
     private Integer type;
 
