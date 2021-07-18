@@ -16,8 +16,7 @@ import xyz.esion.manage.view.DatabaseInfoView;
 import xyz.esion.manage.view.DatabaseListView;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -149,15 +148,6 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
     }
 
-    /**
-     * 根据数据库信息连接，数据库信息需要是本地数据库中得到
-     *
-     * @param database 数据库信息
-     * @return 连接结果，数据源
-     * */
-    private DataSource connect(Database database){
-
-    }
 
     @Override
     public Boolean status(String id) {
@@ -165,7 +155,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     }
 
     @Override
-    public Dict exec(String id, String sql) {
+    public Dict executeQuery(String id, String sql) {
         Connection connection = null;
         try {
             if (DATABASE_STATUS_MAP.containsKey(id)){
@@ -174,12 +164,32 @@ public class DatabaseServiceImpl implements DatabaseService {
 
             }else {
                 // 如果不存在
-                Database database = databaseMapper.selectById(id);
-                Assert.isNull(database, "ID错误");
-                DataSource dataSource = connect(database);
-                Assert.isNull(database, "数据库连接失败");
+                DataSource dataSource = connect(id);
+                Assert.isNull(dataSource, "数据库连接失败");
                 connection = dataSource.getConnection();
             }
+            Dict result = new Dict();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            List<String> columnNames = new ArrayList<>();
+            for (int i = 0; i < columnCount; i++) {
+                String columnName = metaData.getColumnName(i + 1);
+                columnNames.add(columnName);
+            }
+            // 表中字段
+            result.set("column_names", columnNames);
+            List<Dict> data = new ArrayList<>();
+            while (resultSet.next()){
+                Dict item = new Dict();
+                for (String columnName : columnNames) {
+                    item.set(columnName, result.getObj(columnName));
+                }
+                data.add(item);
+            }
+            result.set("data", data);
+            return result;
         }catch (SQLException ignore){
             return null;
         }finally {

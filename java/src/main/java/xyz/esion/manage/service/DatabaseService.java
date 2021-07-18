@@ -65,13 +65,13 @@ public interface DatabaseService {
     Boolean status(String id);
 
     /**
-     * 执行一句SQL并返回结果
+     * 执行一句查询SQL并返回结果
      *
      * @param id 数据库ID
      * @param sql SQL
      * @return 结果
      * */
-    Dict exec(String id, String sql);
+    Dict executeQuery(String id, String sql);
 
     /**
      * 根据ID查询数据库全部信息

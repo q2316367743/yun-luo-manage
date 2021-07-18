@@ -91,9 +91,9 @@ public class DatabaseController {
      * @param sql SQL
      * @return 结果
      * */
-    @PostMapping("exec/{id}")
-    public Result exec(@PathVariable("id") String id, @RequestBody String sql){
-        return Result.success().items(databaseService.exec(id, sql));
+    @PostMapping("executeQuery/{id}")
+    public Result executeQuery(@PathVariable("id") String id, @RequestBody String sql){
+        return Result.success().items(databaseService.executeQuery(id, sql));
     }
 
     /**
