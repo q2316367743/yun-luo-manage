@@ -69,8 +69,8 @@ public class DatabaseController {
      * @return 操作结果
      * */
     @PostMapping("connect")
-    public Result connect(String id){
-        return Result.choose(databaseService.connect(id));
+    public Result refresh(String id){
+        return Result.success().item(databaseService.refresh(id));
     }
 
     /**

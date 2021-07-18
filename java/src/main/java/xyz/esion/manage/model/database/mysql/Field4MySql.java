@@ -9,7 +9,8 @@ import lombok.Data;
 @Data
 public class Field4MySql{
 
-    public static final String[] COLUMN = new String[]{"Field", "Type", "Null", "Key", "Default", "Extra"};
+    public static final String[] COLUMN = new String[]{"Field", "Type", "Collation", "Null", "Key", "Default",
+            "Extra", "Privileges", "Comment"};
 
     /**
      * 字段名
@@ -18,6 +19,8 @@ public class Field4MySql{
 
     private String type;
 
+    private String collation;
+
     private String isNull;
 
     private String key;
@@ -25,5 +28,9 @@ public class Field4MySql{
     private String defaultValue;
 
     private String extra;
+
+    private String privileges;
+
+    private String comment;
 
 }

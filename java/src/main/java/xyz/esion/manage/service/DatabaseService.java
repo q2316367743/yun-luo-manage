@@ -49,12 +49,12 @@ public interface DatabaseService {
     boolean remove(String id);
 
     /**
-     * 连接一个数据库
+     * 刷新数据库信息
      *
-     * @param id 数据库ID
-     * @return 操作结果
+     * @param id 数据库信息ID
+     * @return 刷新结果
      * */
-    boolean connect(String id);
+    DatabaseListView refresh(String id);
 
     /**
      * 获取一个数据库的状态
@@ -62,7 +62,7 @@ public interface DatabaseService {
      * @param id 数据库ID
      * @return 状态
      * */
-    Integer status(String id);
+    Boolean status(String id);
 
     /**
      * 执行一句SQL并返回结果

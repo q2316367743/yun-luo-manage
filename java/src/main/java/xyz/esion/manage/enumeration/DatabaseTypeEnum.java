@@ -35,4 +35,14 @@ public enum DatabaseTypeEnum {
     public void setDriver(String driver) {
         this.driver = driver;
     }
+
+    public static DatabaseTypeEnum getByType(Integer type){
+        for (DatabaseTypeEnum value : values()) {
+            if (value.getType().equals(type)){
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("不受支持的数据库类型：" + type);
+    }
+
 }

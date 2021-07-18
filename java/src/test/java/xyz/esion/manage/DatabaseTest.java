@@ -6,6 +6,7 @@ import xyz.esion.manage.model.database.mysql.Database4MySql;
 import xyz.esion.manage.model.database.mysql.Field4MySql;
 import xyz.esion.manage.model.database.mysql.Table4MySql;
 import xyz.esion.manage.model.database.mysql.View4MySql;
+import xyz.esion.manage.util.DatabaseUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,6 +28,12 @@ public class DatabaseTest {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+//        test(connection);
+        Database4MySql database4MySql = DatabaseUtil.initMySQLInformation(connection);
+        Console.log(JSONUtil.parseObj(database4MySql).toJSONString(4));
+    }
+
+    public static void test(Connection connection) throws SQLException {
         DatabaseMetaData metaData = connection.getMetaData();
         System.out.println("数据库已知的用户: " + metaData.getUserName());
         System.out.println("数据库的系统函数的逗号分隔列表: " + metaData.getSystemFunctions());
@@ -91,16 +98,19 @@ public class DatabaseTest {
         Console.log(JSONUtil.parseArray(views).toJSONString(4));
         Console.log("数据库中表t_article字段：");
         Statement fieldStatement = connection.createStatement();
-        ResultSet fieldResult = fieldStatement.executeQuery("desc t_article");
+        ResultSet fieldResult = fieldStatement.executeQuery("SHOW FULL COLUMNS FROM t_article");
         List<Field4MySql> fields = new ArrayList<>();
         while (fieldResult.next()){
             Field4MySql field = new Field4MySql();
             field.setName(fieldResult.getString(Field4MySql.COLUMN[0]));
             field.setType(fieldResult.getString(Field4MySql.COLUMN[1]));
-            field.setIsNull(fieldResult.getString(Field4MySql.COLUMN[2]));
-            field.setKey(fieldResult.getString(Field4MySql.COLUMN[3]));
-            field.setDefaultValue(fieldResult.getString(Field4MySql.COLUMN[4]));
-            field.setExtra(fieldResult.getString(Field4MySql.COLUMN[5]));
+            field.setCollation(fieldResult.getString(Field4MySql.COLUMN[2]));
+            field.setIsNull(fieldResult.getString(Field4MySql.COLUMN[3]));
+            field.setKey(fieldResult.getString(Field4MySql.COLUMN[4]));
+            field.setDefaultValue(fieldResult.getString(Field4MySql.COLUMN[5]));
+            field.setExtra(fieldResult.getString(Field4MySql.COLUMN[6]));
+            field.setPrivileges(fieldResult.getString(Field4MySql.COLUMN[7]));
+            field.setComment(fieldResult.getString(Field4MySql.COLUMN[8]));
             fields.add(field);
         }
         Console.log(JSONUtil.parseArray(fields).toJSONString(4));

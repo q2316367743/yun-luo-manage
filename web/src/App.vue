@@ -1,72 +1,42 @@
 <template>
-    <v-app>
-        <v-navigation-drawer app>
-            <v-list-item>
-                <v-list-item-content>
-                    <v-list-item-title class="text-h6">
-                        云落管理
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                        Linux
-                    </v-list-item-subtitle>
-                </v-list-item-content>
-            </v-list-item>
-            <v-divider></v-divider>
-            <v-list dense nav>
-                <v-list-item link to="/">
-                    <v-list-item-content>
-                        <v-list-item-title>首页</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item link to="/database">
-                    <v-list-item-content>
-                        <v-list-item-title>数据库</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item link to="/redis">
-                    <v-list-item-content>
-                        <v-list-item-title>Redis</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-        </v-navigation-drawer>
-
-        <v-app-bar app style="background-color: #ffffff">
-            <div class="nav">
-                <v-menu offset-y open-on-hover>
-                    <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                            text
-                            v-bind="attrs"
-                            v-on="on"
-                        >
-                            管理员
-                        </v-btn>
-                    </template>
-                    <v-list dense>
-                        <v-list-item link>
-                            <v-list-item-content>
-                                <v-list-item-title>退出</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
+    <div id="app">
+        <div id="left-nav">
+            <div id="logo">
+                <div id="title">云落管理</div>
+                <div id="subtitle">Linux</div>
             </div>
-        </v-app-bar>
+            <el-menu
+                :default-active="index"
+                router>
+                <el-menu-item index="/">首页</el-menu-item>
+                <el-menu-item index="/database">数据库</el-menu-item>
+                <el-menu-item index="/redis">Redis</el-menu-item>
+            </el-menu>
+        </div>
+
+        <div id="top-nav">
+            <div></div>
+            <div>
+                <el-dropdown>
+                    <span>管理员</span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>退出</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+        </div>
 
         <!-- 根据应用组件来调整你的内容 -->
-        <v-main style="background-color: #f2f2f2">
+        <div id="main">
+            <router-view></router-view>
+        </div>
 
-            <!-- 给应用提供合适的间距 -->
-            <v-container fluid>
+        <div id="footer">
+            <span>云落管理 ©2014-2021 云落天都 | 项目地址：</span>
+            <a href="https://gitee.com/qiaoshengda/yun-luo-manage" target="_blank">码云</a>
+        </div>
 
-                <!-- 如果使用 vue-router -->
-                <router-view></router-view>
-            </v-container>
-            <div class="footer">云落管理 ©2014-2021 云落天都|建议请上<a href="https://gitee.com/qiaoshengda/yun-luo-manage" target="_blank">码云</a></div>
-        </v-main>
-
-    </v-app>
+    </div>
 </template>
 
 <script>
@@ -75,26 +45,86 @@ export default {
     name: 'App',
 
     data: () => ({
-        //
+        index: '/'
     }),
+    watch: {
+        $route(to){
+            this.index = to.path;
+        }
+    }
 };
 </script>
 
-<style lang="scss">
-.nav {
-    text-align: right;
-    width: 100%;
-    height: 100%;
-    line-height: 56px;
+<style>
+#app {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
 }
-.footer{
+
+#left-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    border-right: 1px solid #E0E0E0;
+}
+
+#top-nav {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    right: 0;
+    height: 66px;
+    border-bottom: 1px solid #E0E0E0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#top-nav > div {
+    line-height: 66px;
+    padding: 0 40px;
+}
+
+#logo{
+    height: 46px;
+    padding: 10px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+#main {
+    position: fixed;
+    top: 66px;
+    left: 200px;
+    right: 0;
+    bottom: 50px;
+    background-color: #f2f2f2;
+    overflow: auto;
+}
+
+#footer {
     height: 50px;
     line-height: 50px;
     width: 100%;
     text-align: center;
     background-color: #ffffff;
-    margin-top: 12px;
     position: absolute;
     bottom: 0;
+    left: 200px;
+    border-left: #e0e0e0 solid 1px;
+    border-top: #e0e0e0 solid 1px;
+}
+
+#title {
+    font-size: 1rem;
+}
+
+#subtitle {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.875rem;
 }
 </style>
