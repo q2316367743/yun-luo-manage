@@ -2,7 +2,7 @@
     <div style="padding: 12px">
         <el-card>
             <div slot="header">
-                <span>Redis管理</span>
+                <span>软件管理</span>
             </div>
         </el-card>
     </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: "redis"
+    name: "application"
 }
 </script>
 

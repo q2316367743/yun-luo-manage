@@ -1,13 +1,12 @@
 <template>
-    <div class="db-main">
+    <div class="db-main" @click="old_choose()">
         <el-card style="height: 100%;position: relative">
             <div class="db-list">
+                <div class="db-list-option"></div>
                 <!-- 全部数据库列表 -->
-                <el-tree :data="databases" :props="list_prop" style="margin-top: 12px">
-                    <span class="custom-tree-node" slot-scope="{ node, data }">
-                        <span>{{ data.name }}</span>
-                    </span>
-                </el-tree>
+                <div v-for="(database, index) in databases" :key="index">
+                    <div class="db-database" :class="{'db-list-choose': choose_id === database.id, 'db-list-old-choose': old_choose_id === database.id}" @click.stop="choose(database.id)">{{ database.nickname }}</div>
+                </div>
             </div>
             <div class="db-content">
                 <div class="db-show">
@@ -30,18 +29,37 @@ export default {
     name: "database",
     data() {
         return {
-            list_prop: {
-                children: 'children',
-                label: 'name'
-            },
             databases: [{
-                name: 'root@localhost',
+                id: '111',
+                nickname: 'root@localhost',
                 children: [{
                     name: 'table'
                 }, {
                     name: 'view'
                 }]
-            }]
+            }, {
+                id: '222',
+                nickname: 'root@localhost',
+                children: [{
+                    name: 'table'
+                }, {
+                    name: 'view'
+                }]
+            }],
+            choose_id: '111',
+            old_choose_id: '',
+        }
+    },
+    methods: {
+        choose(id){
+            this.old_choose_id = '';
+            this.choose_id = id;
+        },
+        old_choose(){
+            if (this.choose_id !== ''){
+                this.old_choose_id = this.choose_id;
+                this.choose_id = ''
+            }
         }
     }
 }
@@ -65,6 +83,8 @@ export default {
     width: 250px;
     border: 1px solid #E0E0E0;
     border-radius: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .db-content {
@@ -102,4 +122,24 @@ export default {
     right: 0;
     bottom: 0;
 }
+
+.db-list-option{
+
+}
+
+.db-list-choose{
+    background-color: #409EFF;
+}
+
+.db-list-old-choose{
+    background-color: #f2f2f2;
+}
+
+.db-database{
+    height: 16px;
+    font-size: 12px;
+    padding: 6px 16px;
+    cursor: pointer;
+}
+
 </style>

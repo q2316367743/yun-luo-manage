@@ -2,7 +2,10 @@
 
 基于springboot+vue，数据库存储为sqlite存储，只需要有java运行环境即可运行
 
-功能参考：<https://demo.bt.cn/>
+## 参考
+
+- [盘古](https://gitee.com/javashop/pangu)
+- [BaoTa](https://gitee.com/terrydash/BaoTa)
 
 ## 功能
 
@@ -47,7 +50,9 @@ web文件浏览器
 1. 通过命令使用系统计划任务
 2. java实现计划任务
 
-### 面板设置
+### 服务器配置
+
+- 环境变量
 
 
 

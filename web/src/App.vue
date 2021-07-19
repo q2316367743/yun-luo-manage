@@ -8,9 +8,13 @@
             <el-menu
                 :default-active="index"
                 router>
-                <el-menu-item index="/">首页</el-menu-item>
-                <el-menu-item index="/database">数据库</el-menu-item>
-                <el-menu-item index="/redis">Redis</el-menu-item>
+                <template v-for="(item, index) in router">
+                    <el-submenu :key="index" :index="item.path" v-if="item.children">
+                        <template slot="title">{{ item.nickname }}</template>
+                        <el-menu-item v-for="(child, child_index) in item.children" :key="child_index" :index="item.path + '/' + child.path" v-text="child.nickname"></el-menu-item>
+                    </el-submenu>
+                    <el-menu-item :key="index" :index="item.path" v-text="item.nickname" v-else></el-menu-item>
+                </template>
             </el-menu>
         </div>
 
@@ -40,17 +44,22 @@
 </template>
 
 <script>
+import router from './plugins/router'
 
 export default {
     name: 'App',
 
     data: () => ({
-        index: '/'
+        index: '/',
+        router: router
     }),
     watch: {
         $route(to){
             this.index = to.path;
         }
+    },
+    created() {
+        this.index = this.$route.path
     }
 };
 </script>
