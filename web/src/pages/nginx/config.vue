@@ -1,8 +1,8 @@
 <template>
     <el-card style="margin: 12px">
-        <div>
-            <span>读取文件：</span>
-            <el-button type="primary">打开</el-button>
+        <div class="config-open">
+            <el-button type="primary">读取</el-button>
+            <el-button type="primary" @click="download">下载</el-button>
         </div>
         <el-tabs v-model="activeName">
             <el-tab-pane label="全局配置" name="main">
@@ -73,7 +73,7 @@
                     <el-form-item label="事件驱动模型：">
                         <el-select
                             v-model="result.events.use"
-                            style="margin-left: 10px;width: 164px;"
+                            style="width: 164px;"
                         >
                             <el-option
                                 v-for="item in ['select', 'poll', 'kqueue', 'epoll', 'resig', '/dev/poll', 'eventport']"
@@ -91,9 +91,6 @@
             <el-tab-pane label="http配置" name="http">角色管理</el-tab-pane>
             <el-tab-pane label="预览" name="show">
                 <div class="nginx-show">
-                    <div class="download">
-                        <el-button type="primary" @click="download">下载</el-button>
-                    </div>
                     <pre ref="download">
 {{result.isWindow ? '' : `user ${result.user.info} ${result.user.group};\n`}}worker_processes {{result.worker_processes}};
 pid {{result.pid}};
@@ -163,17 +160,18 @@ export default {
     margin-top: 20px;
     position: relative;
     pre {
-        padding: 5px 5px;
+        padding: 5px 10px;
         background-color: #282c34;
         color: #fff;
         font-family: JetBrainsMono, sans-serif;
         font-size: 16px;
-        letter-spacing: 1px
+        letter-spacing: 1px;
     }
 }
-.download {
+.config-open{
     position: absolute;
-    right: 10px;
-    top: 10px;
+    top: 22px;
+    right: 32px;
+    z-index: 1;
 }
 </style>
