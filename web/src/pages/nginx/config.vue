@@ -92,7 +92,7 @@
             <el-tab-pane label="预览" name="show">
                 <div class="nginx-show">
                     <pre ref="download">
-{{result.isWindow ? '' : `user ${result.user.info} ${result.user.group};\n`}}worker_processes {{result.worker_processes}};
+{{result.is_window ? '' : `user ${result.user.info} ${result.user.group};\n`}}worker_processes {{result.worker_processes}};
 pid {{result.pid}};
 error_log {{result.error_log}} {{result.error_log_level}};
 events{

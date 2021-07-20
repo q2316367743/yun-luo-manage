@@ -206,4 +206,9 @@ public class DatabaseServiceImpl implements DatabaseService {
         return null;
     }
 
+    @Override
+    public Integer count() {
+        return databaseMapper.selectCount(new QueryWrapper<>());
+    }
+
 }

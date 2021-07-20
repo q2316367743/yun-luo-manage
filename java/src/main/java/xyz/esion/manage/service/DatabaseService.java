@@ -81,4 +81,11 @@ public interface DatabaseService {
      * */
     DatabaseInfoView info(String id);
 
+    /**
+     * 获取本机数据库中存储的数据库数量
+     *
+     * @return 数量
+     * */
+    Integer count();
+
 }

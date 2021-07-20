@@ -8,13 +8,15 @@
             <el-menu
                 :default-active="index"
                 router>
-                <template v-for="(item, index) in router">
-                    <el-submenu :key="index" :index="item.path" v-if="item.children">
-                        <template slot="title">{{ item.nickname }}</template>
-                        <el-menu-item v-for="(child, child_index) in item.children" :key="child_index" :index="item.path + '/' + child.path" v-text="child.nickname"></el-menu-item>
-                    </el-submenu>
-                    <el-menu-item :key="index" :index="item.path" v-text="item.nickname" v-else></el-menu-item>
-                </template>
+                <el-menu-item index="/">主页</el-menu-item>
+                <el-menu-item index="/file">文件管理</el-menu-item>
+                <el-submenu index="">
+                    <template slot="title">Nginx</template>
+                    <el-menu-item index="/nginx/config">配置文件</el-menu-item>
+                </el-submenu>
+                <el-menu-item index="/database">数据库管理</el-menu-item>
+                <el-menu-item index="/redis">Redis管理</el-menu-item>
+                <el-menu-item index="/application">应用管理</el-menu-item>
             </el-menu>
         </div>
 
@@ -44,17 +46,15 @@
 </template>
 
 <script>
-import router from './plugins/router'
 
 export default {
     name: 'App',
 
     data: () => ({
         index: '/',
-        router: router
     }),
     watch: {
-        $route(to){
+        $route(to) {
             this.index = to.path;
         }
     },
@@ -99,7 +99,7 @@ export default {
     padding: 0 40px;
 }
 
-#logo{
+#logo {
     height: 46px;
     padding: 10px;
     border-bottom: 1px solid #E0E0E0;
