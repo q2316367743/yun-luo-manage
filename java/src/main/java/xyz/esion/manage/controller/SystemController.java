@@ -2,6 +2,7 @@ package xyz.esion.manage.controller;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.system.oshi.OshiUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,9 +27,10 @@ import java.util.Properties;
  */
 @RestController
 @RequestMapping("api/system")
+@RequiredArgsConstructor
 public class SystemController {
 
-    private DatabaseService databaseService;
+    private final DatabaseService databaseService;
 
     @GetMapping("dynamic")
     public Result get(){

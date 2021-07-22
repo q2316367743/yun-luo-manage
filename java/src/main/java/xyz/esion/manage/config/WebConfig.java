@@ -2,6 +2,8 @@ package xyz.esion.manage.config;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -30,16 +32,14 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -138,7 +138,7 @@ public class WebConfig implements WebMvcConfigurer {
             }
             // 执行建表命令
             connection = dataSource.getConnection();
-            List<String> manage = new FileReader("manage.sql").readLines();
+            ArrayList<String> manage = IoUtil.readLines(this.getClass().getResourceAsStream("/manage.sql"), StandardCharsets.UTF_8, new ArrayList<>());
             List<String> sqls = new ArrayList<>();
             StringBuilder temp = new StringBuilder();
             for (String line : manage) {

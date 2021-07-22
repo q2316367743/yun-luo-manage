@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.lang.Dict;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import xyz.esion.manage.entity.Database;
 import xyz.esion.manage.enumeration.DatabaseTypeEnum;
@@ -27,6 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2021/7/17
  */
 @Service
+@RequiredArgsConstructor
 public class DatabaseServiceImpl implements DatabaseService {
 
     /**
@@ -37,7 +39,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     /**
      * 本身数据库存放的信息
      * */
-    private DatabaseMapper databaseMapper;
+    private final DatabaseMapper databaseMapper;
 
     @Override
     public boolean add(Database database) {
