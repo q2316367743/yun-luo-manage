@@ -37,13 +37,13 @@
                 <div class="home-card">
                     <div>
                         <div>CPU使用率</div>
-                        <el-tooltip placement="top" effect="light">
+                        <el-tooltip placement="top" effect="dark">
                             <el-progress type="circle" :percentage="cpu_value" class="home-progress"></el-progress>
                             <span slot="content">
                                 <div>{{ dynamic.cpu.cpuModel }} * {{ dynamic.cpu.cpuNum }}</div>
-                                <div>已使用：{{ dynamic.cpu.used }}</div>
-                                <div>系统：{{ dynamic.cpu.sys }}</div>
-                                <div>空闲：{{ dynamic.cpu.free }}</div>
+                                <div>已使用：{{ dynamic.cpu.used }} %</div>
+                                <div>系统：{{ dynamic.cpu.sys }} %</div>
+                                <div>空闲：{{ dynamic.cpu.free }} %</div>
                             </span>
                         </el-tooltip>
                         <div>
@@ -52,7 +52,7 @@
                     </div>
                     <div>
                         <div>内存使用率</div>
-                        <el-tooltip placement="top" effect="light">
+                        <el-tooltip placement="top" effect="dark">
                             <el-progress type="circle" :percentage="member_value" class="home-progress"></el-progress>
                             <span slot="content">
                                 <div>总内存：{{ format(dynamic.memory.total) }}</div>
@@ -187,6 +187,7 @@ export default {
     margin-top: 10px;
     font-size: 24px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .home-tip {
@@ -199,7 +200,7 @@ export default {
 
 .home-item {
     width: 200px;
-    background-color: #f2f2f2;
+    background-color: #212334;
     margin: 0px 12px;
 }
 
@@ -216,5 +217,8 @@ export default {
     text-align: center;
     height: 50px;
     font-size: 26px;
+}
+.home-item-content>a{
+    color: #ffffff;
 }
 </style>

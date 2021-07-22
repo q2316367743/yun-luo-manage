@@ -7,6 +7,8 @@
             </div>
             <el-menu
                 :default-active="index"
+                background-color="#2B2D41"
+                text-color="#ffffff"
                 router>
                 <el-menu-item index="/">主页</el-menu-item>
                 <el-menu-item index="/file">文件管理</el-menu-item>
@@ -23,23 +25,21 @@
         <div id="top-nav">
             <div></div>
             <div>
-                <el-dropdown>
-                    <span>管理员</span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>退出</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+                <el-menu mode="horizontal"
+                    background-color="#212334"
+                    text-color="#ffffff"
+                    active-text-color="#ffffff">
+                    <el-submenu index="">
+                        <template slot="title">管理员</template>
+                        <el-menu-item index="">退出</el-menu-item>
+                    </el-submenu>
+                </el-menu>
             </div>
         </div>
 
         <!-- 根据应用组件来调整你的内容 -->
         <div id="main">
             <router-view></router-view>
-        </div>
-
-        <div id="footer">
-            <span>云落管理 ©2014-2021 云落天都 | 项目地址：</span>
-            <a href="https://gitee.com/qiaoshengda/yun-luo-manage" target="_blank">码云</a>
         </div>
 
     </div>
@@ -80,7 +80,7 @@ export default {
     left: 0;
     bottom: 0;
     width: 200px;
-    border-right: 1px solid #E0E0E0;
+    background-color: #2B2D41;
 }
 
 #top-nav {
@@ -89,9 +89,10 @@ export default {
     left: 200px;
     right: 0;
     height: 66px;
-    border-bottom: 1px solid #E0E0E0;
     display: flex;
     justify-content: space-between;
+    background-color: #212334;
+    color: #ffffff;
 }
 
 #top-nav > div {
@@ -102,7 +103,7 @@ export default {
 #logo {
     height: 46px;
     padding: 10px;
-    border-bottom: 1px solid #E0E0E0;
+    color: #ffffff;
 }
 
 #main {
@@ -110,30 +111,41 @@ export default {
     top: 66px;
     left: 200px;
     right: 0;
-    bottom: 50px;
-    background-color: #f2f2f2;
+    bottom: 0;
+    background-color: #212334;
     overflow: auto;
 }
 
-#footer {
-    height: 50px;
-    line-height: 50px;
-    width: 100%;
-    text-align: center;
-    background-color: #ffffff;
-    position: absolute;
-    bottom: 0;
-    left: 200px;
-    border-left: #e0e0e0 solid 1px;
-    border-top: #e0e0e0 solid 1px;
-}
 
 #title {
     font-size: 1rem;
 }
 
 #subtitle {
-    color: rgba(0, 0, 0, 0.6);
+    color: #f2f2f2;
     font-size: 0.875rem;
+}
+.el-menu{
+    border-right: solid 1px #2B2D41 !important;
+}
+.el-card{
+    background-color: #2A2E3F !important;
+    color: #ffffff !important;
+    border: #2A2E3F !important;
+}
+.el-card__header{
+    border-bottom: 1px solid #212334 !important;
+}
+.el-menu.el-menu--horizontal{
+    border: #2A2E3F !important;
+}
+.el-submenu__title{
+    border-bottom: 2px solid #212334 !important;
+}
+.el-form-item__label{
+    color: #ffffff !important;
+}
+.el-tabs__item{
+    color: #ffffff !important;
 }
 </style>
