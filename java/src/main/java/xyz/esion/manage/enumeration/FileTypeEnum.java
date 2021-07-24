@@ -1,51 +1,46 @@
 package xyz.esion.manage.enumeration;
 
-import cn.hutool.core.util.StrUtil;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Esion
  * @since 2021/7/20
  */
+@Slf4j
 public enum FileTypeEnum {
 
     // 文件夹
-    FOLDER(1, new String[]{}),
+    FOLDER(1, 'd'),
     // 文件，不支持下载
-    FILE(2, new String[]{}),
-    // 图片
-    IMAGE(3, new String[]{"jpg", "jpeg", "png"}),
-    // 视频
-    VIDEO(4, new String[]{"mp4", "webm"}),
-    // 代码
-    CODE(5, new String[]{"java", "c", "cpp", "html"});
-
+    FILE(2, '-'),
+    // 链接文件
+    LINK(3, 'l'),
+    // 管理文件
+    MANAGE(4, 'p'),
+    // 块设备文件
+    BLOCK_QUIPMENT(4, 'b'),
+    // 字符设备文件
+    CHAR_EQUIPMENT(6, 'c');
     /**
      * 枚举值
      * */
     Integer value;
 
-    /**
-     * 包含文件
-     * */
-    String[] include;
+    Character type;
 
-    FileTypeEnum(Integer value, String[] include) {
+    FileTypeEnum(Integer value, Character type) {
         this.value = value;
-        this.include = include;
+        this.type = type;
     }
 
-    /**
-     * 根据关键字获取文件类型
-     * */
-    public static Integer getTypeByKeyword(String keyword){
-        if (StrUtil.containsAny(keyword, IMAGE.include)){
-            return IMAGE.value;
-        }else if (StrUtil.containsAny(keyword, VIDEO.include)){
-            return VIDEO.value;
-        }else if (StrUtil.containsAny(keyword, CODE.include)){
-            return CODE.value;
+    public static FileTypeEnum parse(Character type){
+        for (FileTypeEnum item : values()) {
+            if (item.type.equals(type)){
+                return item;
+            }
         }
-        return FileTypeEnum.FILE.value;
+        log.error("不受支持的文件类型");
+        return FILE;
     }
 
 }

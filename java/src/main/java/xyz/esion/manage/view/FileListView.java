@@ -1,8 +1,15 @@
 package xyz.esion.manage.view;
 
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import xyz.esion.manage.enumeration.FileTypeEnum;
 
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -31,15 +38,15 @@ public class FileListView implements Serializable {
     /**
      * 文件大小
      * */
-    private Double size;
+    private String size;
 
     /**
-     * 文件单位
+     * 绝对大小
      * */
-    private String unit;
+    private Long absSize;
 
     /**
-     * 文件路径
+     * 文件路径】
      * */
     private String path;
 
@@ -61,6 +68,60 @@ public class FileListView implements Serializable {
     /**
      * 更新时间
      * */
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime updateTime;
+
+    /**
+     * 解析一行<em>ls -l --full-time</em>命令
+     *
+     * @param path 目录
+     * @param line 一行数据
+     * @return 文件列表视图
+     * */
+    public static FileListView parse(String path, String line){
+        FileListView view = new FileListView();
+        String[] item = line.split("[ ]+");
+        if (item.length != 9){
+            return null;
+        }
+        view.setName(item[8]);
+        view.setType(FileTypeEnum.parse(item[0].charAt(0)));
+        long absSize = Long.parseLong(item[4]);
+        if (absSize > 1024 * 1024 * 1024){
+            String size = NumberUtil.decimalFormat("#.00", absSize / 1024.0 / 1024 / 1024);
+            size = StrUtil.removeAny(size, ".00");
+            if (size.equals("")){
+                view.setSize("-");
+            }else {
+                view.setSize(size + "GB");
+            }
+        }else if (absSize > 1024 * 1024){
+            String size = NumberUtil.decimalFormat("#.00", absSize / 1024.0 / 1024);
+            size = StrUtil.removeAny(size, ".00");
+            if (size.equals("")){
+                view.setSize("-");
+            }else {
+                view.setSize(size + "MB");
+            }
+        }else if (absSize > 1024){
+            String size = NumberUtil.decimalFormat("#.00", absSize / 1024.0);
+            size = StrUtil.removeAny(size, ".00");
+            if (size.equals("")){
+                view.setSize("-");
+            }else {
+                view.setSize(size + "KB");
+            }
+        }else {
+            view.setSize(absSize + "B");
+        }
+        view.setAbsSize(absSize);
+        view.setPath(path + File.separator + item[8]);
+        view.setPermission(item[0].substring(1));
+        view.setOwner(item[2]);
+        view.setGroup(item[3]);
+        view.setUpdateTime(DateUtil.parseLocalDateTime(item[5] + " " + item[6].substring(0, 8)));
+        return view;
+    }
 
 }

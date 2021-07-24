@@ -52,10 +52,6 @@ instance.interceptors.response.use(
             return {
                 success: false,
             };
-        } else if (response.data.code === 500) {
-            return {
-                success: false,
-            };
         } else {
             return response.data;
         }

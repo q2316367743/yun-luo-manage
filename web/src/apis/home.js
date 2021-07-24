@@ -1,19 +1,9 @@
-import axios from '../plugins/axios';
+import {getJSON} from '@/utils/axios';
 
 export function get_base(success){
-    axios({
-        url: '/system/base',
-        method: 'GET',
-    }).then(res => {
-        success(res)
-    })
+    getJSON('/system/base', success);
 }
 
 export function get_dynamic(success){
-    axios({
-        url: '/system/dynamic',
-        method: 'GET',
-    }).then(res => {
-        success(res)
-    })
+    getJSON('/system/dynamic', success);
 }

@@ -65,6 +65,15 @@ export default {
 </script>
 
 <style>
+:root{
+    --bg-color: #212334;
+    --text-color: #ffffff;
+    --main-color: #2B2D41;
+    --em-color: rgb(31, 33, 46);
+    --dis-color: #c0c4cc;
+}
+
+
 #app {
     position: fixed;
     top: 0;
@@ -80,7 +89,7 @@ export default {
     left: 0;
     bottom: 0;
     width: 200px;
-    background-color: #2B2D41;
+    background-color: var(--main-color);
 }
 
 #top-nav {
@@ -88,11 +97,12 @@ export default {
     top: 0;
     left: 200px;
     right: 0;
-    height: 66px;
+    height: 44px;
+    line-height: 44px;
     display: flex;
     justify-content: space-between;
-    background-color: #212334;
-    color: #ffffff;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }
 
 #top-nav > div {
@@ -103,16 +113,16 @@ export default {
 #logo {
     height: 46px;
     padding: 10px;
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 #main {
     position: fixed;
-    top: 66px;
+    top: 44px;
     left: 200px;
     right: 0;
     bottom: 0;
-    background-color: #212334;
+    background-color: var(--bg-color);
     overflow: auto;
 }
 
@@ -125,27 +135,62 @@ export default {
     color: #f2f2f2;
     font-size: 0.875rem;
 }
+
+*::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--main-color);
+	background-image: -webkit-linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.1) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(255, 255, 255, 0.1) 50%,
+		rgba(255, 255, 255, 0.1) 75%,
+		transparent 75%,
+		transparent
+	);
+}
+
+*::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+
 .el-menu{
-    border-right: solid 1px #2B2D41 !important;
+    border-right: solid 1px var(--main-color) !important;
 }
 .el-card{
-    background-color: #2A2E3F !important;
-    color: #ffffff !important;
-    border: #2A2E3F !important;
+    background-color: var(--main-color) !important;
+    color: var(--text-color) !important;
+    border: var(--main-color) !important;
 }
 .el-card__header{
-    border-bottom: 1px solid #212334 !important;
+    border-bottom: 1px solid var(--bg-color) !important;
 }
 .el-menu.el-menu--horizontal{
-    border: #2A2E3F !important;
+    border: var(--main-color) !important;
 }
 .el-submenu__title{
-    border-bottom: 2px solid #212334 !important;
+    border-bottom: 2px solid var(--bg-color) !important;
 }
 .el-form-item__label{
-    color: #ffffff !important;
+    color: var(--text-color) !important;
 }
 .el-tabs__item{
-    color: #ffffff !important;
+    color: var(--text-color) !important;
 }
+.el-submenu__title{
+    height: 44px !important;
+    line-height: 44px !important;
+}
+.el-checkbox-group{
+    font-size: 16px !important;
+}
+.el-checkbox__label{
+    color: var(--text-color) !important;
+}
+
 </style>

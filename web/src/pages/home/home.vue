@@ -106,31 +106,31 @@ export default {
             interval: -1,
             base: {
                 "os": {
-                    "bitness": 64,
+                    "bitness": 0,
                     "version": {
-                        "version": "10",
-                        "buildNumber": "19042",
-                        "codeName": "Home"
+                        "version": "",
+                        "buildNumber": "",
+                        "codeName": ""
                     },
-                    "manufacturer": "Microsoft",
-                    "family": "Windows"
+                    "manufacturer": "",
+                    "family": ""
                 },
                 "redis": 0,
                 "database": 0
             },
             dynamic: {
                 "memory": {
-                    "available": 2528346112,
-                    "total": 16805203968
+                    "available": 0,
+                    "total": 1
                 },
                 "cpu": {
                     "wait": 0,
-                    "cpuModel": "Intel(R) Core(TM) i5-10400 CPU @ 2.90GHz",
-                    "used": 2.95,
-                    "sys": 1.26,
-                    "cpuNum": 12,
-                    "toTal": 12187,
-                    "free": 95.77
+                    "cpuModel": "",
+                    "used": 0.0,
+                    "sys": 0.0,
+                    "cpuNum": 0,
+                    "toTal": 0,
+                    "free": 0.0
                 },
             }
         }
