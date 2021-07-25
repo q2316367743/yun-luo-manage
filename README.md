@@ -9,6 +9,8 @@
 
 ## 安装使用
 
+### 自行打包
+
 ```bash
 git pull https://gitee.com/qiaoshengda/yun-luo-manage.git
 cd yun-luo-manage
@@ -19,6 +21,21 @@ cd ../java
 mvn package -Dmaven.test.skip=true
 cd target
 java -jar manage-1.0.jar
+```
+
+访问地址：<localhost:7743>
+
+### 下载安装
+
+> 如果只是想体验功能，可以使用此方法
+
+软件运行系统：Linux
+
+软件运行基础：Java
+
+```bash
+wget https://gitee.com/qiaoshengda/yun-luo-manage/attach_files/782110/download/manage-1.0.jar
+nohup java -jar manage-1.0.jar > log 2&>1 &
 ```
 
 访问地址：<localhost:7743>
