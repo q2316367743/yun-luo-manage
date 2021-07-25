@@ -7,6 +7,22 @@
 - [盘古](https://gitee.com/javashop/pangu)
 - [BaoTa](https://gitee.com/terrydash/BaoTa)
 
+## 安装使用
+
+```bash
+git pull https://gitee.com/qiaoshengda/yun-luo-manage.git
+cd yun-luo-manage
+cd web
+npm install
+npm run build
+cd ../java
+mvn package -Dmaven.test.skip=true
+cd target
+java -jar manage-1.0.jar
+```
+
+访问地址：<localhost:7743>
+
 ## 功能
 
 ### 首页
@@ -43,7 +59,7 @@ mysql数据库可视化
 
 ### 文件
 
-web文件浏览器
+web文件浏览器（已完成大部分功能）
 
 ### 计划任务
 

@@ -186,8 +186,34 @@ export default {
             this.check_all = value.length === this.file_list.length;
             this.is_check_all = value.length > 0 && value.length < this.file_list.length;
         },
-        open(path){
-            console.log(path);
+        open(path, name){
+            let is_error = true;
+            // 文本类型
+            let code = this.code_style.code;
+            for(let item of code){
+                if(lastWith(name, item)){
+                    // 判断是否是支持的语法高亮
+                    let is_no_suppert = true;
+                    for(let mode of this.modes){
+                        for(let suffix of mode.suffix){
+                            if(item === suffix){
+                                is_no_suppert = false;
+                                this.options.mode = mode.value;
+                                break;
+                            }
+                        }
+                    }
+                    if(is_no_suppert){
+                        this.options.mode = '';
+                    }
+                    this.open_code(path);
+                    is_error = false;
+                    break;
+                }
+            }
+            if(is_error){
+                this.$message.error('不受支持的文件类型')
+            }
         },
         rename(name){
             let path = this.path;
@@ -341,11 +367,11 @@ export default {
             this.menu_index = -1;
             this.menu_file = null;
         },
-        open_code(){
+        open_code(path){
             this.code = true;
             // 获取文件内容
             this.charset = default_charset;
-            this.menu_temp_path = this.menu_file.path;
+            this.menu_temp_path = path ? path : this.menu_file.path;
             this.open_code_charset();
         },
         open_code_charset(){
@@ -376,26 +402,29 @@ export default {
                 // 文件类型，通过判断后缀判断具体类型
                 let name = this.menu_file.name;
                 // 文本类型
-                let code = this.code_style.code;
-                for(let item of code){
-                    if(lastWith(name, item)){
-                        // 判断是否是支持的语法高亮
-                        let is_no_suppert = true;
-                        for(let mode of this.modes){
-                            for(let suffix of mode.suffix){
-                                if(item === suffix){
-                                    is_no_suppert = false;
-                                    this.options.mode = mode.value;
-                                    break;
+                let style = this.code_style;
+                for(let temp in style){
+                    let items = style[temp];
+                    for(let item of items){
+                        if(lastWith(name, item)){
+                            // 判断是否是支持的语法高亮
+                            let is_no_suppert = true;
+                            for(let mode of this.modes){
+                                for(let suffix of mode.suffix){
+                                    if(item === suffix){
+                                        is_no_suppert = false;
+                                        this.options.mode = mode.value;
+                                        break;
+                                    }
                                 }
                             }
+                            if(is_no_suppert){
+                                this.options.mode = '';
+                            }
+                            this.open_code();
+                            is_error = false;
+                            break;
                         }
-                        if(is_no_suppert){
-                            this.options.mode = '';
-                        }
-                        this.open_code();
-                        is_error = false;
-                        break;
                     }
                 }
                 if(is_error){

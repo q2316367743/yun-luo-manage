@@ -34,4 +34,6 @@ build/
 .vscode/
 
 ### 数据库文件 ###
-manage.db
+src/main/resources/static
+*.db
+

@@ -52,7 +52,7 @@
 						class="file-content-item" 
 						v-for="(file, index) in file_list" 
 						:key="index"
-						@dblclick="file.type == 'FOLDER' ? toP(file.path) : open(file.path)"
+						@dblclick="file.type == 'FOLDER' ? toP(file.path) : open(file.path, file.name)"
                         @contextmenu.prevent="open_menu(index, file, $event)"
                         :class="{'file-content-hover': index === menu_index}"
 					>
