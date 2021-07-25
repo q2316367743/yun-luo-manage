@@ -1,6 +1,7 @@
 package xyz.esion.manage.option;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 import java.util.List;
@@ -35,5 +36,10 @@ public class FileOption implements Serializable {
      * 编码
      * */
     private String charset;
+
+    /**
+     * 文件上传的文件
+     * */
+    private MultipartFile file;
 
 }

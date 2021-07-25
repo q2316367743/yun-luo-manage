@@ -1,0 +1,68 @@
+.file-main{
+    padding: 12px
+}
+.file-path{
+    padding-left: 12px;
+}
+.file-option{
+    padding-left: 12px;
+    padding-top: 12px;
+    display: flex;
+}
+.file-item-center{
+    text-align: center;
+}
+.file-content>div{
+    height: 45px;
+    align-items: center;
+}
+.file-content>div:hover{
+    background-color: var(--em-color);
+    cursor: pointer;
+}
+.file-content-hover{
+    background-color: var(--em-color);
+}
+.file-name>.el-checkbox{
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.file-head{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 1fr 1.5fr 0.7fr 0.7fr 1.1fr;
+}
+.file-content-item{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 1fr 1.5fr 0.7fr 0.7fr 1.1fr;
+}
+.file-button{
+    color: var(--text-color) !important;
+    background-color: var(--main-color) !important;
+}
+#file-menu-bg{
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+#file-menu{
+    display: none;
+    background-color: var(--bg-color);
+    position: absolute;
+    width: 120px;
+    border-radius: 5px;
+}
+#file-menu>div{
+    padding: 3px 10px;
+    color: var(--text-color);
+    font-size: 14px;
+}
+#file-menu>div:hover{
+    background-color: var(--em-color);
+    cursor: pointer;
+    border-radius: 5px;
+}

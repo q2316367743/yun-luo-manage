@@ -1,15 +1,19 @@
 package xyz.esion.manage.controller;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import xyz.esion.manage.exception.FileException;
 import xyz.esion.manage.global.Result;
 
+import java.io.IOException;
+
 /**
  * @author Esion
  * @since 2021/7/15
  */
+@Slf4j
 @RestControllerAdvice
 public class ExceptionController {
 
@@ -27,6 +31,12 @@ public class ExceptionController {
     @ExceptionHandler(FileException.class)
     public Result FileException(FileException exception){
         return Result.fail(Result.ResultCode.FAIL).message(exception.getMessage());
+    }
+
+    @ExceptionHandler(IOException.class)
+    public Result IOException(IOException exception){
+        log.error(exception.getMessage());
+        return Result.fail(Result.ResultCode.FAIL).message("没有权限");
     }
 
 }

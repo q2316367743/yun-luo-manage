@@ -1,8 +1,10 @@
 package xyz.esion.manage.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
 import xyz.esion.manage.view.FileListView;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -92,8 +94,17 @@ public interface FileService {
      * 写入一个文件
      *
      * @param path 文件绝对路径
+     * @param charset 编码，默认UTF-8
      * @param content 文件内容
      */
-    boolean write(String path, String content) throws FileException;
+    boolean write(String path, String charset, String content) throws FileException;
+
+    /**
+     * 文件上传
+     *
+     * @param path 上传文件的路径
+     * @param file 文件
+     */
+    boolean upload(String path, MultipartFile file) throws FileException, IOException;
 
 }

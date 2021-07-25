@@ -192,5 +192,45 @@ export default {
 .el-checkbox__label{
     color: var(--text-color) !important;
 }
+.el-message-box{
+    background-color: var(--bg-color) !important;
+    border: 1px solid var(--bg-color) !important;
+}
+.el-message-box__content{
+    color: var(--text-color) !important;
+}
+.el-message-box__title{
+    color: var(--text-color) !important;
+}
+.el-input__inner{
+    color: var(--text-color) !important;
+    background-color: var(--main-color) !important;
+    border: 1px solid var(--em-color) !important;
+}
+.el-select-dropdown__item{
+    color: var(--text-color) !important;
+    background-color: var(--main-color) !important;
+}
+.el-select-dropdown{
+    color: var(--text-color) !important;
+    background-color: var(--main-color) !important;
+    border: 0 !important;
+}
+.el-popper[x-placement^=bottom] .popper__arrow{
+    border-bottom-color: var(--main-color) !important;
+}
+.el-popper[x-placement^=bottom] .popper__arrow::after{
+    border-bottom-color: var(--main-color) !important;
+}
 
+.el-dialog{
+    background-color: var(--bg-color) !important;
+    border: 1px solid var(--bg-color) !important;
+}
+.el-dialog__title{
+    color: var(--text-color) !important;
+}
+.el-dialog__body{
+    color: var(--text-color) !important;
+}
 </style>

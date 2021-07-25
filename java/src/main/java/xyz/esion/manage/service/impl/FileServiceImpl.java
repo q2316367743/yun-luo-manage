@@ -7,11 +7,13 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.core.util.StrUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
 import xyz.esion.manage.service.FileService;
 import xyz.esion.manage.view.FileListView;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
@@ -153,11 +155,29 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public boolean write(String path, String content) throws FileException {
+    public boolean write(String path, String charset, String content) throws FileException {
         if (!FileUtil.isFile(path)){
             throw new FileException("目录不是文件，" + path);
         }
-        FileUtil.writeString(content, path, StandardCharsets.UTF_8);
+        if (StrUtil.isBlank(charset)){
+            charset = CharsetUtil.UTF_8;
+        }
+        FileUtil.writeString(content, path, charset);
+        return true;
+    }
+
+    @Override
+    public boolean upload(String path, MultipartFile file) throws FileException, IOException {
+        File filePath = FileUtil.file(path);
+        if (!filePath.exists()){
+            throw new FileException("路径不存在");
+        }
+        // 判断路径
+        if (!filePath.isDirectory()){
+            throw new FileException("路径不是文件夹，" + path);
+        }
+        String name = file.getOriginalFilename();
+        IoUtil.copy(file.getInputStream(), FileUtil.getOutputStream(new File(filePath, name)));
         return true;
     }
 

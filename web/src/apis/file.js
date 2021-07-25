@@ -1,4 +1,4 @@
-import { get, getJSON, post } from '@/utils/axios';
+import { get, getJSON, getObject, post, postObject } from '@/utils/axios';
 
 const model = 'file';
 
@@ -38,5 +38,17 @@ export default {
         post(model + '/cp', {
             paths, target
         }, success);
+    },
+    open(path, charset, success){
+        get(model + '/open', {path, charset}, success)
+    },
+    write(path, charset, content, success, error){
+        post(model + '/write', {path, charset, content}, success, error)
+    },
+    show(path, success, error){
+        getObject(model + '/show', {path}, success, error);
+    },
+    upload(data, success, error){
+        postObject(model + '/upload', data, success, error);
     }
 }

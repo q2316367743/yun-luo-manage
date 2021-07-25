@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import home from "../pages/home/home";
-import file from "../pages/file/file";
+import file from "../pages/file/file.vue";
 import nginx_config from "../pages/nginx/config";
 import database from "../pages/database/database";
 import redis from "../pages/redis/redis";
