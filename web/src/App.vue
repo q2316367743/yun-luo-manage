@@ -31,7 +31,7 @@
                     active-text-color="#ffffff">
                     <el-submenu index="">
                         <template slot="title">管理员</template>
-                        <el-menu-item index="">退出</el-menu-item>
+                        <el-menu-item index="" @click="logout">退出</el-menu-item>
                     </el-submenu>
                 </el-menu>
             </div>
@@ -60,6 +60,11 @@ export default {
     },
     created() {
         this.index = this.$route.path
+    },
+    methods: {
+        logout(){
+            this.$router.push('/login')
+        }
     }
 };
 </script>

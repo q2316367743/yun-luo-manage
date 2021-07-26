@@ -500,13 +500,31 @@ export default {
         },
         remote_download() {
             this.remote_download_status = false;
-            this.$message.error('在不支持下载');
+            let url = this.remote_download_value.url;
+            if(url.length === 0){
+                this.$message.error('url不能为空');
+            }
+            // 判断是否是url
+            let oRegUrl = new RegExp();
+            oRegUrl.compile("^[A-Za-z]+://");
+            if (!oRegUrl.test(url)) {
+                this.$message.error('url格式不正确');
+            }
+            file.remote_download(this.path, this.remote_download_value.name, url, (res)=>{
+                if(res.success){
+                    this.$message.success('下载成功');
+                    this.refresh()
+                }
+            }, ()=>{
+                this.$message.error('下载失败')
+            })
+            
         },
         parse_url() {
             let url = this.remote_download_value.url;
             // 判断是否是url
             let oRegUrl = new RegExp();
-            oRegUrl.compile("^[A-Za-z]+://[A-Za-z0-9-_]+\\.[A-Za-z0-9-_%&\\?\\/.=]+$");
+            oRegUrl.compile("^[A-Za-z]+://");
             if (!oRegUrl.test(url)) {
                 return;
             }

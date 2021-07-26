@@ -326,7 +326,7 @@
 					>取 消</el-button
 				>
 				<el-button type="primary" @click="remote_download"
-					>修 改</el-button
+					>下 载</el-button
 				>
 			</span>
 		</el-dialog>

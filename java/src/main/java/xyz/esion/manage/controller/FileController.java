@@ -91,7 +91,7 @@ public class FileController {
     }
 
     @GetMapping("remote_download")
-    public Result remoteDownload(@RequestBody FileOption option) throws FileException {
+    public Result remoteDownload(FileOption option) throws FileException {
         return Result.choose(fileService.remoteDownload(option.getPath(), option.getName(), option.getUrl()));
     }
 

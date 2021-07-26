@@ -7,6 +7,7 @@ import nginx_config from "../pages/nginx/config";
 import database from "../pages/database/database";
 import redis from "../pages/redis/redis";
 import application from "../pages/application/application";
+import login from '@/pages/login/login'
 
 Vue.use(Router);
 
@@ -41,5 +42,9 @@ export default new Router({
         name: 'application',
         nickname: '应用管理',
         component: application
+    }, {
+        path: '/login',
+        name: 'login',
+        component: login
     }]
 })

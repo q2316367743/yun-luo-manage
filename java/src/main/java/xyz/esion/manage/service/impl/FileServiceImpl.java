@@ -195,7 +195,7 @@ public class FileServiceImpl implements FileService {
         }
         // 获取文件
         /* 暂时直接下载 */
-        HttpUtil.downloadFile(url, file, 3000);
+        HttpUtil.downloadFile(url, file);
         return true;
     }
 

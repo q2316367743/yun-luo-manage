@@ -50,5 +50,8 @@ export default {
     },
     upload(data, success, error){
         postObject(model + '/upload', data, success, error);
+    },
+    remote_download(path, name, url, success, error){
+        get(model + '/remote_download', {path, name, url}, success, error)
     }
 }
