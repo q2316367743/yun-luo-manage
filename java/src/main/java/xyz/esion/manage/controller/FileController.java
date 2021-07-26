@@ -82,11 +82,17 @@ public class FileController {
         return Result.choose(fileService.upload(option.getPath(), option.getFile()));
     }
 
-    // 获取受支持的文件拓展名
+    /**
+     * 获取受支持的文件拓展名
+     * */
     @GetMapping("base")
     public Result code(){
         return Result.success().item(SystemUtil.getUserInfo().getHomeDir()).items(Constant.FILE_TYPE);
     }
 
+    @GetMapping("remote_download")
+    public Result remoteDownload(@RequestBody FileOption option) throws FileException {
+        return Result.choose(fileService.remoteDownload(option.getPath(), option.getName(), option.getUrl()));
+    }
 
 }

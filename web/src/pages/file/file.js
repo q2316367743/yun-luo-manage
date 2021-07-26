@@ -114,6 +114,11 @@ export default {
         },
         code: false,
         code_style: {},
+        remote_download_status: false,
+        remote_download_value: {
+            name: '',
+            url: ''
+        }
     }),
     created() {
         // 获取用户目录
@@ -462,10 +467,11 @@ export default {
             })
         },
         open_remote_download() {
-            this.$message({
-                message: '暂不支持远程下载',
-                type: 'warning'
-            })
+            this.remote_download_status = true
+            this.remote_download_value = {
+                name: '',
+                url: ''
+            }
         },
         multi_download() {
             this.$message({
@@ -491,6 +497,22 @@ export default {
         refresh() {
             this.toP(this.path);
             this.close_menu();
+        },
+        remote_download() {
+            this.remote_download_status = false;
+            this.$message.error('在不支持下载');
+        },
+        parse_url() {
+            let url = this.remote_download_value.url;
+            // 判断是否是url
+            let oRegUrl = new RegExp();
+            oRegUrl.compile("^[A-Za-z]+://[A-Za-z0-9-_]+\\.[A-Za-z0-9-_%&\\?\\/.=]+$");
+            if (!oRegUrl.test(url)) {
+                return;
+            }
+            let names = url.split('/');
+            let name = names[names.length - 1];
+            this.remote_download_value.name = name;
         }
     }
 }

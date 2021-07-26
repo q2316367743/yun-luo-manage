@@ -28,6 +28,11 @@ public class FileOption implements Serializable {
     private String content;
 
     /**
+     *
+     * */
+    private String url;
+
+    /**
      * 是否强制
      * */
     private Boolean isForce = false;

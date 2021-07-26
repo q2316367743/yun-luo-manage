@@ -302,6 +302,34 @@
 				>
 			</span>
 		</el-dialog>
+		<el-dialog
+			title="远程下载"
+			:visible.sync="remote_download_status"
+			:modal-append-to-body="false"
+			destroy-on-close
+			:close-on-click-modal="false"
+			width="50%"
+		>
+			<el-form v-model="remote_download_value" label-position="left">
+				<el-form-item label="远程地址">
+					<el-input
+						v-model="remote_download_value.url"
+						@input="parse_url"
+					></el-input>
+				</el-form-item>
+				<el-form-item label="文件名称">
+					<el-input v-model="remote_download_value.name"></el-input>
+				</el-form-item>
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="remote_download_status = false"
+					>取 消</el-button
+				>
+				<el-button type="primary" @click="remote_download"
+					>修 改</el-button
+				>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 

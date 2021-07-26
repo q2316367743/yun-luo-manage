@@ -6,6 +6,7 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
@@ -178,6 +179,23 @@ public class FileServiceImpl implements FileService {
         }
         String name = file.getOriginalFilename();
         IoUtil.copy(file.getInputStream(), FileUtil.getOutputStream(new File(filePath, name)));
+        return true;
+    }
+
+    @Override
+    public boolean remoteDownload(String path, String name, String url) throws FileException {
+        // 判断目录是否存在
+        File file = FileUtil.file(path);
+        if (!file.isDirectory()){
+            throw new FileException("路径不是文件夹，" + path);
+        }
+        // 判断文件名
+        if (StrUtil.isNotBlank(name)){
+            file = new File(file, name);
+        }
+        // 获取文件
+        /* 暂时直接下载 */
+        HttpUtil.downloadFile(url, file, 3000);
         return true;
     }
 
