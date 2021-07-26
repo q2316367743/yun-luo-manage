@@ -24,20 +24,20 @@ import 'codemirror/mode/vue/vue.js'
 // 自定义工具
 function lastWith(str, target) {
     // 请把你的代码写在这里
-    var start = str.length-target.length;
-    var arr = str.substr(start,target.length);
-    if(arr == target){
+    var start = str.length - target.length;
+    var arr = str.substr(start, target.length);
+    if (arr == target) {
         return true;
     }
     return false;
 }
 
 function dl(content, fileName) {
-    var aEle = document.createElement("a");// 创建a标签
-    aEle.download = fileName;// 设置下载文件的文件名
+    var aEle = document.createElement("a"); // 创建a标签
+    aEle.download = fileName; // 设置下载文件的文件名
     aEle.href = URL.createObjectURL(content);
-    aEle.click();// 设置点击事件
-  }
+    aEle.click(); // 设置点击事件
+}
 
 const default_charset = 'UTF-8';
 
@@ -46,7 +46,7 @@ export default {
     components: {
         codemirror
     },
-    data: ()=>({
+    data: () => ({
         path: '/',
         show_path: [],
         file_list: [],
@@ -80,7 +80,7 @@ export default {
             label: 'XML/HTML',
             suffix: ['html', 'xml']
         }, {
-            value: 'x-python',
+            value: 'python',
             label: 'Python',
             suffix: ['py']
         }, {
@@ -100,7 +100,7 @@ export default {
             label: 'Markdown',
             suffix: ['md']
         }],
-		// 编辑器默认配置
+        // 编辑器默认配置
         options: {
             tabSize: 4, // 缩进格式
             theme: 'dracula', // 主题，对应主题库 JS 需要提前引入
@@ -115,9 +115,9 @@ export default {
         code: false,
         code_style: {},
     }),
-    created(){
+    created() {
         // 获取用户目录
-        file.base(res=> {
+        file.base(res => {
             this.path = res.data.item;
             this.code_style = res.data.items;
             this.parse_path();
@@ -125,7 +125,7 @@ export default {
         })
     },
     methods: {
-        toP(path){
+        toP(path) {
             let old = this.path;
             this.path = path;
             this.toPath(() => {
@@ -133,152 +133,212 @@ export default {
                 this.parse_path();
             });
             this.clear_check();
-			this.parse_path();
+            this.parse_path();
         },
-        toPath(error){
-            file.ls(this.path, res=>{
-                if(res.success){
+        toPath(error) {
+            file.ls(this.path, res => {
+                if (res.success) {
                     this.file_list = res.data.items;
                 }
             }, () => {
-                if(error){
+                if (error) {
                     error()
                 }
             })
         },
-        parse_path(){
+        parse_path() {
             let show_path = [{
                 name: '根目录',
                 path: '/'
             }];
-            if(this.path === '/'){
+            if (this.path === '/') {
                 this.show_path = show_path;
                 return;
             }
             let items = this.path.split('/');
             let path = '';
-            for(let i = 0; i < items.length; i++){
-                if(items[i] === ''){
+            for (let item of items) {
+                if (item === '') {
                     continue;
                 }
-                path = path + '/' + items[i];
+                path = path + '/' + item;
                 show_path.push({
-                    name: items[i],
+                    name: item,
                     path
                 })
             }
             this.show_path = show_path;
         },
-        handleCheckAllChange(val){
+        handleCheckAllChange(val) {
             console.log(val)
-            if(val){
+            if (val) {
                 let paths = [];
                 this.file_list.forEach(item => {
                     paths.push(item.path);
                 });
                 this.paths = paths;
-            }else{
+            } else {
                 this.paths = [];
             }
             this.is_check_all = false;
         },
-        handleCheckedChange(value){
+        handleCheckedChange(value) {
             this.check_all = value.length === this.file_list.length;
             this.is_check_all = value.length > 0 && value.length < this.file_list.length;
         },
-        open(path, name){
+        /**
+         * 打开
+         * 
+         * @param {Object} file 文件详情
+         */
+        open(file) {
+            if (file.type === 'FOLDER') {
+                this.toP(file.path)
+            } else if (file.type === 'FILE') {
+                this.open_by_file(file.path, file.name);
+            }
+        },
+        /**
+         * 打开文件
+         * @param {String} path 文件路径
+         * @param {String} name 文件名
+         */
+        open_by_file(path, name) {
             let is_error = true;
-            // 文本类型
+            // 判断是否是文本类型
             let code = this.code_style.code;
-            for(let item of code){
-                if(lastWith(name, item)){
+            for (let item of code) {
+                if (lastWith(name, item)) {
                     // 判断是否是支持的语法高亮
-                    let is_no_suppert = true;
-                    for(let mode of this.modes){
-                        for(let suffix of mode.suffix){
-                            if(item === suffix){
-                                is_no_suppert = false;
-                                this.options.mode = mode.value;
-                                break;
-                            }
-                        }
-                    }
-                    if(is_no_suppert){
-                        this.options.mode = '';
-                    }
-                    this.open_code(path);
+                    this.open_by_code(path, name, item);
                     is_error = false;
                     break;
                 }
             }
-            if(is_error){
+            if (is_error) {
                 this.$message.error('不受支持的文件类型')
             }
         },
-        rename(name){
+        /**
+         * 文本格式打开
+         * @param {String} path 文件路径
+         * @param {String} name 文件名
+         */
+        open_by_code(path, name, suffix) {
+            // 判断是否是支持的语法高亮
+            let is_no_suppert = true;
+            for (let mode of this.modes) {
+                for (let item of mode.suffix) {
+                    if (item === suffix) {
+                        is_no_suppert = false;
+                        this.options.mode = mode.value;
+                        break;
+                    }
+                }
+            }
+            if (is_no_suppert) {
+                this.options.mode = '';
+            }
+            this.open_code(path);
+        },
+        // 打开文本编辑框
+        open_code(path) {
+            this.code = true;
+            // 获取文件内容
+            this.charset = default_charset;
+            this.content = '';
+            this.menu_temp_path = path;
+            this.open_code_charset();
+        },
+        /**
+         * 通过指定编码获取文件内容
+         * 
+         * @param {String} path 文件路径
+         */
+        open_code_charset() {
+            // 以指定编码打开
+            file.open(this.menu_temp_path, this.charset, res => {
+                if (res.success) {
+                    this.content = res.data.item;
+                }
+            })
+        },
+        open_by_image() {
+            this.$message({
+                message: '暂不支持打开图片',
+                type: 'info'
+            })
+        },
+        open_by_video() {
+            this.$message({
+                message: '暂不支持打开视频',
+                type: 'info'
+            })
+        },
+        rename(name) {
             let path = this.path;
             this.$prompt('请输入新名称', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 inputValue: name
             }).then(({ value }) => {
-                file.rename(path, name, value, res=>{
-                    if(res.success){
+                file.rename(path, name, value, res => {
+                    if (res.success) {
                         this.$message({
-                        type: 'success',
-                        message: '修改成功'
-                    });
-                    // 重新加载目录
-                    this.toP(this.path);
+                            type: 'success',
+                            message: '修改成功'
+                        });
+                        // 重新加载目录
+                        this.toP(this.path);
                     }
                 })
             })
         },
-        touch(){
+        touch() {
             let path = this.path;
             this.$prompt('请输入文件名称', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消'
             }).then(({ value }) => {
-                file.touch(path, value, res=>{
-                    if(res.success){
+                file.touch(path, value, res => {
+                    if (res.success) {
                         this.$message({
-                        type: 'success',
-                        message: '创建文件成功'
-                    });
-                    // 重新加载目录
-                    this.toP(this.path);
+                            type: 'success',
+                            message: '创建文件成功'
+                        });
+                        // 重新加载目录
+                        this.toP(this.path);
                     }
                 })
             })
         },
-        mkdir(){
+        mkdir() {
             let path = this.path;
             this.$prompt('请输入文件夹名称', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消'
             }).then(({ value }) => {
-                file.mkdir(path, value, res=>{
-                    if(res.success){
+                file.mkdir(path, value, res => {
+                    if (res.success) {
                         this.$message({
-                        type: 'success',
-                        message: '创建文件夹成功'
-                    });
-                    // 重新加载目录
-                    this.toP(this.path);
+                            type: 'success',
+                            message: '创建文件夹成功'
+                        });
+                        // 重新加载目录
+                        this.toP(this.path);
                     }
                 })
             })
         },
-        rm(path, is_force){
+        rm(path, is_force) {
             this.$confirm('此操作将永久删除该文件/夹, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                file.rm([path], is_force, res=>{
-                    if(res.success){
-                            this.$message({
+                file.rm([path], is_force, res => {
+                    if (res.success) {
+                        this.$message({
                             type: 'success',
                             message: '删除该文件/夹成功'
                         });
@@ -288,15 +348,15 @@ export default {
                 })
             })
         },
-        rm_all(){
+        rm_all() {
             this.$confirm('此操作将永久并强制删除这些文件/夹, 是否继续?', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                file.rm(this.paths, true, res=>{
-                    if(res.success){
-                            this.$message({
+                file.rm(this.paths, true, res => {
+                    if (res.success) {
+                        this.$message({
                             type: 'success',
                             message: '删除这些文件/夹成功'
                         });
@@ -306,25 +366,25 @@ export default {
                 })
             })
         },
-        clear_check(){
+        clear_check() {
             this.paths = [];
             this.check_all = false;
             this.is_check_all = false
         },
-        cp(){
+        cp() {
             this.cp_paths = this.paths;
             this.clear_check()
         },
-        mv(){
+        mv() {
             this.mv_paths = this.paths;
             this.clear_check();
         },
-        paste(){
+        paste() {
             console.log(this.mv_paths, this.cp_paths, this.path);
-            if(this.mv_paths.length > 0){
-                file.mv(this.mv_paths, this.path, res=> {
-                    if(res.success){
-                            this.$message({
+            if (this.mv_paths.length > 0) {
+                file.mv(this.mv_paths, this.path, res => {
+                    if (res.success) {
+                        this.$message({
                             type: 'success',
                             message: '移动成功'
                         });
@@ -334,10 +394,10 @@ export default {
                     }
                 })
             }
-            if(this.cp_paths.length > 0){
-                file.cp(this.cp_paths, this.path, res=> {
-                    if(res.success){
-                            this.$message({
+            if (this.cp_paths.length > 0) {
+                file.cp(this.cp_paths, this.path, res => {
+                    if (res.success) {
+                        this.$message({
                             type: 'success',
                             message: '复制成功'
                         });
@@ -348,11 +408,11 @@ export default {
                 })
             }
         },
-        canel(){
+        canel() {
             this.cp_paths = [];
             this.mv_paths = [];
         },
-        open_menu(index, file, e){
+        open_menu(index, file, e) {
             this.menu_index = index;
             this.menu_file = file;
             let menu = document.getElementById('file-menu');
@@ -361,31 +421,16 @@ export default {
             menu.style.top = e.layerY + 10 + 'px';
             document.getElementById('file-menu-bg').style.display = 'block';
         },
-        close_menu(){
+        close_menu() {
             document.getElementById('file-menu').style.display = 'none';
             document.getElementById('file-menu-bg').style.display = 'none';
             this.menu_index = -1;
             this.menu_file = null;
         },
-        open_code(path){
-            this.code = true;
-            // 获取文件内容
-            this.charset = default_charset;
-            this.menu_temp_path = path ? path : this.menu_file.path;
-            this.open_code_charset();
-        },
-        open_code_charset(){
-            // 以指定编码打开
-            file.open(this.menu_temp_path, this.charset, res=>{
-                if(res.success){
-                    this.content = res.data.item;
-                }
-            })
-        },
-        write_code_charset(){
+        write_code_charset() {
             // 以指定的编码写入
             file.write(this.menu_temp_path, this.charset, this.content, res => {
-                if(res.success){
+                if (res.success) {
                     // 关闭对话框
                     this.code = false
                     this.$message.success('修改成功')
@@ -394,100 +439,58 @@ export default {
                 this.$message.error('修改失败，' + message)
             })
         },
-        menu_open(){
-            if(this.menu_file.type === 'FOLDER'){
-                this.toP(this.menu_file.path)
-            }else if(this.menu_file.type === 'FILE'){
-                let is_error = true;
-                // 文件类型，通过判断后缀判断具体类型
-                let name = this.menu_file.name;
-                // 文本类型
-                let style = this.code_style;
-                for(let temp in style){
-                    let items = style[temp];
-                    for(let item of items){
-                        if(lastWith(name, item)){
-                            // 判断是否是支持的语法高亮
-                            let is_no_suppert = true;
-                            for(let mode of this.modes){
-                                for(let suffix of mode.suffix){
-                                    if(item === suffix){
-                                        is_no_suppert = false;
-                                        this.options.mode = mode.value;
-                                        break;
-                                    }
-                                }
-                            }
-                            if(is_no_suppert){
-                                this.options.mode = '';
-                            }
-                            this.open_code();
-                            is_error = false;
-                            break;
-                        }
-                    }
-                }
-                if(is_error){
-                    this.$message.error('不受支持的文件类型')
-                }
-            }
+        /**
+         * 菜单打开
+         */
+        menu_open() {
+            this.open(this.menu_file);
             this.close_menu();
         },
-        menu_open_by_code(){
-            // 以文本形式打开
-            // 文件类型，通过判断后缀判断具体类型
-            let name = this.menu_file.name;
-            // 文本类型
-            let code = this.code_style.code;
-            for(let item of code){
-                if(lastWith(name, item)){
-                    // 判断是否是支持的语法高亮
-                    let is_no_suppert = true;
-                    for(let mode of this.modes){
-                        for(let suffix of mode.suffix){
-                            if(item === suffix){
-                                is_no_suppert = false;
-                                this.options.mode = mode.value;
-                                break;
-                            }
-                        }
-                    }
-                    if(is_no_suppert){
-                        this.options.mode = '';
-                    }
-                    break;
-                }
+        menu_open_by_code() {
+            let names = this.menu_file.name.split('.');
+            let suffix = '';
+            if (names.length > 0) {
+                suffix = names[names.length - 1];
             }
-            this.open_code();
-            this.close_menu();
+            this.open_by_code(this.menu_file.path, this.menu_file.name, suffix);
         },
-        download(path, name){
-            file.show(path, res=>{
+        download(path, name) {
+            file.show(path, res => {
                 dl(res, name)
-            }, ()=>{
+            }, () => {
                 this.$message.error('文件下载失败')
             })
         },
-        multi_download(){
+        open_remote_download() {
+            this.$message({
+                message: '暂不支持远程下载',
+                type: 'warning'
+            })
+        },
+        multi_download() {
             this.$message({
                 message: '暂不可用',
                 type: 'warning'
             })
         },
-        on_upload(event){
+        on_upload(event) {
             let formData = new FormData();
             formData.set("path", this.path);
             formData.set("file", event.file);
-            file.upload(formData, res=>{
-                if(res.success){
+            file.upload(formData, res => {
+                if (res.success) {
                     this.$message.success('上传成功');
                     // 重新加载目录
                     this.toP(this.path);
                 }
-            }, ()=>{
+            }, () => {
                 this.$message.error('上传失败');
             })
-            
+
+        },
+        refresh() {
+            this.toP(this.path);
+            this.close_menu();
         }
     }
 }

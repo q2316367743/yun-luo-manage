@@ -4,8 +4,7 @@ module.exports = {
         port: 9090,
     },
     publicPath: process.env.NODE_ENV === 'production' ?
-        './' :
-        '/',
+        './' : '/',
     outputDir: '../java/src/main/resources/static',
     css: {
         loaderOptions: {
