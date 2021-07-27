@@ -9,6 +9,8 @@
 
 ## 安装使用
 
+初始用户名：Esion，初始密码：123456
+
 ### 自行打包
 
 ```bash
@@ -33,10 +35,9 @@ java -jar manage-1.0.jar
 
 软件运行基础：Java
 
-```bash
-wget https://gitee.com/qiaoshengda/yun-luo-manage/attach_files/782110/download/manage-1.0.jar
-nohup java -jar manage-1.0.jar > log 2&>1 &
-```
+下载发行版
+
+使用`java -jar manage-1.0.0`运行
 
 访问地址：<localhost:7743>
 
