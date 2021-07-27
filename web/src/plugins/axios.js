@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Message} from "element-ui";
+import { Message } from "element-ui";
 import router from './router'
 
 const instance = axios.create({
@@ -12,12 +12,12 @@ const instance = axios.create({
 instance.interceptors.request.use(
     config => {
         // 除了登录，如果没有token，则无法执行。
-        /*
         if (sessionStorage.getItem('token')) {
             config.headers['token'] = sessionStorage.getItem('token');
-        } else if(config.url !== 'admin/login'){
+        } else if (config.url !== '/user/login') {
+            router.push("/login")
             throw new axios.Cancel('Operation canceled by the user.');
-        }*/
+        }
         return config
     },
     err => {
@@ -28,6 +28,7 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     response => {
         //debugger
+
         if (response.data.code === 401) {
             router.push("/login").then(() => {
                 Message({

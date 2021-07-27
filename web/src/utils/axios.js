@@ -8,25 +8,25 @@ import { Message } from 'element-ui';
  * @param {function} success 成功回调
  * @param {function} error 失败回调
  */
-export function getJSON(url, success, error){
+export function getJSON(url, success, error) {
     axios({
         url,
         method: 'GET'
     }).then(res => {
-        if(res.success){
+        if (res.success) {
             success(res)
-        }else {
-            if(error){
+        } else {
+            if (error) {
                 error(res.message);
             }
             success({
                 success: false
             })
         }
-    }).catch(()=>{
-        if(error){
+    }).catch(() => {
+        if (error) {
             error('服务器错误');
-        }else{
+        } else {
             Message({
                 message: '服务器错误',
                 type: 'error'
@@ -35,19 +35,28 @@ export function getJSON(url, success, error){
     })
 }
 
-export function getObject(url, params, success, error){
+export function getObject(url, params, success, error) {
     axios({
         url,
         method: 'GET',
         params,
         responseType: 'blob'
-    }).then(response => {
-        success(response);
-    }).catch((err)=>{
+    }).then(res => {
+        if (res.success) {
+            success(res)
+        } else {
+            if (error) {
+                error(res.message);
+            }
+            success({
+                success: false
+            })
+        }
+    }).catch((err) => {
         console.error(err)
-        if(error){
+        if (error) {
             error();
-        }else{
+        } else {
             Message({
                 message: '服务器错误',
                 type: 'error'
@@ -64,18 +73,18 @@ export function getObject(url, params, success, error){
  * @param {Function} success 成功回调
  * @param {Function} error 失败回调
  */
-export function get(url, params, success, error){
+export function get(url, params, success, error) {
     axios({
         url,
         method: 'GET',
         params
     }).then(res => {
-        if(res.success){
+        if (res.success) {
             success(res)
-        }else {
-            if(error){
+        } else {
+            if (error) {
                 error(res.message);
-            }else{
+            } else {
                 Message({
                     message: res.message,
                     type: 'error'
@@ -85,10 +94,10 @@ export function get(url, params, success, error){
                 success: false
             })
         }
-    }).catch(()=>{
-        if(error){
+    }).catch(() => {
+        if (error) {
             error('服务器错误');
-        }else{
+        } else {
             Message({
                 message: '服务器错误',
                 type: 'error'
@@ -105,26 +114,26 @@ export function get(url, params, success, error){
  * @param {Function} success 成功回调
  * @param {Function} error 失败回调
  */
-export function post(url, data, success, error){
+export function post(url, data, success, error) {
     axios({
         url,
         method: 'POST',
         data
     }).then(res => {
-        if(res.success){
+        if (res.success) {
             success(res)
-        }else {
-            if(error){
+        } else {
+            if (error) {
                 error(res.message);
             }
             success({
                 success: false
             })
         }
-    }).catch(()=>{
-        if(error){
+    }).catch(() => {
+        if (error) {
             error('服务器错误');
-        }else{
+        } else {
             Message({
                 message: '服务器错误',
                 type: 'error'
@@ -141,7 +150,7 @@ export function post(url, data, success, error){
  * @param {Function} success 成功回调
  * @param {Function} error 失败回调
  */
- export function postObject(url, data, success, error){
+export function postObject(url, data, success, error) {
     axios({
         url,
         method: 'POST',
@@ -150,20 +159,20 @@ export function post(url, data, success, error){
             "Content-type": "multipart/form-data"
         }
     }).then(res => {
-        if(res.success){
+        if (res.success) {
             success(res)
-        }else {
-            if(error){
+        } else {
+            if (error) {
                 error(res.message);
             }
             success({
                 success: false
             })
         }
-    }).catch(()=>{
-        if(error){
+    }).catch(() => {
+        if (error) {
             error('服务器错误');
-        }else{
+        } else {
             Message({
                 message: '服务器错误',
                 type: 'error'

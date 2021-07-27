@@ -107,7 +107,7 @@ public class WebConfig implements WebMvcConfigurer {
                 // 通过验证
                 return true;
             }
-        }).addPathPatterns("/test/api/**");
+        }).addPathPatterns("/api/**").excludePathPatterns("/api/user/login");
     }
 
     /**

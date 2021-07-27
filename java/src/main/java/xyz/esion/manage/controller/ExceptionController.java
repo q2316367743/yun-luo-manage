@@ -23,6 +23,11 @@ public class ExceptionController {
         return Result.fail();
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Result IllegalArgumentException(IllegalArgumentException exception){
+        return Result.fail().message("参数错误");
+    }
+
     @ExceptionHandler(NotLoginException.class)
     public Result NotLoginException(NotLoginException exception){
         return Result.fail(Result.ResultCode.FAIL).message(exception.getMessage());

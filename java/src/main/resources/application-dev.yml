@@ -24,7 +24,7 @@ spring:
     # token风格
     token-style: uuid
     # 是否输出操作日志
-    is-log: false
+    is-log: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES

@@ -11,7 +11,11 @@
 					<el-input v-model="user.username"></el-input>
 				</el-form-item>
 				<el-form-item label="密码：">
-					<el-input v-model="user.password" type="password"></el-input>
+					<el-input
+						v-model="user.password"
+						type="password"
+						@keydown.enter.native="login"
+					></el-input>
 				</el-form-item>
 			</el-form>
 			<div id="login-submit">
@@ -26,18 +30,24 @@
 </template>
 
 <script>
+import { login } from "@/apis/user.js";
 export default {
-	data: ()=>({
+	data: () => ({
 		user: {
-			username: '',
-			password: ''
-		}
+			username: "",
+			password: "",
+		},
 	}),
 	methods: {
-		login(){
-			this.$router.push('/')
-		}
-	}
+		login() {
+			login(this.user.username, this.user.password, (res) => {
+				if (res.success) {
+					sessionStorage.setItem("token", res.data.item);
+					this.$router.push("/");
+				}
+			});
+		},
+	},
 };
 </script>
 
@@ -53,18 +63,18 @@ export default {
 	grid-template-columns: 1fr 500px 1fr;
 	grid-template-rows: 1fr 300px 1fr;
 }
-#login-main{
+#login-main {
 	background-color: var(--main-color);
 	border-radius: 10px;
 	padding: 24px;
 }
-#login-title{
+#login-title {
 	font-size: 30px;
 	color: var(--text-color);
 	text-align: center;
 	height: 70px;
 }
-#login-submit{
+#login-submit {
 	text-align: center;
 }
 </style>
