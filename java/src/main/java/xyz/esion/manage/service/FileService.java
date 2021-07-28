@@ -132,11 +132,13 @@ public interface FileService {
 
     /**
      * 远程下载
+     * <p>使用任务</p>
      *
      * @param path 文件下载目录
      * @param name 文件名称
      * @param url 远程URL
      * @return 操作结果
+     * @throws FileException 文件操作异常
      */
     boolean remoteDownload(String path, String name, String url) throws FileException;
 
