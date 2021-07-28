@@ -15,6 +15,8 @@ public class UserOption implements Serializable {
 
     private String username;
 
+    private String old;
+
     private String password;
 
 }

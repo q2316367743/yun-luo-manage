@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import xyz.esion.manage.exception.FileException;
+import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.global.Result;
 
 import java.io.IOException;
@@ -35,6 +36,11 @@ public class ExceptionController {
 
     @ExceptionHandler(FileException.class)
     public Result FileException(FileException exception){
+        return Result.fail(Result.ResultCode.FAIL).message(exception.getMessage());
+    }
+
+    @ExceptionHandler(UserException.class)
+    public Result FileException(UserException exception){
         return Result.fail(Result.ResultCode.FAIL).message(exception.getMessage());
     }
 

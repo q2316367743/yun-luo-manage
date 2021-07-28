@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.global.Result;
 import xyz.esion.manage.option.UserOption;
 import xyz.esion.manage.service.UserService;
@@ -37,13 +38,14 @@ public class UserController {
     }
 
     @PostMapping("update")
-    public Result update(@RequestBody UserOption option){
+    public Result update(@RequestBody UserOption option) throws UserException {
         String username = option.getUsername();
         String password = option.getPassword();
-        if (StrUtil.isBlank(username) || StrUtil.isBlank(password)){
+        String old = option.getOld();
+        if (StrUtil.isBlank(password) || StrUtil.isBlank(old)){
             throw new IllegalArgumentException("参数缺失");
         }
-        userService.update(username, password);
+        userService.update(username, old, password);
         StpUtil.logout();
         return Result.success();
     }
