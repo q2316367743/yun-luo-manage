@@ -8,6 +8,7 @@
 
 - [盘古](https://gitee.com/javashop/pangu)
 - [BaoTa](https://gitee.com/terrydash/BaoTa)
+- [phpMyAdmin](https://gitee.com/mirrors/phpMyAdmin)（[码云地址](https://gitee.com/mirrors/phpMyAdmin)）
 
 ## 安装使用
 
