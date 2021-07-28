@@ -1,11 +1,11 @@
 package xyz.esion.manage.controller;
 
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.global.Result;
+import xyz.esion.manage.option.UserOption;
 import xyz.esion.manage.service.UserService;
 
 /**
@@ -33,6 +33,17 @@ public class UserController {
     @GetMapping("logout")
     public Result logout(){
         StpUtil.logout();
+        return Result.success();
+    }
+
+    @PostMapping("update")
+    public Result update(@RequestBody UserOption option){
+        String username = option.getUsername();
+        String password = option.getPassword();
+        if (StrUtil.isBlank(username) || StrUtil.isBlank(password)){
+            throw new IllegalArgumentException("参数缺失");
+        }
+        userService.update(username, password);
         return Result.success();
     }
 
