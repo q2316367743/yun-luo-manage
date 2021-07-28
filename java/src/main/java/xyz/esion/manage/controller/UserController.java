@@ -44,6 +44,7 @@ public class UserController {
             throw new IllegalArgumentException("参数缺失");
         }
         userService.update(username, password);
+        StpUtil.logout();
         return Result.success();
     }
 
