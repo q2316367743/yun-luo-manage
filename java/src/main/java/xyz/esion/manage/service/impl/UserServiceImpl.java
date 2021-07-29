@@ -1,6 +1,8 @@
 package xyz.esion.manage.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import org.springframework.stereotype.Service;
+import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.service.UserService;
 
 /**
@@ -25,8 +27,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean update(String username, String password) {
-        this.username = username;
+    public boolean update(String username, String old, String password) throws UserException {
+        if (!this.password.equals(old)){
+            throw new UserException("密码错误");
+        }
+        if (StrUtil.isNotBlank(username)){
+            this.username = username;
+        }
         this.password = password;
         return true;
     }

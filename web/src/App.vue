@@ -34,6 +34,9 @@
 				>
 					<el-submenu index="">
 						<template slot="title">管理员</template>
+						<el-menu-item index="" @click="update_status = true"
+							>修改账户</el-menu-item
+						>
 						<el-menu-item index="" @click="logout"
 							>退出</el-menu-item
 						>
@@ -46,17 +49,59 @@
 		<div id="main">
 			<router-view></router-view>
 		</div>
+
+		<el-dialog
+			title="修改账户信息"
+			:visible.sync="update_status"
+			:modal-append-to-body="false"
+			destroy-on-close
+			:close-on-click-modal="false"
+			width="50%"
+		>
+			<el-form v-model="user" label-position="left">
+				<el-form-item label="用户名：">
+					<el-input
+						v-model="user.username"
+						placeholder="如不修改可不输入"
+					></el-input>
+				</el-form-item>
+				<el-form-item label="旧密码：">
+					<el-input v-model="user.old" type="password"></el-input>
+				</el-form-item>
+				<el-form-item label="新密码：">
+					<el-input v-model="user.password" type="password"></el-input>
+				</el-form-item>
+				<el-form-item label="再次输入：">
+					<el-input v-model="user.once" type="password"></el-input>
+				</el-form-item>
+			</el-form>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="update = false"
+					>取 消</el-button
+				>
+				<el-button type="primary" @click="update_user"
+					>修 改</el-button
+				>
+			</span>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
-import { logout } from "@/apis/user";
+import { logout, update } from "@/apis/user";
 
 export default {
 	name: "App",
 
 	data: () => ({
 		index: "/",
+		update_status: false,
+		user: {
+			username: '',
+			old: '',
+			password: '',
+			once: ''
+		}
 	}),
 	watch: {
 		$route(to) {
@@ -73,6 +118,32 @@ export default {
 				this.$router.push("/login");
 			});
 		},
+		update_user(){
+			if(this.user.old.length === 0 || this.user.password.length === 0 || this.user.once.length === 0){
+				this.$message.error('输入框不能为空！');
+				return;
+			}
+			if (this.user.password !== this.user.once){
+				this.$message.error('两次密码输入不一致！');
+				return;
+			}
+			update(this.user.username, this.user.old, this.user.password, res=>{
+				if(res.success){
+					this.update_status = false;
+					this.user = {
+						username: '',
+						old: '',
+						password: '',
+						once: ''
+					}
+					this.$message.success('修改成功，请重新登录！');
+					sessionStorage.removeItem("token");
+					this.$router.push("/login");
+				}
+			}, (message) => {
+				this.$message.error(message);
+			});
+		}
 	},
 };
 </script>

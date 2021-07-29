@@ -1,5 +1,7 @@
 package xyz.esion.manage.service;
 
+import xyz.esion.manage.exception.UserException;
+
 /**
  * 用户登录
  *
@@ -21,9 +23,10 @@ public interface UserService {
      * 修改
      *
      * @param username 用户名
+     * @param old 旧密码
      * @param password 密码
      * @return 修改结果
      */
-    boolean update(String username, String password);
+    boolean update(String username, String old, String password) throws UserException;
 
 }
