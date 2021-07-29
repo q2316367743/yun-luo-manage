@@ -1,6 +1,24 @@
 <template>
 	<div class="file-main">
 		<div class="el-card" style="height: 100%">
+			<div class="file-path">
+				<input
+					class="file-path-input"
+					v-model="to_path_temp"
+					v-if="to_path_status"
+					ref="to_path_input"
+					@blur="cancel_path_input"
+					@keydown.enter="path_input_to"
+				/>
+				<div class="file-path-items" v-else @click="open_path_input">
+					<span v-for="(item, index) in show_path" :key="index">
+						<span v-if="index != 0" style="padding: 0 3px">/</span>
+						<el-button type="text" @click.stop="toP(item.path)">{{
+							item.name
+						}}</el-button>
+					</span>
+				</div>
+			</div>
 			<div class="file-option">
 				<el-upload
 					action=""
@@ -75,14 +93,6 @@
 					v-if="mv_paths.length > 0 || cp_paths.length > 0"
 					>取消{{ mv_paths.length > 0 ? "移动" : "复制" }}</el-button
 				>
-			</div>
-			<div class="file-path">
-				<span v-for="(item, index) in show_path" :key="index">
-					<span v-if="index != 0" style="padding: 0 3px">/</span>
-					<el-button type="text" @click="toP(item.path)">{{
-						item.name
-					}}</el-button>
-				</span>
 			</div>
 			<div>
 				<div class="file-head">

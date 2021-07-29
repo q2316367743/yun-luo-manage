@@ -3,12 +3,12 @@
 }
 
 .file-path {
+    padding-top: 12px;
     padding-left: 12px;
 }
 
 .file-option {
-    padding-left: 12px;
-    padding-top: 12px;
+    padding: 12px;
     display: flex;
 }
 
@@ -79,4 +79,31 @@
     background-color: var(--em-color);
     border-radius: 5px;
     user-select: none;
+}
+
+.file-path-items {
+    height: 28px;
+    line-height: 26px;
+    width: 400px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 1px;
+}
+
+.file-path-items>span>button {
+    padding: 0;
+}
+
+.file-path-items:hover {
+    padding: 0;
+    border: 1px solid var(--em-color);
+    height: 26px;
+    margin-bottom: 4px;
+}
+
+.file-path-input {
+    height: 20px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    line-height: 26px;
 }

@@ -118,7 +118,9 @@ export default {
         remote_download_value: {
             name: '',
             url: ''
-        }
+        },
+        to_path_temp: '',
+        to_path_status: false
     }),
     created() {
         // 获取用户目录
@@ -131,6 +133,12 @@ export default {
     },
     methods: {
         toP(path) {
+            let path_reget = new RegExp(/^\/(\w+\/?)+$/);
+            console.log(path, path_reget.test(path))
+            if (!path_reget.test(path)) {
+                this.$message.error('路径验证错误');
+                return;
+            }
             let old = this.path;
             this.path = path;
             this.toPath(() => {
@@ -501,7 +509,7 @@ export default {
         remote_download() {
             this.remote_download_status = false;
             let url = this.remote_download_value.url;
-            if(url.length === 0){
+            if (url.length === 0) {
                 this.$message.error('url不能为空');
             }
             // 判断是否是url
@@ -510,15 +518,15 @@ export default {
             if (!oRegUrl.test(url)) {
                 this.$message.error('url格式不正确');
             }
-            file.remote_download(this.path, this.remote_download_value.name, url, (res)=>{
-                if(res.success){
+            file.remote_download(this.path, this.remote_download_value.name, url, (res) => {
+                if (res.success) {
                     this.$message.success('下载成功');
                     this.refresh()
                 }
-            }, ()=>{
+            }, () => {
                 this.$message.error('下载失败')
             })
-            
+
         },
         parse_url() {
             let url = this.remote_download_value.url;
@@ -531,6 +539,24 @@ export default {
             let names = url.split('/');
             let name = names[names.length - 1];
             this.remote_download_value.name = name;
+        },
+        open_path_input() {
+            this.to_path_status = true;
+            this.to_path_temp = this.path;
+            this.$nextTick(() => {
+                let input = this.$refs.to_path_input;
+                input.focus();
+            })
+        },
+        path_input_to() {
+            this.to_path_status = false;
+            if (this.path === this.to_path_temp) {
+                return;
+            }
+            this.toP(this.to_path_temp)
+        },
+        cancel_path_input() {
+            this.to_path_status = false;
         }
     }
 }
