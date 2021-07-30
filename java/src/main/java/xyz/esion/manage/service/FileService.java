@@ -2,6 +2,7 @@ package xyz.esion.manage.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
+import xyz.esion.manage.view.FileListSimpleView;
 import xyz.esion.manage.view.FileListView;
 
 import java.io.IOException;
@@ -20,7 +21,6 @@ public interface FileService {
      *
      * @param path 目录
      * @return 目录下的文件及文件夹
-     * @return 结果
      * @throws FileException 文件操作异常
      * */
     List<FileListView> ls(String path) throws FileException;
@@ -141,5 +141,13 @@ public interface FileService {
      * @throws FileException 文件操作异常
      */
     boolean remoteDownload(String path, String name, String url) throws FileException;
+
+    /**
+     * 简易文件列表
+     *
+     * @param path 文件路径
+     * @return 文件列表
+     */
+    List<FileListSimpleView> simpleLs(String path);
 
 }

@@ -11,11 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
 import xyz.esion.manage.service.FileService;
+import xyz.esion.manage.view.FileListSimpleView;
 import xyz.esion.manage.view.FileListView;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -72,7 +73,7 @@ public class FileServiceImpl implements FileService {
         }
         command = command +  ArrayUtil.join(source, " ") + " " + target;
         String result = RuntimeUtil.execForStr(command);
-        if (!result.equals("")){
+        if (!"".equals(result)){
             throw new FileException(result);
         }
         return true;
@@ -88,7 +89,7 @@ public class FileServiceImpl implements FileService {
         String command = "cp -f -r -p ";
         command = command +  ArrayUtil.join(source, " ") + " " + target;
         String result = RuntimeUtil.execForStr(command);
-        if (!result.equals("")){
+        if (!"".equals(result)){
             throw new FileException(result);
         }
         return true;
@@ -103,7 +104,7 @@ public class FileServiceImpl implements FileService {
         target = path + File.separator + target;
         String command = "mv " + source + " " + target;
         String result = RuntimeUtil.execForStr(command);
-        if (!result.equals("")){
+        if (!"".equals(result)){
             throw new FileException(result);
         }
         return true;
@@ -118,7 +119,7 @@ public class FileServiceImpl implements FileService {
         }
         command = command + ArrayUtil.join(source, " ");
         String result = RuntimeUtil.execForStr(command);
-        if (!result.equals("")){
+        if (!"".equals(result)){
             throw new FileException(result);
         }
         return true;
@@ -131,7 +132,7 @@ public class FileServiceImpl implements FileService {
         }
         String command = "touch " + path + File.separator + name;
         String result = RuntimeUtil.execForStr(command);
-        if (!result.equals("")){
+        if (!"".equals(result)){
             throw new FileException(result);
         }
         return true;
@@ -149,7 +150,7 @@ public class FileServiceImpl implements FileService {
         }
         command += path + File.separator + name;
         String result = RuntimeUtil.execForStr(command);
-        if (!result.equals("")){
+        if (!"".equals(result)){
             throw new FileException(result);
         }
         return true;
@@ -178,6 +179,9 @@ public class FileServiceImpl implements FileService {
             throw new FileException("路径不是文件夹，" + path);
         }
         String name = file.getOriginalFilename();
+        if (StrUtil.isBlank(name)){
+            name = String.valueOf(System.currentTimeMillis());
+        }
         IoUtil.copy(file.getInputStream(), FileUtil.getOutputStream(new File(filePath, name)));
         return true;
     }
@@ -197,6 +201,27 @@ public class FileServiceImpl implements FileService {
         /* 暂时直接下载 */
         HttpUtil.downloadFile(url, file);
         return true;
+    }
+
+    @Override
+    public List<FileListSimpleView> simpleLs(String path) {
+        if (StrUtil.isBlank(path)){
+            return new ArrayList<>(0);
+        }
+        File file = FileUtil.file(path);
+        File[] files = file.listFiles();
+        if (files == null){
+            return new ArrayList<>();
+        }
+        List<FileListSimpleView> result = new ArrayList<>();
+        for (File item : files) {
+            FileListSimpleView view = new FileListSimpleView();
+            view.setName(item.getName());
+            view.setPath(item.getPath());
+            view.setIsDirectory(item.isDirectory());
+            result.add(view);
+        }
+        return result;
     }
 
     private String[] toStringArray(List<String> source) throws FileException {

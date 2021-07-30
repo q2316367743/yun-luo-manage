@@ -95,4 +95,9 @@ public class FileController {
         return Result.choose(fileService.remoteDownload(option.getPath(), option.getName(), option.getUrl()));
     }
 
+    @GetMapping("simple_ls")
+    public Result simpleLs(String path){
+        return Result.success().items(fileService.simpleLs(path));
+    }
+
 }
