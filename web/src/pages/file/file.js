@@ -133,12 +133,6 @@ export default {
     },
     methods: {
         toP(path) {
-            let path_reget = new RegExp(/^\/(\w+\/?)+$/);
-            console.log(path, path_reget.test(path))
-            if (!path_reget.test(path)) {
-                this.$message.error('路径验证错误');
-                return;
-            }
             let old = this.path;
             this.path = path;
             this.toPath(() => {
@@ -153,11 +147,7 @@ export default {
                 if (res.success) {
                     this.file_list = res.data.items;
                 }
-            }, () => {
-                if (error) {
-                    error()
-                }
-            })
+            }, error)
         },
         parse_path() {
             let show_path = [{
@@ -527,18 +517,6 @@ export default {
                 this.$message.error('下载失败')
             })
 
-        },
-        parse_url() {
-            let url = this.remote_download_value.url;
-            // 判断是否是url
-            let oRegUrl = new RegExp();
-            oRegUrl.compile("^[A-Za-z]+://");
-            if (!oRegUrl.test(url)) {
-                return;
-            }
-            let names = url.split('/');
-            let name = names[names.length - 1];
-            this.remote_download_value.name = name;
         },
         open_path_input() {
             this.to_path_status = true;

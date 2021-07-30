@@ -320,15 +320,19 @@
 			:close-on-click-modal="false"
 			width="50%"
 		>
-			<el-form v-model="remote_download_value" label-position="left">
+			<el-form
+				v-model="remote_download_value"
+				label-position="right"
+				label-width="80px"
+			>
 				<el-form-item label="远程地址">
-					<el-input
-						v-model="remote_download_value.url"
-						@input="parse_url"
-					></el-input>
+					<el-input v-model="remote_download_value.url"></el-input>
 				</el-form-item>
 				<el-form-item label="文件名称">
-					<el-input v-model="remote_download_value.name"></el-input>
+					<el-input
+						v-model="remote_download_value.name"
+						placeholder="如果为空则使用默认文件名"
+					></el-input>
 				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">
