@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import home from "../pages/home/home";
 import file from "../pages/file/file.vue";
-import nginx_config from "../pages/nginx/config";
+import server from "../pages/server/server.vue";
 import database from "../pages/database/database";
 import redis from "../pages/redis/redis";
 import application from "../pages/application/application";
@@ -23,10 +23,10 @@ export default new Router({
         nickname: '文件管理',
         component: file
     }, {
-        path: '/nginx/config',
-        name: 'nginx_config',
-        nickname: 'Nginx管理 - 配置文件',
-        component: nginx_config,
+        path: '/server',
+        name: 'server',
+        nickname: '服务器管理',
+        component: server,
     }, {
         path: '/database',
         name: 'database',

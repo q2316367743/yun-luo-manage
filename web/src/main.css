@@ -1,0 +1,234 @@
+:root {
+    /* 内容背景颜色 */
+    --bg-color: #212334;
+    /* 文字颜色 */
+    --text-color: #ffffff;
+    /* 次要文字颜色 */
+    --sub-color: #f2f2f2;
+    /* 主要卡片颜色 */
+    --main-color: #2b2d41;
+    /* 强调颜色 */
+    --em-color: rgb(31, 33, 46);
+    /* 禁用颜色 */
+    --dis-color: #c0c4cc;
+    /* 左侧导航颜色 */
+    --left-color: #2b2d41;
+    /* 对话框颜色 */
+    --dialog-color: #212334;
+    /* 边框颜色 */
+    --border-color: #212334;
+}
+
+#app {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+#left-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    background-color: var(--left-color);
+}
+
+#top-nav {
+    position: fixed;
+    top: 0;
+    left: 200px;
+    right: 0;
+    height: 44px;
+    line-height: 44px;
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+#top-nav>div {
+    line-height: 66px;
+    padding: 0 40px;
+}
+
+#logo {
+    height: 46px;
+    padding: 10px;
+    color: var(--text-color);
+}
+
+#main {
+    position: fixed;
+    top: 44px;
+    left: 200px;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-color);
+    overflow: auto;
+}
+
+#title {
+    font-size: 1rem;
+}
+
+#subtitle {
+    color: #f2f2f2;
+    font-size: 0.875rem;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--main-color);
+    background-image: -webkit-linear-gradient( 45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.1) 75%, transparent 75%, transparent);
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.el-menu {
+    border-right: solid 1px var(--left-color) !important;
+}
+
+.el-card {
+    background-color: var(--main-color) !important;
+    color: var(--text-color) !important;
+    border: var(--main-color) !important;
+}
+
+.el-card__header {
+    border-bottom: 1px solid var(--bg-color) !important;
+}
+
+.el-menu.el-menu--horizontal {
+    border: var(--main-color) !important;
+}
+
+.el-submenu__title {
+    border-bottom: 2px solid var(--bg-color) !important;
+}
+
+.el-form-item__label {
+    color: var(--text-color) !important;
+}
+
+.el-tabs__item {
+    color: var(--text-color) !important;
+}
+
+.el-submenu__title {
+    height: 44px !important;
+    line-height: 44px !important;
+}
+
+.el-checkbox-group {
+    font-size: 16px !important;
+}
+
+.el-checkbox__label {
+    color: var(--text-color) !important;
+}
+
+.el-message-box {
+    background-color: var(--dialog-color) !important;
+    border: 1px solid var(--dialog-color) !important;
+}
+
+.el-message-box__content {
+    color: var(--text-color) !important;
+}
+
+.el-message-box__title {
+    color: var(--text-color) !important;
+}
+
+.el-input__inner {
+    color: var(--text-color) !important;
+    background-color: var(--main-color) !important;
+    border: 1px solid var(--em-color) !important;
+}
+
+.el-select-dropdown__item {
+    color: var(--text-color) !important;
+    background-color: var(--main-color) !important;
+}
+
+.el-select-dropdown {
+    color: var(--text-color) !important;
+    background-color: var(--main-color) !important;
+    border: 0 !important;
+}
+
+.el-popper[x-placement^="bottom"] .popper__arrow {
+    border-bottom-color: var(--main-color) !important;
+}
+
+.el-popper[x-placement^="bottom"] .popper__arrow::after {
+    border-bottom-color: var(--main-color) !important;
+}
+
+.el-dialog {
+    background-color: var(--dialog-color) !important;
+    border: 1px solid var(--dialog-color) !important;
+}
+
+.el-dialog__title {
+    color: var(--text-color) !important;
+}
+
+.el-dialog__body {
+    color: var(--text-color) !important;
+}
+
+.el-dropdown-menu {
+    background-color: var(--main-color) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.el-dropdown-menu__item {
+    color: var(--text-color) !important;
+}
+
+.el-dropdown-menu__item:focus,
+.el-dropdown-menu__item:not(.is-disabled):hover {
+    background-color: var(--em-color) !important;
+}
+
+.el-table {
+    border: 1px solid var(--border-color) !important;
+    background-color: var(--main-color) !important;
+    border-radius: 5px;
+}
+
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+    background-color: var(--main-color) !important;
+}
+
+.has-gutter {
+    color: var(--sub-color) !important;
+}
+
+.el-table th {
+    background-color: var(--main-color) !important;
+}
+
+.el-table td,
+.el-table th.is-leaf {
+    background-color: var(--main-color) !important;
+    color: var(--sub-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.CodeMirror {
+    height: 450px !important;
+}

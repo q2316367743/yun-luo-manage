@@ -46,8 +46,8 @@ export default {
             target
         }, success);
     },
-    open(path, charset, success) {
-        get(file_model + '/open', { path, charset }, success)
+    open(path, charset, success, error) {
+        get(file_model + '/open', { path, charset }, success, error)
     },
     write(path, charset, content, success, error) {
         post(file_model + '/write', { path, charset, content }, success, error)

@@ -3,20 +3,19 @@ package xyz.esion.manage.entity;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;
 
 /**
  * 
- * @TableName t_database
+ * @TableName t_server
  * @author Esion
- * @since 2021/7/17
+ * @since 2021/7/31
  */
-@TableName(value ="t_database")
+@TableName(value ="t_server")
 @Data
-public class Database implements Serializable {
+public class Server implements Serializable {
     /**
      * 
      */
@@ -26,44 +25,22 @@ public class Database implements Serializable {
     /**
      * 
      */
-    private String nickname;
-
-    /**
-     * 
-     */
     private String name;
 
     /**
      * 
      */
-    private String host;
-
-    /**
-     * 
-     */
-    private Integer port;
-
-    /**
-     * 其他参数
-     */
-    private String parameter;
-
-    /**
-     * 
-     */
-    private String username;
-
-    /**
-     * 
-     */
-    private String password;
-
-    /**
-     * 数据库类型
-     *
-     * @see xyz.esion.manage.enumeration.DatabaseTypeEnum
-     */
     private Integer type;
+
+    /**
+     * 
+     */
+    private String typeName;
+
+    /**
+     * 
+     */
+    private String version;
 
     /**
      * 

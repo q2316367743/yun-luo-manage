@@ -6,18 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
-import xyz.esion.manage.global.Constant;
 import xyz.esion.manage.global.Result;
 import xyz.esion.manage.service.DatabaseService;
-
-import java.io.File;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * 系统服务

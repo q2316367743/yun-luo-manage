@@ -14,6 +14,11 @@ public class Constant {
 
     public static final Map<String, List<String>> FILE_TYPE;
 
+    /**
+     * Nginx基础下载连接
+     */
+    private static final String NGINX_BASE_URL = "http://nginx.org/download/nginx-";
+
     static {
         // 初始化全局变量
 

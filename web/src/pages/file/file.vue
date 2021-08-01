@@ -258,53 +258,14 @@
 			destroy-on-close
 			:close-on-click-modal="false"
 			width="70%"
+			top="10vh"
 		>
-			<div>
-				<span>代码主题：</span>
-				<el-select
-					v-model="options.theme"
-					placeholder="请选择主题"
-					style="margin-bottom: 12px"
-				>
-					<el-option
-						v-for="theme in themes"
-						:key="theme"
-						:label="theme"
-						:value="theme"
-					>
-					</el-option>
-				</el-select>
-				<span style="padding-left: 12px">语法：</span>
-				<el-select
-					v-model="options.mode"
-					placeholder="请选择语法"
-					style="margin-bottom: 12px"
-				>
-					<el-option
-						v-for="(mode, index) in modes"
-						:key="index"
-						:label="mode.label"
-						:value="mode.value"
-					>
-					</el-option>
-				</el-select>
-				<span style="padding-left: 12px">编码：</span>
-				<el-select
-					v-model="charset"
-					placeholder="请选择编码"
-					style="margin-bottom: 12px"
-					@change="open_code_charset"
-				>
-					<el-option
-						v-for="(charset, index) in charsets"
-						:key="index"
-						:label="charset"
-						:value="charset"
-					>
-					</el-option>
-				</el-select>
-			</div>
-			<codemirror v-model="content" :options="options"></codemirror>
+			<code-edit
+				v-if="code"
+				:path="code_path"
+				:suffix="suffix"
+				ref="code_edit"
+			></code-edit>
 			<span slot="footer" class="dialog-footer">
 				<el-button @click="code = false">取 消</el-button>
 				<el-button type="primary" @click="write_code_charset"

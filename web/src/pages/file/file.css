@@ -1,5 +1,9 @@
 .file-main {
-    padding: 12px
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    bottom: 12px;
+    right: 12px;
 }
 
 .file-path {
@@ -14,6 +18,15 @@
 
 .file-item-center {
     text-align: center;
+}
+
+.file-content {
+    position: absolute;
+    top: 130px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
 }
 
 .file-content>div {
@@ -102,8 +115,21 @@
 }
 
 .file-path-input {
-    height: 20px;
+    height: 26px;
     margin-top: 4px;
     margin-bottom: 4px;
     line-height: 26px;
+    width: 400px;
+    -webkit-appearance: none;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #DCDFE6;
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: inherit;
+    outline: 0;
+    transition: border-color .2s cubic-bezier(.645, .045, .355, 1);
+    color: var(--text-color) !important;
+    background-color: var(--main-color) !important;
+    border: 1px solid var(--em-color) !important;
 }

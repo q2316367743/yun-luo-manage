@@ -1,26 +1,15 @@
 // 引入API
 import file from '@/apis/file.js'
 
-// 引入CodeMirror
-import { codemirror } from 'vue-codemirror'
-// 核心样式
-import 'codemirror/lib/codemirror.css'
-// 引入主题后还需要在 options 中指定主题才会生效
-import 'codemirror/theme/idea.css'
-import 'codemirror/theme/rubyblue.css'
-import 'codemirror/theme/xq-dark.css'
-import 'codemirror/theme/cobalt.css'
-import 'codemirror/theme/dracula.css'
-// 语法高亮
-import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/mode/css/css.js'
-import 'codemirror/mode/xml/xml.js'
-import 'codemirror/mode/markdown/markdown.js'
-import 'codemirror/mode/python/python.js'
-import 'codemirror/mode/shell/shell.js'
-import 'codemirror/mode/sql/sql.js'
-import 'codemirror/mode/vue/vue.js'
+import code_edit from '@/components/code_edit.vue'
 
+
+function dl(content, fileName) {
+    var aEle = document.createElement("a"); // 创建a标签
+    aEle.download = fileName; // 设置下载文件的文件名
+    aEle.href = URL.createObjectURL(content);
+    aEle.click(); // 设置点击事件
+}
 // 自定义工具
 function lastWith(str, target) {
     // 请把你的代码写在这里
@@ -32,19 +21,10 @@ function lastWith(str, target) {
     return false;
 }
 
-function dl(content, fileName) {
-    var aEle = document.createElement("a"); // 创建a标签
-    aEle.download = fileName; // 设置下载文件的文件名
-    aEle.href = URL.createObjectURL(content);
-    aEle.click(); // 设置点击事件
-}
-
-const default_charset = 'UTF-8';
-
 export default {
     name: "file",
     components: {
-        codemirror
+        "code-edit": code_edit
     },
     data: () => ({
         path: '/',
@@ -58,69 +38,17 @@ export default {
         menu_file: null,
         menu_temp_path: '',
         menu_index: -1,
-        // 代码
-        content: 'print(\'Hello World\')',
-        themes: ['idea', 'rubyblue', 'xq-dark', 'cobalt', 'dracula'],
-        charsets: ['UTF-8', 'ISO-8859-1', 'GBK'],
-        charset: '',
-        modes: [{
-            value: '',
-            label: '不使用语法主题',
-            suffix: ['text']
-        }, {
-            value: 'css',
-            label: 'CSS',
-            suffix: ['css']
-        }, {
-            value: 'javascript',
-            label: 'Java/Javascript',
-            suffix: ['js', 'java']
-        }, {
-            value: 'html',
-            label: 'XML/HTML',
-            suffix: ['html', 'xml']
-        }, {
-            value: 'python',
-            label: 'Python',
-            suffix: ['py']
-        }, {
-            value: 'x-sh',
-            label: 'Shell',
-            suffix: ['sh']
-        }, {
-            value: 'sql',
-            label: 'SQL',
-            suffix: ['sql']
-        }, {
-            value: 'vue',
-            label: 'Vue',
-            suffix: ['vue']
-        }, {
-            value: 'markdown',
-            label: 'Markdown',
-            suffix: ['md']
-        }],
-        // 编辑器默认配置
-        options: {
-            tabSize: 4, // 缩进格式
-            theme: 'dracula', // 主题，对应主题库 JS 需要提前引入
-            lineNumbers: true, // 显示行号
-            line: true,
-            mode: '',
-            styleActiveLine: true, // 高亮选中行
-            hintOptions: {
-                completeSingle: true // 当匹配只有一项的时候是否自动补全
-            }
-        },
         code: false,
-        code_style: {},
+        code_path: '',
+        code_style: [],
         remote_download_status: false,
         remote_download_value: {
             name: '',
             url: ''
         },
         to_path_temp: '',
-        to_path_status: false
+        to_path_status: false,
+        suffix: ''
     }),
     created() {
         // 获取用户目录
@@ -208,12 +136,16 @@ export default {
          */
         open_by_file(path, name) {
             let is_error = true;
+            this.suffix = '';
             // 判断是否是文本类型
             let code = this.code_style.code;
             for (let item of code) {
                 if (lastWith(name, item)) {
                     // 判断是否是支持的语法高亮
-                    this.open_by_code(path, name, item);
+                    this.code = true;
+                    this.code_path = path;
+                    this.menu_temp_path = path;
+                    this.suffix = item;
                     is_error = false;
                     break;
                 }
@@ -221,50 +153,6 @@ export default {
             if (is_error) {
                 this.$message.error('不受支持的文件类型')
             }
-        },
-        /**
-         * 文本格式打开
-         * @param {String} path 文件路径
-         * @param {String} name 文件名
-         */
-        open_by_code(path, name, suffix) {
-            // 判断是否是支持的语法高亮
-            let is_no_suppert = true;
-            for (let mode of this.modes) {
-                for (let item of mode.suffix) {
-                    if (item === suffix) {
-                        is_no_suppert = false;
-                        this.options.mode = mode.value;
-                        break;
-                    }
-                }
-            }
-            if (is_no_suppert) {
-                this.options.mode = '';
-            }
-            this.open_code(path);
-        },
-        // 打开文本编辑框
-        open_code(path) {
-            this.code = true;
-            // 获取文件内容
-            this.charset = default_charset;
-            this.content = '';
-            this.menu_temp_path = path;
-            this.open_code_charset();
-        },
-        /**
-         * 通过指定编码获取文件内容
-         * 
-         * @param {String} path 文件路径
-         */
-        open_code_charset() {
-            // 以指定编码打开
-            file.open(this.menu_temp_path, this.charset, res => {
-                if (res.success) {
-                    this.content = res.data.item;
-                }
-            })
         },
         open_by_image() {
             this.$message({
@@ -432,7 +320,7 @@ export default {
         },
         write_code_charset() {
             // 以指定的编码写入
-            file.write(this.menu_temp_path, this.charset, this.content, res => {
+            file.write(this.menu_temp_path, this.$refs.code_edit.get_charset(), this.$refs.code_edit.get_content(), res => {
                 if (res.success) {
                     // 关闭对话框
                     this.code = false
@@ -450,12 +338,16 @@ export default {
             this.close_menu();
         },
         menu_open_by_code() {
-            let names = this.menu_file.name.split('.');
-            let suffix = '';
-            if (names.length > 0) {
-                suffix = names[names.length - 1];
+            let code = this.code_style.code;
+            this.suffix = '';
+            for (let item of code) {
+                if (lastWith(this.menu_file.name, item)) {
+                    this.suffix = item;
+                    break;
+                }
             }
-            this.open_by_code(this.menu_file.path, this.menu_file.name, suffix);
+            this.code = true;
+            this.code_path = this.menu_file.path;
         },
         download(path, name) {
             file.show(path, res => {
