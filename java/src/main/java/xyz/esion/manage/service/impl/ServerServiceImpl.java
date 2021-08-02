@@ -78,16 +78,10 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public void add(ServerOption option) throws ServerException {
+    public void add(ServerOption option){
         Server server = new Server();
         server.setName(option.getName());
-        ServerTypeEnum type = ServerTypeEnum.getByValue(option.getType());
-        server.setType(type.getValue());
-        if (type.equals(ServerTypeEnum.DEFAULT)) {
-            server.setTypeName(option.getTypeName());
-        } else {
-            server.setTypeName(type.getName());
-        }
+        server.setType(option.getType());
         server.setVersion(option.getVersion());
         server.setIsDelete(0);
         serverMapper.insert(server);
@@ -95,17 +89,11 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public void update(String id, ServerOption option) throws ServerException {
-        ServerTypeEnum type = ServerTypeEnum.getByValue(option.getType());
+    public void update(String id, ServerOption option) {
         Server server = new Server();
-        server.setType(type.getValue());
-        if (type.equals(ServerTypeEnum.DEFAULT)) {
-            server.setTypeName(option.getTypeName());
-        } else {
-            server.setTypeName(type.getName());
-        }
         server.setId(id);
         server.setName(option.getName());
+        server.setType(option.getType());
         server.setVersion(option.getVersion());
         server.setIsDelete(0);
         serverMapper.updateById(server);
@@ -120,6 +108,15 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
+    public void commandAdd(ServerCommandOption option) {
+        ServerCommand command = new ServerCommand();
+        command.setName(option.getName());
+        command.setCommand(option.getCommand());
+        command.setServerId(option.getServerId());
+        serverCommandMapper.insert(command);
+    }
+
+    @Override
     public void commandUpdate(String id, ServerCommandOption option) {
         ServerCommand serverCommand = BeanUtil.copyProperties(option, ServerCommand.class);
         serverCommand.setId(id);
@@ -129,6 +126,11 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public void commandRemove(String id) {
         serverCommandMapper.deleteById(id);
+    }
+
+    @Override
+    public void configAdd(ServerConfigOption option) {
+
     }
 
     @Override

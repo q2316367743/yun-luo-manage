@@ -22,14 +22,9 @@ public class ServerInfoView implements Serializable {
     private String name;
 
     /**
-     * 服务器类型，枚举类型具有一些特殊的功能
+     * 服务器类型
      */
-    private Integer type;
-
-    /**
-     * 服务器类型名称
-     */
-    private String typeName;
+    private String type;
 
     /**
      * 服务器版本

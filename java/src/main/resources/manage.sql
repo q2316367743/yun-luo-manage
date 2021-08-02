@@ -22,8 +22,7 @@ create table t_server
 (
     id          char(32) primary key,
     name        varchar(255) default '' not null,
-    type        tinyint      default 0 not null,
-    type_name   varchar(16)  default 0 not null,
+    type        varchar(16)  default 0 not null,
     version     varchar(16)  default '' not null,
     create_time datetime     default '1998-08-06 00:00:00' not null,
     update_time datetime     default '1998-08-06 00:00:00' not null,

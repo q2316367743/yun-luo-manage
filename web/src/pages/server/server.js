@@ -1,20 +1,13 @@
-import default_info from './info/default/index.vue'
-
 // 引入API
 import server_api from '@/apis/server.js';
 
 export default {
     name: "server",
-    components: { "default-info": default_info },
     data: () => ({
         servers: [],
-        server_id: '',
-        server_type: -1,
-        info_status: false,
         server: {
             name: '',
-            type: 0,
-            type_name: '',
+            type: '',
             version: ''
         },
         server_dialog: false,
@@ -34,8 +27,7 @@ export default {
         open_add_server() {
             this.server = {
                 name: '',
-                type: 0,
-                type_name: '',
+                type: '',
                 version: ''
             };
             this.server_update = false;
@@ -58,15 +50,8 @@ export default {
         install_server(type) {
             this.$message.success("安装服务器，类型：" + type);
         },
-        open_setting(server) {
-            this.server_id = server.id;
-            this.server_type = server.type;
-            this.info_status = true;
-        },
-        info_close() {
-            if (this.server_is_update) {
-                this.get_server_list();
-            }
+        open_info(id) {
+            this.$router.push(`/server/${id}`);
         },
         remove(id) {
             this.$confirm('此操作将永久删除该服务器, 是否继续?', '提示', {

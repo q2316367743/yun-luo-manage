@@ -232,3 +232,7 @@
 .CodeMirror {
     height: 450px !important;
 }
+
+.el-page-header__content {
+    color: var(--text-color) !important;
+}

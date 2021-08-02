@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import home from "../pages/home/home";
 import file from "../pages/file/file.vue";
 import server from "../pages/server/server.vue";
+import server_info from '@/pages/server/info.vue'
 import database from "../pages/database/database";
 import redis from "../pages/redis/redis";
 import application from "../pages/application/application";
@@ -27,6 +28,11 @@ export default new Router({
         name: 'server',
         nickname: '服务器管理',
         component: server,
+    }, {
+        path: '/server/:id',
+        name: 'server_info',
+        nickname: '服务器信息',
+        component: server_info,
     }, {
         path: '/database',
         name: 'database',

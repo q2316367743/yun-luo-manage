@@ -30,12 +30,7 @@ public class Server implements Serializable {
     /**
      * 
      */
-    private Integer type;
-
-    /**
-     * 
-     */
-    private String typeName;
+    private String type;
 
     /**
      * 

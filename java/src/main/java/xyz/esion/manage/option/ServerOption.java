@@ -17,9 +17,7 @@ public class ServerOption implements Serializable {
 
     private String name;
 
-    private Integer type;
-
-    private String typeName;
+    private String type;
 
     private String version;
 

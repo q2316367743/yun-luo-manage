@@ -101,11 +101,13 @@ export default {
 	}),
 	watch: {
 		$route(to) {
-			this.index = to.path;
+			let paths = to.path.split("/");
+			this.index = `/${paths[1]}`;
 		},
 	},
 	created() {
-		this.index = this.$route.path;
+		let paths = this.$route.path.split("/");
+		this.index = `/${paths[1]}`;
 	},
 	methods: {
 		logout() {

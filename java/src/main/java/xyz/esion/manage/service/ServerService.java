@@ -45,18 +45,16 @@ public interface ServerService {
      * 增加一个服务器
      *
      * @param option 数据
-     * @throws ServerException 服务器类型错误
      */
-    void add(ServerOption option) throws ServerException;
+    void add(ServerOption option);
 
     /**
      * 服务器信息更新
      *
      * @param id 服务器ID
      * @param option 服务器信息
-     * @throws ServerException 服务器类型错误
      */
-    void update(String id, ServerOption option) throws ServerException;
+    void update(String id, ServerOption option);
 
     /**
      * 服务器删除
@@ -64,6 +62,13 @@ public interface ServerService {
      * @param id 服务器ID
      */
     void remove(String id);
+
+    /**
+     * 增加命令
+     *
+     * @param option 命令内容
+     */
+    void commandAdd(ServerCommandOption option);
 
     /**
      * 修改命令
@@ -79,6 +84,13 @@ public interface ServerService {
      * @param id 命令ID
      */
     void commandRemove(String id);
+
+    /**
+     * 增加配置
+     *
+     * @param option 文件路径
+     */
+    void configAdd(ServerConfigOption option);
 
     /**
      * 配置更新

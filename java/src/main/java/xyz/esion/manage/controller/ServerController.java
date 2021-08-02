@@ -36,13 +36,13 @@ public class ServerController {
     }
 
     @PostMapping("add")
-    public Result add(@RequestBody ServerOption option) throws ServerException{
+    public Result add(@RequestBody ServerOption option){
         serverService.add(option);
         return Result.success();
     }
 
     @PostMapping("update/{id}")
-    public Result update(@PathVariable("id") String id, @RequestBody ServerOption option) throws ServerException{
+    public Result update(@PathVariable("id") String id, @RequestBody ServerOption option){
         serverService.update(id, option);
         return Result.success();
     }
@@ -50,6 +50,12 @@ public class ServerController {
     @PostMapping("remove/{id}")
     public Result remove(@PathVariable("id") String id){
         serverService.remove(id);
+        return Result.success();
+    }
+
+    @PostMapping("command/add")
+    public Result commandAdd(@RequestBody ServerCommandOption option){
+        serverService.commandAdd(option);
         return Result.success();
     }
 
@@ -62,6 +68,12 @@ public class ServerController {
     @PostMapping("command/remove/{id}")
     public Result commandRemove(@PathVariable("id") String id){
         serverService.commandRemove(id);
+        return Result.success();
+    }
+
+    @PostMapping("config/add")
+    public Result configAdd(@RequestBody ServerConfigOption option){
+        serverService.configAdd(option);
         return Result.success();
     }
 
