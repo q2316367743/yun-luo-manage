@@ -16,6 +16,7 @@
         "style-loader": "^3.1.0",
         "vue": "^2.6.11",
         "vue-codemirror": "^4.0.6",
+        "vue-layer": "^1.2.5",
         "vue-router": "^3.0.1"
     },
     "devDependencies": {

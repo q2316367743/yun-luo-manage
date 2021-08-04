@@ -17,5 +17,11 @@ export default {
     },
     remove(id, success, error) {
         post(`${server_model}/remove/${id}`, null, success, error);
+    },
+    command_add(data, success, error){
+        post(`${server_model}/command/add`, data, success, error);
+    },
+    command_update(id, data, success, error){
+        post(`${server_model}/command/update/${id}`, data, success, error);
     }
 }
