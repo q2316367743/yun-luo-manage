@@ -130,7 +130,10 @@ public class ServerServiceImpl implements ServerService {
 
     @Override
     public void configAdd(ServerConfigOption option) {
-
+        ServerConfig config = new ServerConfig();
+        config.setPath(option.getPath());
+        config.setServerId(option.getServerId());
+        serverConfigMapper.insert(config);
     }
 
     @Override

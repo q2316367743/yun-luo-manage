@@ -9,6 +9,9 @@ export default {
     ls(path, success, error) {
         get(file_model + '/ls', { path }, success, error)
     },
+    simple_ls(path, success, error) {
+        get(file_model + '/simple_ls', { path }, success, error)
+    },
     rename(path, name, target, success) {
         post(file_model + '/rename', {
             path,

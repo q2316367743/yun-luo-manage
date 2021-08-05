@@ -17,4 +17,6 @@ public class ServerConfigOption implements Serializable {
 
     private String path;
 
+    private String serverId;
+
 }

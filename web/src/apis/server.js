@@ -23,5 +23,14 @@ export default {
     },
     command_update(id, data, success, error){
         post(`${server_model}/command/update/${id}`, data, success, error);
+    },
+    command_remove(id, success, error){
+        post(`${server_model}/command/remove/${id}`, null, success, error);
+    },
+    config_add(data, success, error){
+        post(`${server_model}/config/add`, data, success, error);
+    },
+    config_remove(id, success, error){
+        post(`${server_model}/config/remove/${id}`, null, success, error);
     }
 }
