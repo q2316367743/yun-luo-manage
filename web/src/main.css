@@ -236,3 +236,15 @@
 .el-page-header__content {
     color: var(--text-color) !important;
 }
+
+.el-tree{
+    background-color: var(--main-color) !important;
+    color: var(--text-color) !important;
+}
+
+.el-tree-node__content:hover {
+    background-color: var(--em-color) !important;
+}
+.el-tree-node:focus>.el-tree-node__content {
+    background-color: var(--em-color) !important;
+}
