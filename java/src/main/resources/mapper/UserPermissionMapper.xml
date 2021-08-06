@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.esion.manage.mapper.UserPermissionMapper">
+
+    <resultMap id="BaseResultMap" type="xyz.esion.manage.entity.UserPermission">
+            <result property="userId" column="user_id" jdbcType="CHAR"/>
+            <result property="permissionId" column="permission_id" jdbcType="CHAR"/>
+            <result property="permissionValue" column="permission_value" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,permission_id,permission_value
+    </sql>
+</mapper>

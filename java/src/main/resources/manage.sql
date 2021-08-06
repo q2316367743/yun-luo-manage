@@ -50,12 +50,20 @@ create table t_server_config
     constraint fk_command_server foreign key (server_id) references t_server (id)
 );
 
+/* 权限分类表 */
+create table t_permission_category
+(
+    id   char(32) primary key,
+    name varchar(32) default '' not null
+);
+
 /* 权限表，初始化后就不会改变 */
 create table t_permission
 (
-    id    char(32) primary key,
-    name  varchar(32) unique default '' not null,
-    value varchar(16)        default '' not null
+    id          char(32) primary key,
+    name        varchar(32)        default '' not null,
+    value       varchar(16) unique default '' not null,
+    category_id char(32)           default '' not null
 );
 
 /* 角色表 */
@@ -84,20 +92,43 @@ create table t_user
 (
     id       char(32) primary key,
     username varchar(32) unique default '' not null,
-    password varchar(32) default '' not null,
-    nickname varchar(32) default '' not null,
-    role_id  varchar(32) default '' not null
+    password varchar(32)        default '' not null,
+    nickname varchar(32)        default '' not null,
+    role_id  varchar(32)        default '' not null
 );
 
 create index idx_user_username_password on t_user (username, password);
 
+/* 用户 - 权限视图 */
+create view v_user_permission as
+select u.id as `user_id`, p.id as `permission_id`, p.value as `permission_value`
+from t_permission p
+         left join t_role_permission rp
+                   on rp.permission_id = p.id
+         left join t_role r
+                   on rp.role_id = r.id
+         left join t_user u
+                   on u.role_id = rp.role_id;
+
+
 /* 初始化权限，用户，密码 */
-insert into t_permission values ('1', '文件管理', 'file');
-insert into t_permission values ('2', '服务器管理', 'server');
+insert into t_permission_category (id, name)
+values ('1', '文件管理');
+insert into t_permission_category (id, name)
+values ('2', '服务器管理');
 
-insert into t_role values ('1', '超级管理员', 'admin', '0', '1998-08-06 00:00:00', '0', '1998-08-06 00:00:00', 0);
+insert into t_permission
+values ('1', '文件管理', 'file', '1');
+insert into t_permission
+values ('2', '服务器管理', 'server', '2');
 
-insert into t_role_permission values ('1', '1', '1');
-insert into t_role_permission values ('2', '1', '2');
+insert into t_role
+values ('1', '超级管理员', 'admin', '0', '1998-08-06 00:00:00', '0', '1998-08-06 00:00:00', 0);
 
-insert into t_user values ('1', 'esion', 'e10adc3949ba59abbe56e057f20f883e', '超级管理员', '1');
+insert into t_role_permission
+values ('1', '1', '1');
+insert into t_role_permission
+values ('2', '1', '2');
+
+insert into t_user
+values ('1', 'esion', 'e10adc3949ba59abbe56e057f20f883e', '超级管理员', '1');

@@ -9,33 +9,27 @@ import lombok.Data;
 
 /**
  * 
- * @TableName t_permission
+ * @TableName v_user_permission
  * @author Esion
  * @since 2021/8/6
  */
-@TableName(value ="t_permission")
+@TableName(value ="v_user_permission")
 @Data
-public class Permission implements Serializable {
+public class UserPermission implements Serializable {
     /**
      * 
      */
-    @TableId
-    private String id;
+    private String userId;
 
     /**
      * 
      */
-    private String name;
+    private String permissionId;
 
     /**
      * 
      */
-    private String value;
-
-    /**
-     * 
-     */
-    private String categoryId;
+    private String permissionValue;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
