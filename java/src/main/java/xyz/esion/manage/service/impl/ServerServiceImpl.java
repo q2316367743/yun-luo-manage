@@ -84,6 +84,8 @@ public class ServerServiceImpl implements ServerService {
         server.setType(option.getType());
         server.setVersion(option.getVersion());
         server.setIsDelete(0);
+        server.setCreateId(option.getUserId());
+        server.setUpdateId(option.getUserId());
         serverMapper.insert(server);
 
     }
@@ -95,15 +97,16 @@ public class ServerServiceImpl implements ServerService {
         server.setName(option.getName());
         server.setType(option.getType());
         server.setVersion(option.getVersion());
-        server.setIsDelete(0);
+        server.setUpdateId(option.getUserId());
         serverMapper.updateById(server);
     }
 
     @Override
-    public void remove(String id) {
+    public void remove(String id, String userId) {
         Server server = new Server();
         server.setId(id);
         server.setIsDelete(1);
+        server.setUpdateId(userId);
         serverMapper.updateById(server);
     }
 

@@ -4,6 +4,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import '@/plugins/layer.js'
 import router from "./plugins/router";
+import store from "./plugins/vuex";
 
 import './main.css'
 
@@ -23,5 +24,6 @@ Vue.prototype.$dict = {
 
 new Vue({
     router,
+    store,
     render: h => h(App)
 }).$mount('#app')

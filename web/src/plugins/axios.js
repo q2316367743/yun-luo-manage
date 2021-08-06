@@ -57,7 +57,8 @@ instance.interceptors.response.use(
             return response.data;
         }
     },
-    () => {
+    (error) => {
+        console.error(error);
         return {
             success: false,
         }

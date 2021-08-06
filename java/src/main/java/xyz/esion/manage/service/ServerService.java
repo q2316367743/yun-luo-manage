@@ -60,8 +60,9 @@ public interface ServerService {
      * 服务器删除
      *
      * @param id 服务器ID
+     * @param userId 操作人ID
      */
-    void remove(String id);
+    void remove(String id, String userId);
 
     /**
      * 增加命令

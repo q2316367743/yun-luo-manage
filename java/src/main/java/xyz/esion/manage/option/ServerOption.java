@@ -1,5 +1,6 @@
 package xyz.esion.manage.option;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,5 +21,8 @@ public class ServerOption implements Serializable {
     private String type;
 
     private String version;
+
+    @JsonIgnore
+    private String userId;
 
 }

@@ -27,7 +27,7 @@ public class UserController {
         if (view == null){
             return Result.fail().message("登录错误");
         }else {
-            StpUtil.setLoginId(username);
+            StpUtil.setLoginId(view.getId());
             String token = StpUtil.getTokenValue();
             view.setToken(token);
             return Result.success().item(view);
@@ -40,15 +40,23 @@ public class UserController {
         return Result.success();
     }
 
+    @GetMapping("info")
+    public Result permission(){
+        return Result.success().item(userService.info(StpUtil.getLoginIdAsString()));
+    }
+
     @PostMapping("update")
     public Result update(@RequestBody UserOption option) throws UserException {
         String username = option.getUsername();
         String password = option.getPassword();
         String old = option.getOld();
-        if (StrUtil.isBlank(password) || StrUtil.isBlank(old)){
-            throw new IllegalArgumentException("参数缺失");
+        if (StrUtil.isBlank(password) && StrUtil.isBlank(old)){
+            if (StrUtil.isBlank(username)){
+                throw new IllegalArgumentException("参数缺失");
+            }
         }
-        userService.update(username, old, password);
+        option.setUserId(StpUtil.getLoginIdAsString());
+        userService.update(option);
         StpUtil.logout();
         return Result.success();
     }

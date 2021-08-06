@@ -1,4 +1,4 @@
-import {get, getJSON, post } from '@/utils/axios';
+import { get, getJSON, post } from '@/utils/axios';
 
 const user_model = '/user';
 
@@ -10,6 +10,10 @@ export function logout(success) {
     getJSON(user_model + '/logout', success);
 }
 
-export function update(username, old, password, success, error){
-    post(user_model + '/update', {username, old, password}, success, error);
+export function update(username, old, password, success, error) {
+    post(user_model + '/update', { username, old, password }, success, error);
+}
+
+export function info(success) {
+    getJSON(`${user_model}/info`, success)
 }

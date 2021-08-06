@@ -1,5 +1,6 @@
 package xyz.esion.manage.option;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,6 +13,9 @@ import java.io.Serializable;
 public class UserOption implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @JsonIgnore
+    private String userId;
 
     private String username;
 

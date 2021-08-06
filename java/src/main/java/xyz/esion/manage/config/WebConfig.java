@@ -1,6 +1,8 @@
 package xyz.esion.manage.config;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.fun.SaFunction;
+import cn.dev33.satoken.router.SaRouterUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -69,7 +71,8 @@ public class WebConfig implements WebMvcConfigurer {
                     return true;
                 }else {
                     try {
-                        StpUtil.checkLogin();
+                        SaRouterUtil.match("/api/file/**", () -> StpUtil.checkPermission("file"));
+                        SaRouterUtil.match("/api/server/**", () -> StpUtil.checkPermission("server"));
                     }catch (NotLoginException exception){
                         response.setCharacterEncoding("utf-8");
                         response.setContentType("text/json;charset=UTF-8 ");
@@ -92,7 +95,7 @@ public class WebConfig implements WebMvcConfigurer {
                 // 通过验证
                 return true;
             }
-        }).addPathPatterns("/a/api/**").excludePathPatterns("/api/user/login");
+        }).addPathPatterns("/api/**").excludePathPatterns("/api/user/login");
     }
 
     /**

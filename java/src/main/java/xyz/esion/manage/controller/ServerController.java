@@ -1,5 +1,6 @@
 package xyz.esion.manage.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.exception.ServerException;
@@ -37,19 +38,21 @@ public class ServerController {
 
     @PostMapping("add")
     public Result add(@RequestBody ServerOption option){
+        option.setUserId(StpUtil.getLoginIdAsString());
         serverService.add(option);
         return Result.success();
     }
 
     @PostMapping("update/{id}")
     public Result update(@PathVariable("id") String id, @RequestBody ServerOption option){
+        option.setUserId(StpUtil.getLoginIdAsString());
         serverService.update(id, option);
         return Result.success();
     }
 
     @PostMapping("remove/{id}")
     public Result remove(@PathVariable("id") String id){
-        serverService.remove(id);
+        serverService.remove(id, StpUtil.getLoginIdAsString());
         return Result.success();
     }
 
