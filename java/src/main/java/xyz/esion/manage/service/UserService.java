@@ -1,6 +1,7 @@
 package xyz.esion.manage.service;
 
 import xyz.esion.manage.exception.UserException;
+import xyz.esion.manage.view.UserView;
 
 /**
  * 用户登录
@@ -17,7 +18,7 @@ public interface UserService {
      * @param password 密码
      * @return 登录结果
      */
-    boolean login(String username, String password);
+    UserView login(String username, String password);
 
     /**
      * 修改

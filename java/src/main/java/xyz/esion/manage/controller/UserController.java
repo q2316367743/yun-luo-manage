@@ -8,6 +8,7 @@ import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.global.Result;
 import xyz.esion.manage.option.UserOption;
 import xyz.esion.manage.service.UserService;
+import xyz.esion.manage.view.UserView;
 
 /**
  * @author Esion
@@ -22,12 +23,14 @@ public class UserController {
 
     @GetMapping("login")
     public Result login(String username, String password){
-        if (userService.login(username, password)){
+        UserView view = userService.login(username, password);
+        if (view == null){
+            return Result.fail().message("登录错误");
+        }else {
             StpUtil.setLoginId(username);
             String token = StpUtil.getTokenValue();
-            return Result.success().item(token);
-        }else {
-            return Result.fail().message("登录错误");
+            view.setToken(token);
+            return Result.success().item(view);
         }
     }
 
