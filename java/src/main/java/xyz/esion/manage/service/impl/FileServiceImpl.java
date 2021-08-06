@@ -1,8 +1,9 @@
 package xyz.esion.manage.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.core.util.StrUtil;
@@ -63,7 +64,6 @@ public class FileServiceImpl implements FileService {
     @Override
     public boolean mv(List<String> paths, String target, boolean isForce) throws FileException {
         // 构建命令
-        String[] source = toStringArray(paths);
         if (!FileUtil.isDirectory(target)){
             throw new FileException("目标路径不是目录或不存在，" + target);
         }
@@ -71,7 +71,7 @@ public class FileServiceImpl implements FileService {
         if (isForce){
             command = command + "-f ";
         }
-        command = command +  ArrayUtil.join(source, " ") + " " + target;
+        command = command +  CollUtil.join(paths, " ") + " " + target;
         String result = RuntimeUtil.execForStr(command);
         if (!"".equals(result)){
             throw new FileException(result);
@@ -82,12 +82,11 @@ public class FileServiceImpl implements FileService {
     @Override
     public boolean cp(List<String> paths, String target) throws FileException {
         // 构建命令
-        String[] source = toStringArray(paths);
         if (!FileUtil.isDirectory(target)){
             throw new FileException("目标路径不是目录或不存在，" + target);
         }
         String command = "cp -f -r -p ";
-        command = command +  ArrayUtil.join(source, " ") + " " + target;
+        command = command +  CollUtil.join(paths, " ") + " " + target;
         String result = RuntimeUtil.execForStr(command);
         if (!"".equals(result)){
             throw new FileException(result);
@@ -112,12 +111,11 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public boolean rm(List<String> paths, boolean isForce) throws FileException {
-        String[] source = toStringArray(paths);
         String command = "rm -r ";
         if (isForce){
             command += "-f ";
         }
-        command = command + ArrayUtil.join(source, " ");
+        command = command + CollUtil.join(paths, " ");
         String result = RuntimeUtil.execForStr(command);
         if (!"".equals(result)){
             throw new FileException(result);
@@ -222,17 +220,6 @@ public class FileServiceImpl implements FileService {
             result.add(view);
         }
         return result;
-    }
-
-    private String[] toStringArray(List<String> source) throws FileException {
-        String[] target = new String[source.size()];
-        for (int i = 0; i < source.size(); i++) {
-            if (!FileUtil.exist(source.get(i))){
-                throw new FileException("源路径不存在，" + source);
-            }
-            target[i] = source.get(i);
-        }
-        return target;
     }
 
 }

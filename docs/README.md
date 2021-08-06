@@ -46,13 +46,13 @@ java -jar manage-1.0.jar
 
 ## 功能
 
-![](./docs/image/4.jpeg)
+![](./image/4.jpeg)
 
 ### 首页
 
 各种信息的监控
 
-![](./docs/image/3.jpeg)
+![](./image/3.jpeg)
 
 ### 网站管理
 
@@ -86,9 +86,9 @@ mysql数据库可视化
 
 web文件浏览器（已完成大部分功能）
 
-![](./docs/image/2.jpeg)
+![](./image/2.jpeg)
 
-![](./docs/image/1.png)
+![](./image/1.png)
 
 ### 计划任务
 

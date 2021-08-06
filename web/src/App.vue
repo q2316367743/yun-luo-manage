@@ -108,6 +108,7 @@ export default {
 	created() {
 		let paths = this.$route.path.split("/");
 		this.index = `/${paths[1]}`;
+
 	},
 	methods: {
 		logout() {

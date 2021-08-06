@@ -1,5 +1,7 @@
 package xyz.esion.manage;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.ArrayUtil;
@@ -8,6 +10,7 @@ import xyz.esion.manage.view.FileListView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,7 +22,7 @@ import java.util.List;
 public class FileTest {
 
     public static void main(String[] args) {
-        linux();
+        Util();
     }
 
     public static void jdk(){
@@ -36,6 +39,12 @@ public class FileTest {
             FileListView list = FileListView.parse("/opt/node-v14.17.3-linux-x64", file);
             Console.log(list);
         }
+    }
+
+    public static void Util(){
+        List<String> list = Arrays.asList("1", "2", "3");
+        String join = CollUtil.join(list, "/");
+        System.out.println(join);
     }
 
 }
