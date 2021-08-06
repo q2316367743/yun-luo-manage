@@ -11,10 +11,31 @@
 	section.cover.has-mask .mask{
 		opacity: 0.3 !important;
 	}
+	.home-beian {
+	    position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 12px;
+		display: flex;
+		justify-content: center;
+		line-height: 40px;
+	}
   </style>
 </head>
 <body>
   <div id="app"></div>
+	<div class="home-beian" style="
+    line-height: 45px;
+">
+		<div style="margin-top: 16px;line-height: 45px;">
+			<img src="备案图标.png" alt="">
+		</div>
+		<div style="
+    margin: 12px;
+">
+			<a target="_blank" href="https://beian.miit.gov.cn/" style="color: #409EFF">鄂ICP备2021003611号</a>
+		</div>
+	</div>
   <script>
     window.$docsify = {
       name: '',
