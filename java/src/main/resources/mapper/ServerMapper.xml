@@ -5,19 +5,19 @@
 <mapper namespace="xyz.esion.manage.mapper.ServerMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.manage.entity.Server">
-            <id property="id" column="id" jdbcType="CHAR"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="type" column="type" jdbcType="TINYINT"/>
-            <result property="typeName" column="type_name" jdbcType="VARCHAR"/>
-            <result property="version" column="version" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+        <id property="id" column="id" jdbcType="CHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="VARCHAR"/>
+        <result property="createId" column="create_id" jdbcType="CHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateId" column="update_id" jdbcType="CHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,type,
-        type_name,version,create_time,
-        update_time,is_delete
+        id,name,type,version,create_id,create_time,
+        update_id,update_time,is_delete
     </sql>
 </mapper>

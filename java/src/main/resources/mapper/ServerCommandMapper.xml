@@ -5,10 +5,10 @@
 <mapper namespace="xyz.esion.manage.mapper.ServerCommandMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.manage.entity.ServerCommand">
-            <id property="id" column="id" jdbcType="CHAR"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="command" column="command" jdbcType="VARCHAR"/>
-            <result property="serverId" column="server_id" jdbcType="CHAR"/>
+        <id property="id" column="id" jdbcType="CHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="command" column="command" jdbcType="VARCHAR"/>
+        <result property="serverId" column="server_id" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">

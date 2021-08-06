@@ -66,10 +66,20 @@ public class Database implements Serializable {
     private Integer type;
 
     /**
+     *
+     */
+    private String createId;
+
+    /**
      * 
      */
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
+
+    /**
+     *
+     */
+    private String updateId;
 
     /**
      * 

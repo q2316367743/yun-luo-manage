@@ -4,18 +4,17 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import lombok.Data;
 
 /**
  * 
- * @TableName t_server
+ * @TableName t_role
  * @author Esion
- * @since 2021/7/31
+ * @since 2021/8/6
  */
-@TableName(value ="t_server")
+@TableName(value ="t_role")
 @Data
-public class Server implements Serializable {
+public class Role implements Serializable {
     /**
      * 
      */
@@ -30,15 +29,10 @@ public class Server implements Serializable {
     /**
      * 
      */
-    private String type;
+    private String value;
 
     /**
      * 
-     */
-    private String version;
-
-    /**
-     *
      */
     private String createId;
 
@@ -49,7 +43,7 @@ public class Server implements Serializable {
     private Date createTime;
 
     /**
-     *
+     * 
      */
     private String updateId;
 

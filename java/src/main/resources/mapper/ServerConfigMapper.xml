@@ -5,9 +5,9 @@
 <mapper namespace="xyz.esion.manage.mapper.ServerConfigMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.manage.entity.ServerConfig">
-            <id property="id" column="id" jdbcType="CHAR"/>
-            <result property="path" column="path" jdbcType="VARCHAR"/>
-            <result property="serverId" column="server_id" jdbcType="CHAR"/>
+        <id property="id" column="id" jdbcType="CHAR"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="serverId" column="server_id" jdbcType="CHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
