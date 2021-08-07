@@ -5,11 +5,12 @@
 <mapper namespace="xyz.esion.manage.mapper.PermissionCategoryMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.manage.entity.PermissionCategory">
-        <id property="id" column="id" jdbcType="CHAR"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
+            <id property="id" column="id" jdbcType="CHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="value" column="value" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name
+        id,name,value
     </sql>
 </mapper>

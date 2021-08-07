@@ -1,18 +1,17 @@
-package xyz.esion.manage.view;
+package xyz.esion.manage.option;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Esion
- * @since 2021/8/6
+ * @since 2021/8/7
  */
 @Data
-public class UserView implements Serializable {
+public class RoleOption implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,16 +21,19 @@ public class UserView implements Serializable {
     /**
      *
      */
-    private String nickname;
+    private String name;
 
     /**
-     * token
+     *
      */
-    private String token;
+    private String value;
 
     /**
-     * 权限合集
+     * 权限列表
      */
-    private Map<String, List<String>> permissions;
+    private List<String> permissionIds;
+
+    @JsonIgnore
+    private String userId;
 
 }

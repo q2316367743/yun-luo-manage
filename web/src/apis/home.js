@@ -1,9 +1,9 @@
-import {getJSON} from '@/utils/axios';
+import { getJSON } from '@/utils/axios';
 
-export function get_base(success){
-    getJSON('/system/base', success);
+export function get_base(success) {
+    getJSON('/home/base', success);
 }
 
-export function get_dynamic(success){
-    getJSON('/system/dynamic', success);
+export function get_dynamic(success) {
+    getJSON('/home/dynamic', success);
 }

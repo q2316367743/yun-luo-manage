@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.global.Result;
 import xyz.esion.manage.option.UserOption;
-import xyz.esion.manage.service.UserService;
+import xyz.esion.manage.service.CommonService;
 import xyz.esion.manage.view.UserView;
 
 /**
@@ -15,17 +15,17 @@ import xyz.esion.manage.view.UserView;
  * @since 2021/7/27
  */
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("api/common")
 @RequiredArgsConstructor
-public class UserController {
+public class CommonController {
 
-    private final UserService userService;
+    private final CommonService commonService;
 
     @GetMapping("login")
     public Result login(String username, String password){
-        UserView view = userService.login(username, password);
+        UserView view = commonService.login(username, password);
         if (view == null){
-            return Result.fail().message("登录错误");
+            return Result.fail().message("用户或密码错误");
         }else {
             StpUtil.setLoginId(view.getId());
             String token = StpUtil.getTokenValue();
@@ -42,7 +42,7 @@ public class UserController {
 
     @GetMapping("info")
     public Result permission(){
-        return Result.success().item(userService.info(StpUtil.getLoginIdAsString()));
+        return Result.success().item(commonService.info(StpUtil.getLoginIdAsString()));
     }
 
     @PostMapping("update")
@@ -56,7 +56,7 @@ public class UserController {
             }
         }
         option.setUserId(StpUtil.getLoginIdAsString());
-        userService.update(option);
+        commonService.update(option);
         StpUtil.logout();
         return Result.success();
     }

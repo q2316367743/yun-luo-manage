@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * @Entity xyz.esion.manage.entity.User
- * @author Esion
- * @since 2021/8/6
  */
 public interface UserMapper extends BaseMapper<User> {
 

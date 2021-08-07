@@ -17,9 +17,9 @@ import xyz.esion.manage.service.DatabaseService;
  * @since 2021/7/15
  */
 @RestController
-@RequestMapping("api/system")
+@RequestMapping("api/home")
 @RequiredArgsConstructor
-public class SystemController {
+public class HomeController {
 
     private final DatabaseService databaseService;
 

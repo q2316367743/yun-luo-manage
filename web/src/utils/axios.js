@@ -23,7 +23,8 @@ export function getJSON(url, success, error) {
                 success: false
             })
         }
-    }).catch(() => {
+    }).catch((err) => {
+        console.error(err)
         if (error) {
             error('服务器错误');
         } else {

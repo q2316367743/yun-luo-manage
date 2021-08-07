@@ -5,15 +5,23 @@
 <mapper namespace="xyz.esion.manage.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="xyz.esion.manage.entity.User">
-        <id property="id" column="id" jdbcType="CHAR"/>
-        <result property="username" column="username" jdbcType="VARCHAR"/>
-        <result property="password" column="password" jdbcType="VARCHAR"/>
-        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
-        <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+            <id property="id" column="id" jdbcType="CHAR"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="roleId" column="role_id" jdbcType="VARCHAR"/>
+            <result property="createId" column="create_id" jdbcType="CHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateId" column="update_id" jdbcType="CHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+            <result property="isEnable" column="is_enable" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,username,password,
-        nickname,role_id
+        nickname,role_id,create_id,
+        create_time,update_id,update_time,
+        is_delete,is_enable
     </sql>
 </mapper>

@@ -1,10 +1,11 @@
 package xyz.esion.manage.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Data;
 
 /**
@@ -41,6 +42,38 @@ public class User implements Serializable {
      * 
      */
     private String roleId;
+
+    /**
+     * 
+     */
+    private String createId;
+
+    /**
+     *
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
+
+    /**
+     *
+     */
+    private String updateId;
+
+    /**
+     *
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
+
+    /**
+     * 
+     */
+    private Integer isDelete;
+
+    /**
+     * 
+     */
+    private Integer isEnable;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -73,7 +73,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     @Override
     public List<DatabaseListView> list() {
         // 查询数据库
-        List<Database> databases = databaseMapper.selectList(new QueryWrapper<>());
+        List<Database> databases = databaseMapper.selectList(new QueryWrapper<Database>().eq("is_delete", 0));
         List<DatabaseListView> result = new ArrayList<>();
         for (Database database : databases) {
             DatabaseListView databaseListView = BeanUtil.copyProperties(database, DatabaseListView.class);

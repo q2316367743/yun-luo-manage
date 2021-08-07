@@ -4,7 +4,10 @@ import cn.dev33.satoken.stp.StpInterface;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import xyz.esion.manage.entity.Role;
+import xyz.esion.manage.entity.User;
 import xyz.esion.manage.entity.UserPermission;
+import xyz.esion.manage.mapper.RoleMapper;
 import xyz.esion.manage.mapper.UserMapper;
 import xyz.esion.manage.mapper.UserPermissionMapper;
 
@@ -25,6 +28,7 @@ public class StpPermissionConfig implements StpInterface {
 
     private final UserPermissionMapper userPermissionMapper;
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
 
     @Override
     public List<String> getPermissionList(Object loginId, String loginKey) {
@@ -37,8 +41,10 @@ public class StpPermissionConfig implements StpInterface {
 
     @Override
     public List<String> getRoleList(Object loginId, String loginKey) {
+        User user = userMapper.selectById(loginId.toString());
+        Role role = roleMapper.selectById(user.getRoleId());
         // 暂时不对角色进行验证
-        return new ArrayList<>(0);
+        return Collections.singletonList(role.getValue());
     }
 
 }

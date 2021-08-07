@@ -11,7 +11,7 @@ import lombok.Data;
  * 
  * @TableName v_user_permission
  * @author Esion
- * @since 2021/8/6
+ * @since 2021/8/7
  */
 @TableName(value ="v_user_permission")
 @Data
@@ -24,7 +24,7 @@ public class UserPermission implements Serializable {
     /**
      * 
      */
-    private String permissionId;
+    private String categoryValue;
 
     /**
      * 

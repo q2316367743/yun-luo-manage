@@ -11,7 +11,7 @@ import lombok.Data;
  * 
  * @TableName t_permission_category
  * @author Esion
- * @since 2021/8/6
+ * @since 2021/8/7
  */
 @TableName(value ="t_permission_category")
 @Data
@@ -19,13 +19,18 @@ public class PermissionCategory implements Serializable {
     /**
      * 
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**
      * 
      */
     private String name;
+
+    /**
+     * 
+     */
+    private String value;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

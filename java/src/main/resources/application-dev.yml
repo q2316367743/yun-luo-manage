@@ -28,6 +28,7 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     property-naming-strategy: CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES
+    time-zone: GMT+8
   servlet:
     multipart:
       max-file-size: 100MB

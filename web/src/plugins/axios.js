@@ -14,7 +14,7 @@ instance.interceptors.request.use(
         // 除了登录，如果没有token，则无法执行。
         if (sessionStorage.getItem('token')) {
             config.headers['token'] = sessionStorage.getItem('token');
-        } else if (config.url !== '/user/login') {
+        } else if (config.url !== '/common/login') {
             router.push("/login")
             throw new axios.Cancel('Operation canceled by the user.');
         }
@@ -27,7 +27,6 @@ instance.interceptors.request.use(
 // http response 拦截器
 instance.interceptors.response.use(
     response => {
-        //debugger
 
         if (response.data.code === 401) {
             router.push("/login").then(() => {

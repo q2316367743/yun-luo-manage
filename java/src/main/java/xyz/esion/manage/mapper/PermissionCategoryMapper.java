@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
  * @Entity xyz.esion.manage.entity.PermissionCategory
  * @author Esion
- * @since 2021/8/6
+ * @since 2021/8/7
  */
 public interface PermissionCategoryMapper extends BaseMapper<PermissionCategory> {
 

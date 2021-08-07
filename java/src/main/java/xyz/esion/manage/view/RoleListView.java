@@ -7,33 +7,33 @@ import java.util.Date;
 
 /**
  * @author Esion
- * @since 2021/7/31
+ * @since 2021/8/7
  */
 @Data
-public class ServerListView implements Serializable {
+public class RoleListView implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String id;
 
     /**
-     * 服务器名称
+     * 角色名称
      */
     private String name;
 
     /**
-     * 服务器类型
+     * 角色标识
      */
-    private String type;
-
-    /**
-     * 服务器版本
-     */
-    private String version;
+    private String value;
 
     /**
      * 创建时间
      */
     private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
 }
