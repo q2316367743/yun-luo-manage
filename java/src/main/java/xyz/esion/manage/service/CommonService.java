@@ -1,11 +1,8 @@
 package xyz.esion.manage.service;
 
 import xyz.esion.manage.exception.UserException;
-import xyz.esion.manage.option.UserOption;
-import xyz.esion.manage.view.UserListView;
+import xyz.esion.manage.option.CommonOption;
 import xyz.esion.manage.view.UserView;
-
-import java.util.List;
 
 /**
  * 用户登录
@@ -39,6 +36,6 @@ public interface CommonService {
      * @return 修改结果
      * @throws UserException 旧密码错误
      */
-    boolean update(UserOption option) throws UserException;
+    boolean update(CommonOption option) throws UserException;
 
 }

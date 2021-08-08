@@ -23,11 +23,6 @@ public class RoleController {
         return Result.success().items(roleService.list());
     }
 
-    @GetMapping("simple")
-    public Result simple(){
-        return Result.success().items(roleService.simple());
-    }
-
     @GetMapping("info/{id}")
     public Result info(@PathVariable String id){
         return Result.success().item(roleService.info(id));

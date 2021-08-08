@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.global.Result;
-import xyz.esion.manage.option.UserOption;
+import xyz.esion.manage.option.CommonOption;
 import xyz.esion.manage.service.CommonService;
 import xyz.esion.manage.view.UserView;
 
@@ -46,7 +46,7 @@ public class CommonController {
     }
 
     @PostMapping("update")
-    public Result update(@RequestBody UserOption option) throws UserException {
+    public Result update(@RequestBody CommonOption option) throws UserException {
         String username = option.getUsername();
         String password = option.getPassword();
         String old = option.getOld();

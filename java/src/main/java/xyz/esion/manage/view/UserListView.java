@@ -23,4 +23,6 @@ public class UserListView implements Serializable {
 
     private String roleId;
 
+    private Boolean isEnable;
+
 }

@@ -74,6 +74,7 @@ public class WebConfig implements WebMvcConfigurer {
                         SaRouterUtil.match("/api/file/**", () -> StpUtil.checkPermission("file"));
                         SaRouterUtil.match("/api/server/**", () -> StpUtil.checkPermission("server"));
                         SaRouterUtil.match("/api/role/**", () -> StpUtil.checkPermission("role"));
+                        SaRouterUtil.match("/api/user/**", () -> StpUtil.checkPermission("user"));
                         SaRouterUtil.match("/api/home/**", StpUtil::checkLogin);
                         SaRouterUtil.match("/api/common/**", StpUtil::checkLogin);
                     }catch (NotLoginException exception){

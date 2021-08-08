@@ -11,16 +11,14 @@ import xyz.esion.manage.entity.UserPermission;
 import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.mapper.UserMapper;
 import xyz.esion.manage.mapper.UserPermissionMapper;
-import xyz.esion.manage.option.UserOption;
+import xyz.esion.manage.option.CommonOption;
 import xyz.esion.manage.service.CommonService;
-import xyz.esion.manage.view.UserListView;
 import xyz.esion.manage.view.UserView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author Esion
@@ -62,7 +60,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public boolean update(UserOption option) throws UserException {
+    public boolean update(CommonOption option) throws UserException {
         // 获取密码，对比
         User user = userMapper.selectById(option.getUserId());
         if (!user.getPassword().equals(new Digester(DigestAlgorithm.MD5).digestHex(option.getOld()))){

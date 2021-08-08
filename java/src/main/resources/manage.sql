@@ -92,16 +92,16 @@ create table t_role_permission
 create table t_user
 (
     id          char(32) primary key,
-    username    varchar(32) unique default '' not null,
-    password    varchar(32)        default '' not null,
-    nickname    varchar(32)        default '' not null,
-    role_id     varchar(32)        default '' not null,
-    create_id   char(32)           default '' not null,
-    create_time datetime           default '1998-08-06 00:00:00' not null,
-    update_id   char(32)           default '' not null,
-    update_time datetime           default '1998-08-06 00:00:00' not null,
-    is_delete   int                default 0 not null,
-    is_enable   int                default 1 not null
+    username    varchar(32) default '' not null,
+    password    varchar(32) default '' not null,
+    nickname    varchar(32) default '' not null,
+    role_id     varchar(32) default '' not null,
+    create_id   char(32)    default '' not null,
+    create_time datetime    default '1998-08-06 00:00:00' not null,
+    update_id   char(32)    default '' not null,
+    update_time datetime    default '1998-08-06 00:00:00' not null,
+    is_delete   int         default 0 not null,
+    is_enable   int         default 1 not null
 );
 
 create index idx_user_username_password on t_user (username, password);
