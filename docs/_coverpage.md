@@ -1,4 +1,4 @@
-# yun-luo-manage <small>1.0</small>
+# yun-luo-manage <small>2.0</small>
 
 > 云落Linux管理
 
