@@ -109,22 +109,12 @@ public interface ServerService {
     void configRemove(String id);
 
     /**
-     * 获取配置信息
-     *
-     * @param id 配置ID
-     * @param charset 解码方式
-     * @return 配置信息
-     * @throws ServerException 配置文件不存在
-     */
-    String getConfigById(String id, String charset) throws ServerException;
-
-    /**
      * 根据命令ID执行命令
      *
      * @param id 命令ID
      * @return 执行结果
      * @throws ServerException 命令不存在
      */
-    String execCommand(String id) throws ServerException;
+    String commandExec(String id) throws ServerException;
 
 }

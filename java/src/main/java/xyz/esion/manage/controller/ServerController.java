@@ -92,16 +92,9 @@ public class ServerController {
         return Result.success();
     }
 
-    @GetMapping("config/info/{id}")
-    public Result getConfigById(
-            @PathVariable("id") String id,
-            @RequestParam(required = false, defaultValue = "") String charset) throws ServerException{
-        return Result.success().item(serverService.getConfigById(id, charset));
-    }
-
     @GetMapping("command/exec/{id}")
     public Result execCommand(@PathVariable("id") String id) throws ServerException{
-        return Result.success().item(serverService.execCommand(id));
+        return Result.success().item(serverService.commandExec(id));
     }
     
 }

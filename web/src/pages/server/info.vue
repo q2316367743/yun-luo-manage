@@ -61,7 +61,11 @@
 					</el-table-column>
 					<el-table-column label="操作">
 						<template slot-scope="scope">
-							<el-button type="text">执行</el-button>
+							<el-button
+								type="text"
+								@click="command_exec(scope.row.id)"
+								>执行</el-button
+							>
 							<el-button
 								type="text"
 								@click="open_command_dialog(true, scope.row)"
@@ -369,6 +373,26 @@ export default {
 					}
 				);
 			});
+		},
+		command_exec(id) {
+			server_api.command_exec(
+				id,
+				(res) => {
+					if (res.success) {
+						console.log(res.data.item);
+						console.log(res.data.item.split("\n").join("<br />"));
+						this.$msgbox({
+							title: "执行结果",
+							message: res.data.item.split("\n").join("<br />"),
+							closeOnClickModal: false,
+							dangerouslyUseHTMLString: true,
+						});
+					}
+				},
+				(message) => {
+					this.$message.error("删除配置文件失败，" + message);
+				}
+			);
 		},
 	},
 };

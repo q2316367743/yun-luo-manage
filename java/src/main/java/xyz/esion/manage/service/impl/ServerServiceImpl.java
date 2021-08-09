@@ -1,17 +1,13 @@
 package xyz.esion.manage.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.RuntimeUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import xyz.esion.manage.entity.Server;
 import xyz.esion.manage.entity.ServerCommand;
 import xyz.esion.manage.entity.ServerConfig;
-import xyz.esion.manage.enumeration.ServerTypeEnum;
 import xyz.esion.manage.exception.ServerException;
 import xyz.esion.manage.mapper.ServerCommandMapper;
 import xyz.esion.manage.mapper.ServerConfigMapper;
@@ -25,7 +21,6 @@ import xyz.esion.manage.view.ServerConfigView;
 import xyz.esion.manage.view.ServerInfoView;
 import xyz.esion.manage.view.ServerListView;
 
-import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -152,24 +147,7 @@ public class ServerServiceImpl implements ServerService {
     }
 
     @Override
-    public String getConfigById(String id, String charset) throws ServerException {
-        ServerConfig serverConfig = serverConfigMapper.selectById(id);
-        if (serverConfig == null) {
-            throw new ServerException("配置文件ID错误");
-        }
-        String path = serverConfig.getPath();
-        File file = FileUtil.file(path);
-        if (!file.exists()) {
-            return "配置文件路径错误，请删除后重新选择。";
-        }
-        if (StrUtil.isBlank(charset)) {
-            charset = CharsetUtil.UTF_8;
-        }
-        return FileUtil.readString(file, CharsetUtil.parse(charset));
-    }
-
-    @Override
-    public String execCommand(String id) throws ServerException {
+    public String commandExec(String id) throws ServerException {
         ServerCommand serverCommand = serverCommandMapper.selectById(id);
         if (serverCommand == null) {
             throw new ServerException("命令ID错误");

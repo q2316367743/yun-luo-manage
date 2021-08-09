@@ -7,6 +7,7 @@ import router from "./plugins/router";
 import store from "./plugins/vuex";
 
 import './main.css'
+import './plugins/layer'
 
 Vue.use(ElementUI);
 

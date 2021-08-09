@@ -18,19 +18,22 @@ export default {
     remove(id, success, error) {
         post(`${server_model}/remove/${id}`, null, success, error);
     },
-    command_add(data, success, error){
+    command_add(data, success, error) {
         post(`${server_model}/command/add`, data, success, error);
     },
-    command_update(id, data, success, error){
+    command_update(id, data, success, error) {
         post(`${server_model}/command/update/${id}`, data, success, error);
     },
-    command_remove(id, success, error){
+    command_remove(id, success, error) {
         post(`${server_model}/command/remove/${id}`, null, success, error);
     },
-    config_add(data, success, error){
+    config_add(data, success, error) {
         post(`${server_model}/config/add`, data, success, error);
     },
-    config_remove(id, success, error){
+    config_remove(id, success, error) {
         post(`${server_model}/config/remove/${id}`, null, success, error);
+    },
+    command_exec(id, success, error) {
+        getJSON(`${server_model}/command/exec/${id}`, success, error);
     }
 }
