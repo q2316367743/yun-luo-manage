@@ -217,7 +217,15 @@
 			>
 				视频格式打开
 			</div>
-			<div v-if="this.menu_file && this.menu_file.type === 'FILE'">
+			<div
+				v-if="this.menu_file && this.menu_file.type === 'FILE'"
+				@click="
+					() => {
+						download(this.menu_file.path, this.menu_file.name);
+						close_menu();
+					}
+				"
+			>
 				下载
 			</div>
 			<div

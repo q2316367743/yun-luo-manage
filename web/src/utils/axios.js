@@ -43,16 +43,7 @@ export function getObject(url, params, success, error) {
         params,
         responseType: 'blob'
     }).then(res => {
-        if (res.success) {
-            success(res)
-        } else {
-            if (error) {
-                error(res.message);
-            }
-            success({
-                success: false
-            })
-        }
+        success(res)
     }).catch((err) => {
         console.error(err)
         if (error) {

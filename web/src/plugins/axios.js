@@ -1,9 +1,10 @@
 import axios from "axios";
 import { Message } from "element-ui";
 import router from './router'
+import setting from '@/setting'
 
 const instance = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' ? './api' : 'http://localhost:7743/api',
+    baseURL: setting.base_url,
     timeout: 3000
 })
 
