@@ -1,8 +1,8 @@
 // 引入API
 import file from '@/apis/file.js'
+import setting from '@/setting';
 
 import code_edit from '@/components/code_edit.vue'
-
 
 function dl(content, fileName) {
     var aEle = document.createElement("a"); // 创建a标签
@@ -155,10 +155,16 @@ export default {
             }
         },
         open_by_image() {
-            this.$message({
-                message: '暂不支持打开图片',
-                type: 'info'
-            })
+            let img = document.createElement('img');
+            img.style.height = '500px'
+            img.src = `${setting.base_url}/file/show?path=${this.menu_temp_path}&token=${sessionStorage.getItem('token')}`;
+            this.$layer.open({
+                type: 1,
+                title: '图片预览',
+                area: ['auto'],
+                shadeClose: true,
+                content: img.outerHTML
+            });
         },
         open_by_video() {
             file.show(this.menu_temp_path, res => {
