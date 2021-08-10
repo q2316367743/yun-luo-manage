@@ -199,7 +199,7 @@
 				v-if="this.menu_file && this.menu_file.type === 'FILE'"
 				@click="
 					() => {
-						open_by_image();
+						open_by_image(this.menu_file.name);
 						close_menu();
 					}
 				"
@@ -210,7 +210,7 @@
 				v-if="this.menu_file && this.menu_file.type === 'FILE'"
 				@click="
 					() => {
-						open_by_video();
+						open_by_video(this.menu_file.name);
 						close_menu();
 					}
 				"

@@ -87,7 +87,7 @@ public class FileController {
      * */
     @GetMapping("base")
     public Result code(){
-        return Result.success().item(SystemUtil.getUserInfo().getHomeDir()).items(Constant.FILE_TYPE);
+        return Result.success().item(SystemUtil.getUserInfo().getHomeDir());
     }
 
     @GetMapping("remote_download")

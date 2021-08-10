@@ -40,7 +40,6 @@ export default {
         menu_index: -1,
         code: false,
         code_path: '',
-        code_style: [],
         remote_download_status: false,
         remote_download_value: {
             name: '',
@@ -136,46 +135,56 @@ export default {
          */
         open_by_file(path, name) {
             this.menu_temp_path = path;
-            let is_error = true;
             this.suffix = '';
             // 判断是否是文本类型
-            let code = this.code_style.code;
-            for (let item of code) {
+            for (let item of setting.file_type.code) {
                 if (lastWith(name, item)) {
-                    // 判断是否是支持的语法高亮
-                    this.code = true;
-                    this.code_path = path;
-                    this.suffix = item;
-                    is_error = false;
-                    break;
+                    this.open_by_code(name, item)
+                    return;
                 }
             }
-            if (is_error) {
-                this.$message.error('不受支持的文件类型')
+            for (let item of setting.file_type.img) {
+                if (lastWith(name, item)) {
+                    this.open_by_image(name)
+                    return;
+                }
             }
+            for (let item of setting.file_type.video) {
+                if (lastWith(name, item)) {
+                    this.open_by_video(name)
+                    return;
+                }
+            }
+            this.$message.error('不受支持的文件类型')
         },
-        open_by_image() {
+        open_by_code(path, suffix) {
+            this.code = true;
+            this.code_path = path;
+            this.suffix = suffix;
+        },
+        open_by_image(name) {
             let img = document.createElement('img');
             img.style.height = '500px'
             img.src = `${setting.base_url}/file/show?path=${this.menu_temp_path}&token=${sessionStorage.getItem('token')}`;
             this.$layer.open({
                 type: 1,
-                title: '图片预览',
+                title: name,
                 area: ['auto'],
                 shadeClose: true,
                 content: img.outerHTML
             });
         },
-        open_by_video() {
-            file.show(this.menu_temp_path, res => {
-                let video = document.createElement('video');
-                video.srcObject = res;
-                this.$msgbox({
-                    content: video
-                })
-            }, () => {
-                this.$message.error('打开视频失败');
-            })
+        open_by_video(name) {
+            let video = document.createElement('video');
+            video.style.height = '500px'
+            video.src = `${setting.base_url}/file/show?path=${this.menu_temp_path}&token=${sessionStorage.getItem('token')}`;
+            this.$layer.open({
+                type: 1,
+                title: name,
+                area: ['auto'],
+                shadeClose: false,
+                content: video.outerHTML
+            });
 
         },
         rename(name) {
@@ -351,7 +360,7 @@ export default {
             this.close_menu();
         },
         menu_open_by_code() {
-            let code = this.code_style.code;
+            let code = setting.file_type.code;
             this.suffix = '';
             for (let item of code) {
                 if (lastWith(this.menu_file.name, item)) {
