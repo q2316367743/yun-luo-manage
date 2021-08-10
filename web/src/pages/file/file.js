@@ -4,6 +4,10 @@ import setting from '@/setting';
 
 import code_edit from '@/components/code_edit.vue'
 
+import 'mui-player/dist/mui-player.min.css'
+import MuiPlayer from 'mui-player'
+import Flv from 'flv.js'
+
 function dl(content, fileName) {
     var aEle = document.createElement("a"); // 创建a标签
     aEle.download = fileName; // 设置下载文件的文件名
@@ -175,16 +179,54 @@ export default {
             });
         },
         open_by_video(name) {
-            let video = document.createElement('video');
-            video.style.height = '500px'
-            video.src = `${setting.base_url}/file/show?path=${this.menu_temp_path}&token=${sessionStorage.getItem('token')}`;
-            this.$layer.open({
-                type: 1,
-                title: name,
-                area: ['auto'],
-                shadeClose: false,
-                content: video.outerHTML
-            });
+            let src = `${setting.base_url}/file/show?path=${this.menu_temp_path}&token=${sessionStorage.getItem('token')}`;
+            if (lastWith(name, 'flv')) {
+                this.$layer.open({
+                    type: 1,
+                    title: name,
+                    area: ['800px', '501px'],
+                    shadeClose: false,
+                    content: '<div id="mui-player"></div>',
+                    success() {
+                        new MuiPlayer({
+                            container: '#mui-player',
+                            title: name,
+                            src: src,
+                            autoplay: true,
+                            height: '500px',
+                            width: '800px',
+                            parse: {
+                                type: 'flv',
+                                loader: Flv, // flv config to：https://github.com/Bilibili/flv.js/blob/HEAD/docs/api.md#flvjscreateplayer
+                                config: {
+                                    cors: true
+                                },
+                            },
+                        });
+
+
+                    }
+                });
+            } else {
+                this.$layer.open({
+                    type: 1,
+                    title: name,
+                    shadeClose: false,
+                    content: '<div id="mui-player"></div>',
+                    success() {
+                        new MuiPlayer({
+                            container: '#mui-player',
+                            title: name,
+                            src: src,
+                            autoplay: true,
+                            height: '500px',
+                            width: '800px',
+                        });
+
+                    }
+                });
+
+            }
 
         },
         rename(name) {

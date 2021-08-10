@@ -3,6 +3,6 @@ export default {
     file_type: {
         code: ['java', 'py', 'txt', 'conf', 'vue', 'html', 'css', 'js', 'md', 'sql'],
         img: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-        video: ['mp4']
+        video: ['mp4', 'flv']
     }
 }
