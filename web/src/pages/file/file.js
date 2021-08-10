@@ -135,6 +135,7 @@ export default {
          * @param {String} name 文件名
          */
         open_by_file(path, name) {
+            this.menu_temp_path = path;
             let is_error = true;
             this.suffix = '';
             // 判断是否是文本类型
@@ -144,7 +145,6 @@ export default {
                     // 判断是否是支持的语法高亮
                     this.code = true;
                     this.code_path = path;
-                    this.menu_temp_path = path;
                     this.suffix = item;
                     is_error = false;
                     break;
@@ -161,10 +161,16 @@ export default {
             })
         },
         open_by_video() {
-            this.$message({
-                message: '暂不支持打开视频',
-                type: 'info'
+            file.show(this.menu_temp_path, res => {
+                let video = document.createElement('video');
+                video.srcObject = res;
+                this.$msgbox({
+                    content: video
+                })
+            }, () => {
+                this.$message.error('打开视频失败');
             })
+
         },
         rename(name) {
             let path = this.path;
@@ -306,6 +312,7 @@ export default {
         open_menu(index, file, e) {
             this.menu_index = index;
             this.menu_file = file;
+            this.menu_temp_path = file.path;
             let menu = document.getElementById('file-menu');
             menu.style.display = 'block';
             menu.style.left = e.layerX + 10 + 'px'

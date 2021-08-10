@@ -42,3 +42,4 @@ mybatis-plus:
 
 logging:
   level.xyz.esion.manage: debug
+  config: logback-spring.xml

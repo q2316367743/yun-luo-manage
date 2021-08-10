@@ -36,4 +36,5 @@ build/
 ### 数据库文件 ###
 src/main/resources/static
 *.db
+log
 
