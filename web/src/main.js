@@ -2,13 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import '@/plugins/layer.js'
 import router from "./plugins/router";
 import store from "./plugins/vuex";
 
 import './main.css'
-import './plugins/layer'
 
+Vue.prototype.$layer = window.layer
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false;
