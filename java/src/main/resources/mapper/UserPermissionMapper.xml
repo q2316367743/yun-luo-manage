@@ -6,11 +6,10 @@
 
     <resultMap id="BaseResultMap" type="xyz.esion.manage.entity.UserPermission">
             <result property="userId" column="user_id" jdbcType="CHAR"/>
-            <result property="categoryValue" column="category_value" jdbcType="VARCHAR"/>
             <result property="permissionValue" column="permission_value" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        user_id,category_value,permission_value
+        user_id,permission_value
     </sql>
 </mapper>

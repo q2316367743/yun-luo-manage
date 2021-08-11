@@ -1,5 +1,6 @@
 package xyz.esion.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.system.SystemUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -13,12 +14,15 @@ import xyz.esion.manage.service.FileService;
 import java.io.IOException;
 
 /**
+ * 暂时权限只验证全局
+ *
  * @author Esion
  * @since 2021/7/24
  */
 @RestController
 @RequestMapping("api/file")
 @RequiredArgsConstructor
+@SaCheckPermission("file&a")
 public class FileController {
 
     private final FileService fileService;

@@ -44,6 +44,7 @@
 			:modal-append-to-body="false"
 			:close-on-click-modal="false"
 			width="50%"
+			top="5vh"
 		>
 			<el-form label-position="right" label-width="120px">
 				<el-form-item label="名称：">
@@ -56,39 +57,180 @@
 					<table class="el-table">
 						<thead>
 							<tr>
-								<th id="category" class="is-leaf">权限分组</th>
+								<th id="category" class="is-leaf">权限</th>
 								<th id="permission" class="is-leaf">权限</th>
+								<th id="operations" class="is-leaf">权限</th>
 							</tr>
 						</thead>
-						<template v-for="(permission, index) in permissions">
-							<tr :key="index">
-								<td :rowspan="permission.permissions.length">
-									{{ permission.name }}
-								</td>
-								<td>
-									<el-checkbox
-										v-model="permission_check"
-										:label="permission.permissions[0].id"
-										>{{
-											permission.permissions[0].name
-										}}</el-checkbox
-									>
-								</td>
-							</tr>
-							<template
-								v-for="(item, idx) in permission.permissions"
-							>
-								<tr :key="idx + index" v-if="idx > 0">
-									<td>
-										<el-checkbox
-											v-model="permission_check"
-											:label="item.id"
-											>{{ item.name }}</el-checkbox
-										>
-									</td>
-								</tr>
-							</template>
-						</template>
+						<tr>
+							<td :rowspan="1">文件管理</td>
+							<td :rowspan="1">文件管理</td>
+							<td>
+								<el-checkbox
+									v-model="permission_check"
+									label="1"
+									>文件管理</el-checkbox
+								>
+							</td>
+						</tr>
+						<tr>
+							<td :rowspan="3">服务器管理</td>
+							<td :rowspan="1">服务器管理</td>
+							<td>
+								<el-checkbox
+									v-model="permission_check"
+									label="2"
+									@change="
+										check_add($event, [
+											'3',
+											'4',
+											'5',
+											'6',
+											'7',
+											'8',
+											'9',
+											'10',
+											'11',
+											'12',
+											'13',
+										])
+									"
+									>列表</el-checkbox
+								>
+								<el-checkbox
+									v-model="permission_check"
+									label="3"
+									@change="check_remove($event, '2')"
+									>新增</el-checkbox
+								><el-checkbox
+									v-model="permission_check"
+									label="4"
+									@change="check_remove($event, '2')"
+									>修改</el-checkbox
+								>
+								<el-checkbox
+									v-model="permission_check"
+									label="5"
+									@change="check_remove($event, '2')"
+									>删除</el-checkbox
+								><el-checkbox
+									v-model="permission_check"
+									label="6"
+									@change="check_remove($event, '2')"
+									>详情</el-checkbox
+								>
+							</td>
+						</tr>
+						<tr>
+							<td :rowspan="1">命令管理</td>
+							<td>
+								<el-checkbox
+									v-model="permission_check"
+									label="7"
+									@change="check_remove($event, '2')"
+									>新增</el-checkbox
+								><el-checkbox
+									v-model="permission_check"
+									label="8"
+									@change="check_remove($event, '2')"
+									>修改</el-checkbox
+								>
+								<el-checkbox
+									v-model="permission_check"
+									label="9"
+									@change="check_remove($event, '2')"
+									>删除</el-checkbox
+								><el-checkbox
+									v-model="permission_check"
+									label="10"
+									@change="check_remove($event, '2')"
+									>执行</el-checkbox
+								>
+							</td>
+						</tr>
+						<tr>
+							<td :rowspan="1">配置管理</td>
+							<td>
+								<el-checkbox
+									v-model="permission_check"
+									label="11"
+									@change="check_remove($event, '2')"
+									>新增</el-checkbox
+								><el-checkbox
+									v-model="permission_check"
+									label="12"
+									@change="check_remove($event, '2')"
+									>修改</el-checkbox
+								>
+								<el-checkbox
+									v-model="permission_check"
+									label="13"
+									@change="check_remove($event, '2')"
+									>删除</el-checkbox
+								>
+							</td>
+						</tr>
+						<tr>
+							<td :rowspan="2">系统管理</td>
+							<td :rowspan="1">角色管理</td>
+							<td>
+								<el-checkbox
+									v-model="permission_check"
+									label="14"
+									@change="
+										check_add($event, ['15', '16', '17'])
+									"
+									>列表</el-checkbox
+								>
+								<el-checkbox
+									v-model="permission_check"
+									label="15"
+									@change="check_remove($event, '14')"
+									>新增</el-checkbox
+								><el-checkbox
+									v-model="permission_check"
+									label="16"
+									@change="check_remove($event, '14')"
+									>修改</el-checkbox
+								>
+								<el-checkbox
+									v-model="permission_check"
+									label="17"
+									@change="check_remove($event, '14')"
+									>删除</el-checkbox
+								>
+							</td>
+						</tr>
+						<tr>
+							<td :rowspan="1">用户管理</td>
+							<td>
+								<el-checkbox
+									v-model="permission_check"
+									label="18"
+									@change="
+										check_add($event, ['19', '20', '21'])
+									"
+									>列表</el-checkbox
+								>
+								<el-checkbox
+									v-model="permission_check"
+									label="19"
+									@change="check_remove($event, '18')"
+									>新增</el-checkbox
+								><el-checkbox
+									v-model="permission_check"
+									label="20"
+									@change="check_remove($event, '18')"
+									>修改</el-checkbox
+								>
+								<el-checkbox
+									v-model="permission_check"
+									label="21"
+									@change="check_remove($event, '18')"
+									>删除</el-checkbox
+								>
+							</td>
+						</tr>
 					</table>
 				</el-form-item>
 			</el-form>
@@ -105,10 +247,18 @@
 <script>
 import role_api from "@/apis/role";
 
+function consist(list, keyword) {
+	for (let item of list) {
+		if (item.indexOf(keyword) != -1) {
+			return true;
+		}
+	}
+	return false;
+}
+
 export default {
 	data: () => ({
 		roles: [],
-		permissions: [],
 		role: {
 			name: "",
 			value: "",
@@ -120,11 +270,6 @@ export default {
 	}),
 	created() {
 		this.get_role_list();
-		role_api.list_permission((res) => {
-			if (res.success) {
-				this.permissions = res.data.items;
-			}
-		});
 	},
 	methods: {
 		get_role_list() {
@@ -221,6 +366,24 @@ export default {
 					}
 				);
 			});
+		},
+		check_add(value, ids) {
+			if (!value) {
+				for (let id of ids) {
+					this.permission_check = this.permission_check.filter(
+						(item) => {
+							return item !== id;
+						}
+					);
+				}
+			}
+		},
+		check_remove(value, id) {
+			if (value) {
+				if (!consist(this.permission_check, id)) {
+					this.permission_check.push(id);
+				}
+			}
 		},
 	},
 };

@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
  * @Entity xyz.esion.manage.entity.Permission
- * @author Esion
- * @since 2021/8/6
+ * @author esion
+ * @since 2021/8/11
  */
 public interface PermissionMapper extends BaseMapper<Permission> {
 

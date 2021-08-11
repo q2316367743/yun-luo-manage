@@ -8,6 +8,15 @@ import server_info from '@/pages/server/info.vue'
 import system_role from '@/pages/system/role/role.vue'
 import system_user from '@/pages/system/user/user.vue'
 
+function consist(list, keyword) {
+    for (let item of list) {
+        if (item.indexOf(keyword) != -1) {
+            return true;
+        }
+    }
+    return false;
+}
+
 const router_list = {
     "file": [{
         path: '/file',
@@ -40,99 +49,33 @@ const router_list = {
     }]
 }
 
-const default_menu = {
-    path: '/',
-    name: '首页'
-}
-
-const menu_list = {
-    file: {
-        name: '文件管理',
-        children: {
-            "file": {
-                path: '/file',
-                name: '文件管理'
-            }
-        }
-    },
-    server: {
-        name: '服务器管理',
-        children: {
-            "server": {
-                path: '/server',
-                name: '服务器管理'
-            }
-        }
-    },
-    system: {
-        name: '系统管理',
-        children: {
-            role: {
-                name: "角色管理",
-                path: "/system/role"
-            },
-            user: {
-                name: "用户管理",
-                path: "/system/user"
-            }
-        }
-    }
-}
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
         nickname: '',
-        menus: [{
-            path: '/',
-            name: '首页'
-        }]
+        permissions: [],
     },
     mutations: {
         SET_NICKNAME(state, nickname) {
             state.nickname = nickname;
         },
         SET_MENU(state, user_permission) {
-            state.menus = [];
-            state.menus.push(default_menu)
-                // 获取分类
-            for (let category in user_permission) {
-                // 获取分类下权限列表
-                for (let permission of user_permission[category]) {
-                    // 获取每个权限
-                    for (let route of router_list[permission]) {
-                        // 渲染路由
-                        router.addRoute(route)
-                    }
+            state.permissions = user_permission;
 
-                }
-                // 根据大的分类获取下面菜单列表
-                let categorys = menu_list[category];
-                let permissions = user_permission[category];
-                if (Object.keys(categorys.children).length > 1) {
-                    // 多级菜单
-                    let temp = {
-                        name: categorys.name,
-                        children: []
-                    };
-                    for (let permission of permissions) {
-                        temp.children.push(categorys.children[permission]);
+            //router.addRoute(route)
+
+            for (let route in router_list) {
+                if (consist(user_permission, route)) {
+                    for (let item of router_list[route]) {
+                        router.addRoute(item);
                     }
-                    state.menus.push(temp);
-                } else {
-                    // 单独一个，一级菜单
-                    let temp = {
-                        name: categorys.name,
-                        path: categorys.children[category].path
-                    };
-                    state.menus.push(temp);
                 }
             }
         }
     },
     getters: {
         nickname: state => state.nickname,
-        menus: state => state.menus
+        permissions: state => state.permissions
     }
 })

@@ -71,12 +71,7 @@ public class WebConfig implements WebMvcConfigurer {
                     return true;
                 }else {
                     try {
-                        SaRouterUtil.match("/api/file/**", () -> StpUtil.checkPermission("file"));
-                        SaRouterUtil.match("/api/server/**", () -> StpUtil.checkPermission("server"));
-                        SaRouterUtil.match("/api/role/**", () -> StpUtil.checkPermission("role"));
-                        SaRouterUtil.match("/api/user/**", () -> StpUtil.checkPermission("user"));
-                        SaRouterUtil.match("/api/home/**", StpUtil::checkLogin);
-                        SaRouterUtil.match("/api/common/**", StpUtil::checkLogin);
+                        StpUtil.checkLogin();
                     }catch (NotLoginException exception){
                         response.setCharacterEncoding("utf-8");
                         response.setContentType("text/json;charset=UTF-8 ");

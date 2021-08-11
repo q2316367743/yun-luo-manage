@@ -10,8 +10,8 @@ import lombok.Data;
 /**
  * 
  * @TableName t_permission
- * @author Esion
- * @since 2021/8/6
+ * @author esion
+ * @since 2021/8/11
  */
 @TableName(value ="t_permission")
 @Data
@@ -31,11 +31,6 @@ public class Permission implements Serializable {
      * 
      */
     private String value;
-
-    /**
-     * 
-     */
-    private String categoryId;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

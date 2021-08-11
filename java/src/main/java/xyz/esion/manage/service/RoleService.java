@@ -1,7 +1,6 @@
 package xyz.esion.manage.service;
 
 import xyz.esion.manage.option.RoleOption;
-import xyz.esion.manage.view.PermissionsView;
 import xyz.esion.manage.view.RoleInfoView;
 import xyz.esion.manage.view.RoleListView;
 import xyz.esion.manage.view.RoleSimpleVie;
@@ -26,13 +25,6 @@ public interface RoleService {
      * @return 简洁的角色列表
      */
     List<RoleSimpleVie> simple();
-
-    /**
-     * 获取全部权限
-     *
-     * @return 全部权限
-     */
-    List<PermissionsView> listPermission();
 
     /**
      * 根据角色ID获取信息

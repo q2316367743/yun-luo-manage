@@ -11,22 +11,32 @@
 				text-color="#ffffff"
 				router
 			>
-				<template v-for="(menu, index) in menus">
-					<el-submenu :key="index" index="" v-if="menu.children">
-						<template slot="title">
-							<span>{{ menu.name }}</span>
-						</template>
-						<el-menu-item
-							v-for="(child, idx) in menu.children"
-							:index="child.path"
-							:key="idx"
-							>{{ child.name }}</el-menu-item
-						>
-					</el-submenu>
-					<el-menu-item :index="menu.path" :key="index" v-else>
-						<span slot="title">{{ menu.name }}</span>
-					</el-menu-item>
-				</template>
+				<el-menu-item index="/">
+					<span slot="title">首页</span>
+				</el-menu-item>
+				<el-menu-item index="/file" v-if="consist(permissions, 'file')">
+					<span slot="title">文件管理</span>
+				</el-menu-item>
+				<el-menu-item
+					index="/server"
+					v-if="consist(permissions, 'file')"
+				>
+					<span slot="title">服务器管理</span>
+				</el-menu-item>
+				<el-submenu index="" v-if="consist(permissions, 'system')">
+					<template slot="title">
+						<span>系统管理</span>
+					</template>
+					<el-menu-item
+						index="/system/role"
+						v-if="consist(permissions, 'role')"
+						>角色管理</el-menu-item
+					><el-menu-item
+						index="/system/user"
+						v-if="consist(permissions, 'user')"
+						>用户管理</el-menu-item
+					>
+				</el-submenu>
 			</el-menu>
 		</div>
 		<div id="top-nav">
@@ -108,7 +118,7 @@ export default {
 		},
 	}),
 	computed: {
-		...mapGetters(["menus", "nickname"]),
+		...mapGetters(["permissions", "nickname"]),
 	},
 	created() {
 		let index = this.$route.path;
@@ -166,6 +176,14 @@ export default {
 					this.$message.error(message);
 				}
 			);
+		},
+		consist(list, keyword) {
+			for (let item of list) {
+				if (item.indexOf(keyword) != -1) {
+					return true;
+				}
+			}
+			return false;
 		},
 	},
 };

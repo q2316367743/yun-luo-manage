@@ -5,18 +5,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import xyz.esion.manage.entity.Permission;
-import xyz.esion.manage.entity.PermissionCategory;
 import xyz.esion.manage.entity.Role;
 import xyz.esion.manage.entity.RolePermission;
 import xyz.esion.manage.exception.UserException;
-import xyz.esion.manage.mapper.PermissionCategoryMapper;
 import xyz.esion.manage.mapper.PermissionMapper;
 import xyz.esion.manage.mapper.RoleMapper;
 import xyz.esion.manage.mapper.RolePermissionMapper;
 import xyz.esion.manage.option.RoleOption;
 import xyz.esion.manage.service.RoleService;
-import xyz.esion.manage.view.PermissionsView;
 import xyz.esion.manage.view.RoleInfoView;
 import xyz.esion.manage.view.RoleListView;
 import xyz.esion.manage.view.RoleSimpleVie;
@@ -34,7 +30,6 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleMapper roleMapper;
-    private final PermissionCategoryMapper permissionCategoryMapper;
     private final PermissionMapper permissionMapper;
     private final RolePermissionMapper rolePermissionMapper;
 
@@ -50,37 +45,6 @@ public class RoleServiceImpl implements RoleService {
         List<Role> roles = roleMapper.selectList(new QueryWrapper<Role>().eq("is_delete", 0));
         return roles.stream().map(item -> BeanUtil.copyProperties(item, RoleSimpleVie.class))
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<PermissionsView> listPermission() {
-        List<PermissionCategory> permissionCategories = permissionCategoryMapper
-                .selectList(new QueryWrapper<>());
-        List<Permission> permissions = permissionMapper.selectList(new QueryWrapper<>());
-        Map<String, List<Permission>> permissionMap = new HashMap<>();
-        for (Permission permission : permissions) {
-            if (permissionMap.containsKey(permission.getCategoryId())){
-                permissionMap.get(permission.getCategoryId()).add(permission);
-            }else {
-                List<Permission> temp = new ArrayList<>();
-                temp.add(permission);
-                permissionMap.put(permission.getCategoryId(), temp);
-            }
-        }
-        List<PermissionsView> views = new ArrayList<>();
-        for (PermissionCategory permissionCategory : permissionCategories) {
-            PermissionsView view = new PermissionsView();
-            view.setName(permissionCategory.getName());
-            view.setPermissions(new LinkedList<>());
-            List<Permission> temps = permissionMap.get(permissionCategory.getId());
-            if (temps != null){
-                view.getPermissions().addAll(temps.stream()
-                        .map(item -> BeanUtil.copyProperties(item, PermissionsView.PermissionView.class))
-                        .collect(Collectors.toList()));
-            }
-            views.add(view);
-        }
-        return views;
     }
 
     @Override

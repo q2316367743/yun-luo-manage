@@ -15,10 +15,8 @@ import xyz.esion.manage.option.CommonOption;
 import xyz.esion.manage.service.CommonService;
 import xyz.esion.manage.view.UserView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Esion
@@ -46,7 +44,11 @@ public class CommonServiceImpl implements CommonService {
         User user = users.get(0);
         view.setId(user.getId());
         view.setNickname(user.getNickname());
-        view.setPermissions(getPermissionsByUserId(user.getId()));
+        view.setPermissions(userPermissionMapper.selectList(
+                new QueryWrapper<UserPermission>()
+                        .eq("user_id", user.getId()))
+                .stream().map(UserPermission::getPermissionValue)
+                .collect(Collectors.toList()));
         return view;
     }
 
@@ -55,7 +57,11 @@ public class CommonServiceImpl implements CommonService {
         UserView view = new UserView();
         User user = userMapper.selectById(id);
         view.setNickname(user.getNickname());
-        view.setPermissions(getPermissionsByUserId(user.getId()));
+        view.setPermissions(userPermissionMapper.selectList(
+                        new QueryWrapper<UserPermission>()
+                                .eq("user_id", user.getId()))
+                .stream().map(UserPermission::getPermissionValue)
+                .collect(Collectors.toList()));
         return view;
     }
 
@@ -71,21 +77,6 @@ public class CommonServiceImpl implements CommonService {
         temp.setUsername(StrUtil.isBlank(option.getUsername()) ? null : option.getUsername());
         temp.setPassword(new Digester(DigestAlgorithm.MD5).digestHex(option.getPassword()));
         return userMapper.updateById(temp) > 0;
-    }
-
-    private Map<String, List<String>> getPermissionsByUserId(String userId){
-        List<UserPermission> userPermissions = userPermissionMapper.selectList(new QueryWrapper<UserPermission>().eq("user_id", userId));
-        Map<String, List<String>> permissions = new HashMap<>();
-        for (UserPermission userPermission : userPermissions) {
-            if (permissions.containsKey(userPermission.getCategoryValue())){
-                permissions.get(userPermission.getCategoryValue()).add(userPermission.getPermissionValue());
-            }else {
-                List<String> temp = new ArrayList<>();
-                temp.add(userPermission.getPermissionValue());
-                permissions.put(userPermission.getCategoryValue(), temp);
-            }
-        }
-        return permissions;
     }
 
 }

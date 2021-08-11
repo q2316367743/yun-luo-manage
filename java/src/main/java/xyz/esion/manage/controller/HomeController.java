@@ -11,7 +11,7 @@ import xyz.esion.manage.global.Result;
 import xyz.esion.manage.service.DatabaseService;
 
 /**
- * 系统服务
+ * 主页只需要登录
  *
  * @author Esion
  * @since 2021/7/15

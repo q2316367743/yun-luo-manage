@@ -32,6 +32,6 @@ public class UserView implements Serializable {
     /**
      * 权限合集
      */
-    private Map<String, List<String>> permissions;
+    private List<String> permissions;
 
 }
