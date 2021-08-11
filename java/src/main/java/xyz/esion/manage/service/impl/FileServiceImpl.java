@@ -29,6 +29,9 @@ import java.util.stream.Collectors;
 @Service
 public class FileServiceImpl implements FileService {
 
+    private final Long unit = 1024L;
+    private final Integer max = 5;
+
     @Override
     public List<FileListView> ls(String path) throws FileException {
         if (!FileUtil.isDirectory(path)){
@@ -45,6 +48,9 @@ public class FileServiceImpl implements FileService {
         File file = FileUtil.file(path);
         if (!file.isFile()){
             throw new FileException("目录不是文件或不存在");
+        }
+        if (file.length() > unit * unit * max){
+            throw new FileException("文件大于5M，请下载后打开");
         }
         if (StrUtil.isEmpty(charset)){
             charset = CharsetUtil.UTF_8;

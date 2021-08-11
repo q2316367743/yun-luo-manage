@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import xyz.esion.manage.enumeration.FileTypeEnum;
+import xyz.esion.manage.util.FileUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -87,33 +88,7 @@ public class FileListView implements Serializable {
         view.setName(item[8]);
         view.setType(FileTypeEnum.parse(item[0].charAt(0)));
         long absSize = Long.parseLong(item[4]);
-        if (absSize > 1024 * 1024 * 1024){
-            String size = NumberUtil.decimalFormat("#.00", absSize / 1024.0 / 1024 / 1024);
-            size = StrUtil.removeAny(size, ".00");
-            if (size.equals("")){
-                view.setSize("-");
-            }else {
-                view.setSize(size + "GB");
-            }
-        }else if (absSize > 1024 * 1024){
-            String size = NumberUtil.decimalFormat("#.00", absSize / 1024.0 / 1024);
-            size = StrUtil.removeAny(size, ".00");
-            if (size.equals("")){
-                view.setSize("-");
-            }else {
-                view.setSize(size + "MB");
-            }
-        }else if (absSize > 1024){
-            String size = NumberUtil.decimalFormat("#.00", absSize / 1024.0);
-            size = StrUtil.removeAny(size, ".00");
-            if (size.equals("")){
-                view.setSize("-");
-            }else {
-                view.setSize(size + "KB");
-            }
-        }else {
-            view.setSize(absSize + "B");
-        }
+        view.setSize(FileUtil.beautify(absSize));
         view.setAbsSize(absSize);
         view.setPath(path + File.separator + item[8]);
         view.setPermission(item[0].substring(1));
