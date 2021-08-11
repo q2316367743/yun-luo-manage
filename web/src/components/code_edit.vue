@@ -66,6 +66,7 @@ import "codemirror/theme/rubyblue.css";
 import "codemirror/theme/xq-dark.css";
 import "codemirror/theme/cobalt.css";
 import "codemirror/theme/dracula.css";
+
 // 语法高亮
 import "codemirror/mode/javascript/javascript.js";
 import "codemirror/mode/css/css.js";
@@ -75,6 +76,7 @@ import "codemirror/mode/python/python.js";
 import "codemirror/mode/shell/shell.js";
 import "codemirror/mode/sql/sql.js";
 import "codemirror/mode/vue/vue.js";
+import "codemirror/mode/yaml/yaml.js";
 
 /**
  * 代码编辑器
@@ -95,7 +97,7 @@ export default {
 			{
 				value: "",
 				label: "不使用语法主题",
-				suffix: ["text"],
+				suffix: ["txt"],
 			},
 			{
 				value: "css",
@@ -136,6 +138,11 @@ export default {
 				value: "markdown",
 				label: "Markdown",
 				suffix: ["md"],
+			},
+			{
+				value: "yaml",
+				label: "yaml",
+				suffix: ["yml"],
 			},
 		],
 		options: {
