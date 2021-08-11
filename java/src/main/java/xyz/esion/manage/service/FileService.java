@@ -2,6 +2,7 @@ package xyz.esion.manage.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
+import xyz.esion.manage.view.FileInfoView;
 import xyz.esion.manage.view.FileListSimpleView;
 import xyz.esion.manage.view.FileListView;
 
@@ -43,6 +44,14 @@ public interface FileService {
      * @throws FileException 文件操作异常
      * */
     byte[] show(String path) throws FileException;
+
+    /**
+     * 返回文件/夹详细信息
+     *
+     * @param path 文件/夹路径
+     * @return 详细信息
+     */
+    FileInfoView stat(String path) throws FileException;
 
     /**
      * 移动一个/多个文件到新目录

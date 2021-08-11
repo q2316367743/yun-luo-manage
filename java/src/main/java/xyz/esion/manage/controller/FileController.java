@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.exception.FileException;
-import xyz.esion.manage.global.Constant;
 import xyz.esion.manage.global.Result;
 import xyz.esion.manage.option.FileOption;
 import xyz.esion.manage.service.FileService;
@@ -40,6 +39,11 @@ public class FileController {
                 .status(200)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(fileService.show(option.getPath()));
+    }
+
+    @GetMapping("stat")
+    public Result stat(FileOption option) throws FileException {
+        return Result.success().items(fileService.stat(option.getPath()));
     }
 
     @PostMapping("mv")

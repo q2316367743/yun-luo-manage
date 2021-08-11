@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
 import xyz.esion.manage.service.FileService;
+import xyz.esion.manage.view.FileInfoView;
 import xyz.esion.manage.view.FileListSimpleView;
 import xyz.esion.manage.view.FileListView;
 
@@ -29,8 +30,8 @@ import java.util.stream.Collectors;
 @Service
 public class FileServiceImpl implements FileService {
 
-    private final Long unit = 1024L;
-    private final Integer max = 5;
+    private final static Long UNIT = 1024L;
+    private final static Integer MAX = 5;
 
     @Override
     public List<FileListView> ls(String path) throws FileException {
@@ -49,7 +50,7 @@ public class FileServiceImpl implements FileService {
         if (!file.isFile()){
             throw new FileException("目录不是文件或不存在");
         }
-        if (file.length() > unit * unit * max){
+        if (file.length() > UNIT * UNIT * MAX){
             throw new FileException("文件大于5M，请下载后打开");
         }
         if (StrUtil.isEmpty(charset)){
@@ -65,6 +66,15 @@ public class FileServiceImpl implements FileService {
             throw new FileException("目录不是文件或不存在");
         }
         return IoUtil.readBytes(FileUtil.getInputStream(file));
+    }
+
+    @Override
+    public FileInfoView stat(String path) throws FileException {
+        String command = "stat ";
+        if (!FileUtil.exist(path)){
+            throw new FileException("目标路径不存在，" + path);
+        }
+        return FileInfoView.parse(RuntimeUtil.execForLines(command + path));
     }
 
     @Override
