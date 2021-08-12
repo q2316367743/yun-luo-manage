@@ -19,7 +19,7 @@
 				</el-menu-item>
 				<el-menu-item
 					index="/server"
-					v-if="consist(permissions, 'file')"
+					v-if="consist(permissions, 'server')"
 				>
 					<span slot="title">服务器管理</span>
 				</el-menu-item>
@@ -180,6 +180,7 @@ export default {
 		consist(list, keyword) {
 			for (let item of list) {
 				if (item.indexOf(keyword) != -1) {
+					console.log(item, keyword, item.indexOf(keyword));
 					return true;
 				}
 			}

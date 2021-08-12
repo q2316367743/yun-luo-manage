@@ -68,7 +68,7 @@
 							<td>
 								<el-checkbox
 									v-model="permission_check"
-									label="1"
+									label="10101"
 									>文件管理</el-checkbox
 								>
 							</td>
@@ -79,13 +79,13 @@
 							<td>
 								<el-checkbox
 									v-model="permission_check"
-									label="2"
+									label="20101"
 									@change="
 										check_add($event, [
-											'3',
-											'4',
-											'5',
-											'6',
+											'20102',
+											'20103',
+											'20104',
+											'20105',
 											'7',
 											'8',
 											'9',
@@ -99,24 +99,24 @@
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="3"
-									@change="check_remove($event, '2')"
+									label="20102"
+									@change="check_remove($event, '20101')"
 									>新增</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="4"
-									@change="check_remove($event, '2')"
+									label="20103"
+									@change="check_remove($event, '20101')"
 									>修改</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="5"
-									@change="check_remove($event, '2')"
+									label="20104"
+									@change="check_remove($event, '20101')"
 									>删除</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="6"
-									@change="check_remove($event, '2')"
+									label="20105"
+									@change="check_remove($event, '20101')"
 									>详情</el-checkbox
 								>
 							</td>
@@ -126,24 +126,24 @@
 							<td>
 								<el-checkbox
 									v-model="permission_check"
-									label="7"
-									@change="check_remove($event, '2')"
+									label="20201"
+									@change="check_remove($event, '20101')"
 									>新增</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="8"
-									@change="check_remove($event, '2')"
+									label="20202"
+									@change="check_remove($event, '20101')"
 									>修改</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="9"
-									@change="check_remove($event, '2')"
+									label="20203"
+									@change="check_remove($event, '20101')"
 									>删除</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="10"
-									@change="check_remove($event, '2')"
+									label="20204"
+									@change="check_remove($event, '20101')"
 									>执行</el-checkbox
 								>
 							</td>
@@ -153,19 +153,19 @@
 							<td>
 								<el-checkbox
 									v-model="permission_check"
-									label="11"
-									@change="check_remove($event, '2')"
+									label="20301"
+									@change="check_remove($event, '20101')"
 									>新增</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="12"
-									@change="check_remove($event, '2')"
+									label="20302"
+									@change="check_remove($event, '20101')"
 									>修改</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="13"
-									@change="check_remove($event, '2')"
+									label="20303"
+									@change="check_remove($event, '20101')"
 									>删除</el-checkbox
 								>
 							</td>
@@ -176,27 +176,31 @@
 							<td>
 								<el-checkbox
 									v-model="permission_check"
-									label="14"
+									label="30101"
 									@change="
-										check_add($event, ['15', '16', '17'])
+										check_add($event, [
+											'30102',
+											'30103',
+											'30104',
+										])
 									"
 									>列表</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="15"
-									@change="check_remove($event, '14')"
+									label="30102"
+									@change="check_remove($event, '30101')"
 									>新增</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="16"
-									@change="check_remove($event, '14')"
+									label="30103"
+									@change="check_remove($event, '30101')"
 									>修改</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="17"
-									@change="check_remove($event, '14')"
+									label="30104"
+									@change="check_remove($event, '30101')"
 									>删除</el-checkbox
 								>
 							</td>
@@ -206,27 +210,31 @@
 							<td>
 								<el-checkbox
 									v-model="permission_check"
-									label="18"
+									label="30201"
 									@change="
-										check_add($event, ['19', '20', '21'])
+										check_add($event, [
+											'30202',
+											'30203',
+											'30204',
+										])
 									"
 									>列表</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="19"
-									@change="check_remove($event, '18')"
+									label="30202"
+									@change="check_remove($event, '30201')"
 									>新增</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="20"
-									@change="check_remove($event, '18')"
+									label="30203"
+									@change="check_remove($event, '30201')"
 									>修改</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="21"
-									@change="check_remove($event, '18')"
+									label="30204"
+									@change="check_remove($event, '30201')"
 									>删除</el-checkbox
 								>
 							</td>
