@@ -1,3 +1,5 @@
+// 初始化脚本
+import '@/plugins/init'
 import Vue from 'vue'
 import App from './App.vue'
 import ElementUI from 'element-ui';

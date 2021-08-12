@@ -8,45 +8,37 @@ import server_info from '@/pages/server/info.vue'
 import system_role from '@/pages/system/role/role.vue'
 import system_user from '@/pages/system/user/user.vue'
 
-function consist(list, keyword) {
-    for (let item of list) {
-        if (item.indexOf(keyword) != -1) {
-            return true;
-        }
-    }
-    return false;
-}
-
 const router_list = {
-    "file": [{
+    "file&a": {
         path: '/file',
         name: 'file',
         nickname: '文件管理',
         component: file
-    }],
-    'server': [{
-        path: '/server',
+    },
+    'server-own&l': {
+        path: '/server/own',
         name: 'server',
         nickname: '服务器管理',
         component: server,
-    }, {
-        path: '/server/:id',
+    },
+    "server-own&i": {
+        path: '/server/own/:id',
         name: 'server_info',
         nickname: '服务器信息',
         component: server_info,
-    }],
-    "role": [{
+    },
+    "system-role&l": {
         path: '/system/role',
         name: 'system_role',
         nickname: '角色管理',
         component: system_role
-    }],
-    "user": [{
+    },
+    "system-user&l": {
         path: '/system/user',
         name: 'system_user',
         nickname: '用户管理',
         component: system_user
-    }]
+    }
 }
 
 Vue.use(Vuex)
@@ -66,10 +58,8 @@ export default new Vuex.Store({
             //router.addRoute(route)
 
             for (let route in router_list) {
-                if (consist(user_permission, route)) {
-                    for (let item of router_list[route]) {
-                        router.addRoute(item);
-                    }
+                if (user_permission.consists(route)) {
+                    router.addRoute(router_list[route]);
                 }
             }
         }

@@ -37,10 +37,16 @@
 				</el-table-column>
 				<el-table-column width="180" label="操作">
 					<template slot-scope="scope">
-						<el-button type="text" @click="reset(scope.row.id)"
+						<el-button
+							type="text"
+							@click="reset(scope.row.id)"
+							v-if="permissions.consists('system-user&u')"
 							>重置密码</el-button
 						>
-						<el-button type="text" @click="remove(scope.row.id)"
+						<el-button
+							type="text"
+							@click="remove(scope.row.id)"
+							v-if="permissions.consists('system-user&d')"
 							>删除</el-button
 						>
 					</template>
@@ -52,6 +58,7 @@
 				icon="el-icon-plus"
 				circle
 				style="font-size: 34px"
+				v-if="permissions.consists('system-user&a')"
 				@click="open_dialog"
 			></el-button>
 		</div>
@@ -108,6 +115,7 @@
 
 <script>
 import user_api from "@/apis/user";
+import { mapGetters } from "vuex";
 
 export default {
 	data: () => ({
@@ -133,6 +141,9 @@ export default {
 				this.roles = res.data.items;
 			}
 		});
+	},
+	computed: {
+		...mapGetters(["permissions", "nickname"]),
 	},
 	methods: {
 		get_user() {

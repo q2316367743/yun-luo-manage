@@ -18,9 +18,13 @@
 						<el-button
 							type="text"
 							@click="open_dialog(true, scope.row.id)"
+							v-if="permissions.consists('system-role&u')"
 							>修改</el-button
 						>
-						<el-button type="text" @click="remove(scope.row.id)"
+						<el-button
+							type="text"
+							@click="remove(scope.row.id)"
+							v-if="permissions.consists('system-role&d')"
 							>删除</el-button
 						>
 					</template>
@@ -32,6 +36,7 @@
 				icon="el-icon-plus"
 				circle
 				style="font-size: 34px"
+				v-if="permissions.consists('system-role&a')"
 				@click="open_dialog(false)"
 			></el-button>
 		</div>
@@ -55,6 +60,11 @@
 				</el-form-item>
 				<el-form-item label="权限">
 					<table class="el-table">
+						<colgroup>
+							<col width="100" />
+							<col width="100" />
+							<col />
+						</colgroup>
 						<thead>
 							<tr>
 								<th id="category" class="is-leaf">权限</th>
@@ -74,8 +84,8 @@
 							</td>
 						</tr>
 						<tr>
-							<td :rowspan="3">服务器管理</td>
 							<td :rowspan="1">服务器管理</td>
+							<td :rowspan="1">自定义服务器</td>
 							<td>
 								<el-checkbox
 									v-model="permission_check"
@@ -86,13 +96,13 @@
 											'20103',
 											'20104',
 											'20105',
-											'7',
-											'8',
-											'9',
-											'10',
-											'11',
-											'12',
-											'13',
+											'20106',
+											'20107',
+											'20108',
+											'20109',
+											'20110',
+											'20111',
+											'20112',
 										])
 									"
 									>列表</el-checkbox
@@ -116,56 +126,69 @@
 								><el-checkbox
 									v-model="permission_check"
 									label="20105"
-									@change="check_remove($event, '20101')"
+									@change="
+										check_remove($event, '20101', [
+											'20106',
+											'20107',
+											'20108',
+											'20109',
+											'20110',
+											'20111',
+											'20112',
+										])
+									"
 									>详情</el-checkbox
 								>
-							</td>
-						</tr>
-						<tr>
-							<td :rowspan="1">命令管理</td>
-							<td>
 								<el-checkbox
 									v-model="permission_check"
-									label="20201"
-									@change="check_remove($event, '20101')"
+									label="20106"
+									@change="
+										check_remove($event, '20101', '20105')
+									"
 									>新增</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="20202"
-									@change="check_remove($event, '20101')"
+									label="20107"
+									@change="
+										check_remove($event, '20101', '20105')
+									"
 									>修改</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="20203"
-									@change="check_remove($event, '20101')"
+									label="20108"
+									@change="
+										check_remove($event, '20101', '20105')
+									"
 									>删除</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="20204"
-									@change="check_remove($event, '20101')"
+									label="20109"
+									@change="
+										check_remove($event, '20101', '20105')
+									"
 									>执行</el-checkbox
-								>
-							</td>
-						</tr>
-						<tr>
-							<td :rowspan="1">配置管理</td>
-							<td>
-								<el-checkbox
+								><el-checkbox
 									v-model="permission_check"
-									label="20301"
-									@change="check_remove($event, '20101')"
+									label="20110"
+									@change="
+										check_remove($event, '20101', '20105')
+									"
 									>新增</el-checkbox
 								><el-checkbox
 									v-model="permission_check"
-									label="20302"
-									@change="check_remove($event, '20101')"
+									label="20111"
+									@change="
+										check_remove($event, '20101', '20105')
+									"
 									>修改</el-checkbox
 								>
 								<el-checkbox
 									v-model="permission_check"
-									label="20303"
-									@change="check_remove($event, '20101')"
+									label="20112"
+									@change="
+										check_remove($event, '20101', '20105')
+									"
 									>删除</el-checkbox
 								>
 							</td>
@@ -254,6 +277,7 @@
 
 <script>
 import role_api from "@/apis/role";
+import { mapGetters } from "vuex";
 
 function consist(list, keyword) {
 	for (let item of list) {
@@ -278,6 +302,9 @@ export default {
 	}),
 	created() {
 		this.get_role_list();
+	},
+	computed: {
+		...mapGetters(["permissions", "nickname"]),
 	},
 	methods: {
 		get_role_list() {
@@ -386,10 +413,28 @@ export default {
 				}
 			}
 		},
-		check_remove(value, id) {
+		check_remove(value, id, extra) {
 			if (value) {
 				if (!consist(this.permission_check, id)) {
 					this.permission_check.push(id);
+				}
+				if (extra) {
+					if (typeof extra === "string") {
+						if (!consist(this.permission_check, extra)) {
+							this.permission_check.push(extra);
+						}
+					}
+				}
+			} else {
+				if (extra) {
+					if (typeof extra === "object") {
+						for (let id of extra) {
+							this.permission_check =
+								this.permission_check.filter((item) => {
+									return item !== id;
+								});
+						}
+					}
 				}
 			}
 		},

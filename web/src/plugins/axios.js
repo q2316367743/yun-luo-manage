@@ -53,6 +53,15 @@ instance.interceptors.response.use(
             return {
                 success: false,
             };
+        } else if (response.data.code === 403) {
+            Message({
+                message: '权限不足',
+                type: 'error',
+                duration: 5 * 1000
+            })
+            return {
+                success: false,
+            };
         } else {
             return response.data;
         }

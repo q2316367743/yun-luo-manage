@@ -14,26 +14,42 @@
 				<el-menu-item index="/">
 					<span slot="title">首页</span>
 				</el-menu-item>
-				<el-menu-item index="/file" v-if="consist(permissions, 'file')">
+				<el-menu-item
+					index="/file"
+					v-if="permissions.consists('file&a')"
+				>
 					<span slot="title">文件管理</span>
 				</el-menu-item>
-				<el-menu-item
+				<el-submenu
 					index="/server"
-					v-if="consist(permissions, 'server')"
+					v-if="permissions.consists('server-own&l')"
 				>
-					<span slot="title">服务器管理</span>
-				</el-menu-item>
-				<el-submenu index="" v-if="consist(permissions, 'system')">
+					<template slot="title">
+						<span>服务器管理</span>
+					</template>
+					<el-menu-item
+						index="/server/own"
+						v-if="permissions.consists('server-own&l')"
+						>自定义服务器</el-menu-item
+					>
+				</el-submenu>
+				<el-submenu
+					index=""
+					v-if="
+						permissions.consists('system-role&l') ||
+						permissions.consists('system-user&l')
+					"
+				>
 					<template slot="title">
 						<span>系统管理</span>
 					</template>
 					<el-menu-item
 						index="/system/role"
-						v-if="consist(permissions, 'role')"
+						v-if="permissions.consists('system-role&l')"
 						>角色管理</el-menu-item
 					><el-menu-item
 						index="/system/user"
-						v-if="consist(permissions, 'user')"
+						v-if="permissions.consists('system-user&l')"
 						>用户管理</el-menu-item
 					>
 				</el-submenu>

@@ -1,5 +1,6 @@
 // 引入API
 import server_api from '@/apis/server.js';
+import { mapGetters } from "vuex";
 
 export default {
     name: "server",
@@ -15,6 +16,9 @@ export default {
     }),
     created() {
         this.get_server_list();
+    },
+    computed: {
+        ...mapGetters(["permissions"]),
     },
     methods: {
         get_server_list() {
@@ -51,7 +55,7 @@ export default {
             this.$message.success("安装服务器，类型：" + type);
         },
         open_info(id) {
-            this.$router.push(`/server/${id}`);
+            this.$router.push(`/server/own/${id}`);
         },
         remove(id) {
             this.$confirm('此操作将永久删除该服务器, 是否继续?', '提示', {

@@ -1,6 +1,7 @@
 package xyz.esion.manage.controller;
 
 import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,6 +40,11 @@ public class ExceptionController {
             return Result.fail(Result.ResultCode.INVALID);
         }
         return Result.fail(Result.ResultCode.FAIL).message(exception.getMessage());
+    }
+
+    @ExceptionHandler(NotPermissionException.class)
+    public Result notPermissionException(NotPermissionException exception){
+        return Result.fail(Result.ResultCode.UN_AUTHORIZE).message(exception.getMessage());
     }
 
     @ExceptionHandler(FileException.class)

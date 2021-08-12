@@ -4,66 +4,39 @@
 			<span>服务器管理</span>
 		</div>
 		<div>
-			<div>
-				<el-button size="mini" type="primary" @click="open_add_server"
-					>新增服务器</el-button
+			<el-table :data="servers" style="width: 100%">
+				<el-table-column label="序号" type="index" width="180">
+				</el-table-column>
+				<el-table-column prop="name" label="名称"> </el-table-column>
+				<el-table-column prop="type" label="服务器类型" width="180">
+				</el-table-column>
+				<el-table-column prop="version" label="版本" width="180">
+				</el-table-column>
+				<el-table-column
+					prop="create_time"
+					label="创建时间"
+					width="180"
 				>
-				<el-dropdown
-					size="small"
-					type="primary"
-					style="padding-left: 12px"
-				>
-					<el-button size="mini" type="primary">安装</el-button>
-					<el-dropdown-menu slot="dropdown">
-						<el-dropdown-item @click.native="install_server(1)"
-							>安装Nginx</el-dropdown-item
+				</el-table-column>
+				<el-table-column label="操作" width="180">
+					<template slot-scope="scope">
+						<el-button
+							type="text"
+							size="mini"
+							@click="open_info(scope.row.id)"
+							v-if="permissions.consists('server-own&i')"
+							>查看</el-button
 						>
-						<el-dropdown-item @click.native="install_server(2)"
-							>安装Apache</el-dropdown-item
+						<el-button
+							type="text"
+							size="mini"
+							v-if="permissions.consists('server-own&d')"
+							@click="remove(scope.row.id)"
+							>删除</el-button
 						>
-						<el-dropdown-item @click.native="install_server(3)"
-							>安装Tomcat</el-dropdown-item
-						>
-						<el-dropdown-item @click.native="install_server(3)"
-							>安装Redis</el-dropdown-item
-						>
-					</el-dropdown-menu>
-				</el-dropdown>
-			</div>
-			<div>
-				<el-table :data="servers" style="width: 100%">
-					<el-table-column label="序号" type="index" width="180">
-					</el-table-column>
-					<el-table-column prop="name" label="名称">
-					</el-table-column>
-					<el-table-column prop="type" label="服务器类型" width="180">
-					</el-table-column>
-					<el-table-column prop="version" label="版本" width="180">
-					</el-table-column>
-					<el-table-column
-						prop="create_time"
-						label="创建时间"
-						width="180"
-					>
-					</el-table-column>
-					<el-table-column label="操作" width="180">
-						<template slot-scope="scope">
-							<el-button
-								type="text"
-								size="mini"
-								@click="open_info(scope.row.id)"
-								>查看</el-button
-							>
-							<el-button
-								type="text"
-								size="mini"
-								@click="remove(scope.row.id)"
-								>删除</el-button
-							>
-						</template>
-					</el-table-column>
-				</el-table>
-			</div>
+					</template>
+				</el-table-column>
+			</el-table>
 		</div>
 		<el-dialog
 			title="新增服务器"
@@ -91,6 +64,14 @@
 				>
 			</span>
 		</el-dialog>
+		<div class="add_button" v-if="permissions.consists('server-own&a')">
+			<el-button
+				icon="el-icon-plus"
+				circle
+				style="font-size: 34px"
+				@click="open_add_server"
+			></el-button>
+		</div>
 	</el-card>
 </template>
 
@@ -103,5 +84,12 @@
 	left: 12px;
 	bottom: 12px;
 	right: 12px;
+}
+.add_button {
+	position: absolute;
+	bottom: 48px;
+	right: 36px;
+	height: 48px;
+	line-height: 48px;
 }
 </style>
