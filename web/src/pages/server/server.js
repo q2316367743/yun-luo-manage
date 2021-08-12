@@ -32,7 +32,8 @@ export default {
             this.server = {
                 name: '',
                 type: '',
-                version: ''
+                version: '',
+                application_name: ''
             };
             this.server_update = false;
             this.server_dialog = true;

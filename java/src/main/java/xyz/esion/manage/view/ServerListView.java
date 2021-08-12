@@ -27,6 +27,11 @@ public class ServerListView implements Serializable {
     private String type;
 
     /**
+     * 是否启动
+     */
+    private Boolean status;
+
+    /**
      * 服务器版本
      */
     private String version;

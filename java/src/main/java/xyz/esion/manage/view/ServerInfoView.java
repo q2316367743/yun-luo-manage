@@ -27,6 +27,16 @@ public class ServerInfoView implements Serializable {
     private String type;
 
     /**
+     * 应用名称，通过判断系统中是否存在进程来判断状态
+     */
+    private String applicationName;
+
+    /**
+     * 是否启动
+     */
+    private Boolean status;
+
+    /**
      * 服务器版本
      */
     private String version;

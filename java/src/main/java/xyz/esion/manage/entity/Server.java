@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import lombok.Data;
 
 /**
@@ -38,7 +37,12 @@ public class Server implements Serializable {
     private String version;
 
     /**
-     *
+     * 应用名称，用于判断系统中是否存在进程来判断状态
+     */
+    private String applicationName;
+
+    /**
+     * 
      */
     private String createId;
 
@@ -49,7 +53,7 @@ public class Server implements Serializable {
     private Date createTime;
 
     /**
-     *
+     * 
      */
     private String updateId;
 

@@ -12,6 +12,11 @@
 				</el-table-column>
 				<el-table-column prop="version" label="版本" width="180">
 				</el-table-column>
+				<el-table-column label="状态" width="180">
+					<template slot-scope="scope">
+						<div>{{ scope.row.status ? "运行中" : "停止" }}</div>
+					</template>
+				</el-table-column>
 				<el-table-column
 					prop="create_time"
 					label="创建时间"
@@ -55,6 +60,21 @@
 				</el-form-item>
 				<el-form-item label="版本：">
 					<el-input v-model="server.version"></el-input>
+				</el-form-item>
+				<el-form-item label="进程名：">
+					<el-input
+						v-model="server.application_name"
+						style="width: 95%"
+					></el-input
+					><el-tooltip
+						effect="dark"
+						content="应用名称，通过判断系统中是否存在进程来判断状态"
+						placement="right"
+					>
+						<el-button type="text" style="margin-left: 12px"
+							>?</el-button
+						>
+					</el-tooltip>
 				</el-form-item>
 			</el-form>
 			<span slot="footer" class="dialog-footer">

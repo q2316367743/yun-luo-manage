@@ -32,6 +32,24 @@
 						></el-input>
 						<div v-else>{{ server.version }}</div>
 					</el-form-item>
+					<el-form-item label="进程名：" v-if="is_update">
+						<el-input
+							v-model="server.application_name"
+							style="width: 400px"
+						></el-input>
+						<el-tooltip
+							effect="dark"
+							content="应用名称，通过判断系统中是否存在进程来判断状态"
+							placement="right"
+						>
+							<el-button type="text" style="margin-left: 12px"
+								>?</el-button
+							>
+						</el-tooltip>
+					</el-form-item>
+					<el-form-item label="状态：" v-if="!is_update">
+						<div>{{ server.status ? "运行中" : "停止" }}</div>
+					</el-form-item>
 					<el-form-item v-if="permissions.consists('server-own&u')">
 						<el-button @click="is_update = !is_update"
 							>{{ is_update ? "取消" : "修改" }}
@@ -207,11 +225,14 @@ export default {
 			name: "",
 			type: "",
 			version: "",
+			application_name: "",
+			status: false,
 		},
 		server_default: {
 			name: "",
 			type: "",
 			version: "",
+			application_name: "",
 			commands: [],
 			configs: [],
 		},
@@ -245,6 +266,9 @@ export default {
 					this.server.name = this.server_default.name;
 					this.server.type = this.server_default.type;
 					this.server.version = this.server_default.version;
+					this.server.application_name =
+						this.server_default.application_name;
+					this.server.status = this.server_default.status;
 					this.commands = this.server_default.commands;
 					this.configs = this.server_default.configs;
 				}
@@ -262,6 +286,7 @@ export default {
 			this.server.name = this.server_default.name;
 			this.server.type = this.server_default.type;
 			this.server.version = this.server_default.version;
+			this.server.application_name = this.server_default.application_name;
 		},
 		update() {
 			server_api.update(this.id, this.server, (res) => {
@@ -407,18 +432,22 @@ export default {
 				id,
 				(res) => {
 					if (res.success) {
-						console.log(res.data.item);
-						console.log(res.data.item.split("\n").join("<br />"));
-						this.$msgbox({
-							title: "执行结果",
-							message: res.data.item.split("\n").join("<br />"),
-							closeOnClickModal: false,
-							dangerouslyUseHTMLString: true,
-						});
+						if (res.data.item === "") {
+							this.$message.success("执行成功");
+						} else {
+							this.$msgbox({
+								title: "执行结果",
+								message: res.data.item
+									.split("\n")
+									.join("<br />"),
+								closeOnClickModal: false,
+								dangerouslyUseHTMLString: true,
+							});
+						}
 					}
 				},
 				(message) => {
-					this.$message.error("删除配置文件失败，" + message);
+					this.$message.error("执行失败，" + message);
 				}
 			);
 		},

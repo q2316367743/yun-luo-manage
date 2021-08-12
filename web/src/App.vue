@@ -34,7 +34,7 @@
 					>
 				</el-submenu>
 				<el-submenu
-					index=""
+					index="/system"
 					v-if="
 						permissions.consists('system-role&l') ||
 						permissions.consists('system-user&l')

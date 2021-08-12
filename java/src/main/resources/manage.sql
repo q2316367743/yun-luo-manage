@@ -20,15 +20,16 @@ create table t_database
 /* 服务器管理 */
 create table t_server
 (
-    id          char(32) primary key,
-    name        varchar(255) default '' not null,
-    type        varchar(16)  default 0 not null,
-    version     varchar(16)  default '' not null,
-    create_id   char(32)     default '' not null,
-    create_time datetime     default '1998-08-06 00:00:00' not null,
-    update_id   char(32)     default '' not null,
-    update_time datetime     default '1998-08-06 00:00:00' not null,
-    is_delete   int          default 0 not null
+    id               char(32) primary key,
+    name             varchar(255) default '' not null,
+    type             varchar(16)  default 0 not null,
+    version          varchar(16)  default '' not null,
+    application_name varchar(255) default '' not null,
+    create_id        char(32)     default '' not null,
+    create_time      datetime     default '1998-08-06 00:00:00' not null,
+    update_id        char(32)     default '' not null,
+    update_time      datetime     default '1998-08-06 00:00:00' not null,
+    is_delete        int          default 0 not null
 );
 
 /* 服务器软件可执行命令 */
@@ -53,9 +54,9 @@ create table t_server_config
 /* 权限表，初始化后就不会改变 */
 create table t_permission
 (
-    id          char(32) primary key,
-    name        varchar(32)        default '' not null,
-    value       varchar(16) unique default '' not null
+    id    char(32) primary key,
+    name  varchar(32)        default '' not null,
+    value varchar(16) unique default '' not null
 );
 
 /* 角色表 */
@@ -111,52 +112,94 @@ where r.is_delete = 0;
 
 /* 初始化权限，用户，密码 */
 
-insert into t_permission values ('10101', '文件管理 & 全部', 'file&a');
-insert into t_permission values ('20101', '服务器管理 - 自定义服务器 & 列表', 'server-own&l');
-insert into t_permission values ('20102', '服务器管理 - 自定义服务器 & 新增', 'server-own&a');
-insert into t_permission values ('20103', '服务器管理 - 自定义服务器 & 修改', 'server-own&u');
-insert into t_permission values ('20104', '服务器管理 - 自定义服务器 & 删除', 'server-own&d');
-insert into t_permission values ('20105', '服务器管理 - 自定义服务器 & 详情', 'server-own&i');
-insert into t_permission values ('20106', '服务器管理 - 自定义服务器 $ 命令 & 新增', 'server-own$command&a');
-insert into t_permission values ('20107', '服务器管理 - 自定义服务器 $ 命令 & 修改', 'server-own$command&u');
-insert into t_permission values ('20108', '服务器管理 - 自定义服务器 $ 命令 & 删除', 'server-own$command&d');
-insert into t_permission values ('20109', '服务器管理 - 自定义服务器 $ 命令 & 执行', 'server-own$command&e');
-insert into t_permission values ('20110', '服务器管理 - 自定义服务器 $ 配置 & 新增', 'server-own$config&a');
-insert into t_permission values ('20111', '服务器管理 - 自定义服务器 $ 配置 & 修改', 'server-own$config&u');
-insert into t_permission values ('20112', '服务器管理 - 自定义服务器 $ 配置 & 删除', 'server-own$config&d');
-insert into t_permission values ('30101', '系统管理 - 角色管理 & 列表', 'system-role&l');
-insert into t_permission values ('30102', '系统管理 - 角色管理 & 新增', 'system-role&a');
-insert into t_permission values ('30103', '系统管理 - 角色管理 & 修改', 'system-role&u');
-insert into t_permission values ('30104', '系统管理 - 角色管理 & 删除', 'system-role&d');
-insert into t_permission values ('30201', '系统管理 - 用户管理 & 列表', 'system-user&l');
-insert into t_permission values ('30202', '系统管理 - 用户管理 & 新增', 'system-user&a');
-insert into t_permission values ('30203', '系统管理 - 用户管理 & 修改', 'system-user&u');
-insert into t_permission values ('30204', '系统管理 - 用户管理 & 删除', 'system-user&d');
+insert into t_permission
+values ('10101', '文件管理 & 全部', 'file&a');
+insert into t_permission
+values ('20101', '服务器管理 - 自定义服务器 & 列表', 'server-own&l');
+insert into t_permission
+values ('20102', '服务器管理 - 自定义服务器 & 新增', 'server-own&a');
+insert into t_permission
+values ('20103', '服务器管理 - 自定义服务器 & 修改', 'server-own&u');
+insert into t_permission
+values ('20104', '服务器管理 - 自定义服务器 & 删除', 'server-own&d');
+insert into t_permission
+values ('20105', '服务器管理 - 自定义服务器 & 详情', 'server-own&i');
+insert into t_permission
+values ('20106', '服务器管理 - 自定义服务器 $ 命令 & 新增', 'server-own$command&a');
+insert into t_permission
+values ('20107', '服务器管理 - 自定义服务器 $ 命令 & 修改', 'server-own$command&u');
+insert into t_permission
+values ('20108', '服务器管理 - 自定义服务器 $ 命令 & 删除', 'server-own$command&d');
+insert into t_permission
+values ('20109', '服务器管理 - 自定义服务器 $ 命令 & 执行', 'server-own$command&e');
+insert into t_permission
+values ('20110', '服务器管理 - 自定义服务器 $ 配置 & 新增', 'server-own$config&a');
+insert into t_permission
+values ('20111', '服务器管理 - 自定义服务器 $ 配置 & 修改', 'server-own$config&u');
+insert into t_permission
+values ('20112', '服务器管理 - 自定义服务器 $ 配置 & 删除', 'server-own$config&d');
+insert into t_permission
+values ('30101', '系统管理 - 角色管理 & 列表', 'system-role&l');
+insert into t_permission
+values ('30102', '系统管理 - 角色管理 & 新增', 'system-role&a');
+insert into t_permission
+values ('30103', '系统管理 - 角色管理 & 修改', 'system-role&u');
+insert into t_permission
+values ('30104', '系统管理 - 角色管理 & 删除', 'system-role&d');
+insert into t_permission
+values ('30201', '系统管理 - 用户管理 & 列表', 'system-user&l');
+insert into t_permission
+values ('30202', '系统管理 - 用户管理 & 新增', 'system-user&a');
+insert into t_permission
+values ('30203', '系统管理 - 用户管理 & 修改', 'system-user&u');
+insert into t_permission
+values ('30204', '系统管理 - 用户管理 & 删除', 'system-user&d');
 
 insert into t_role
 values ('1', '超级管理员', 'admin', '0', '1998-08-06 00:00:00', '0', '1998-08-06 00:00:00', 0);
 
-insert into t_role_permission values ('1', '1', '10101');
-insert into t_role_permission values ('2', '1', '20101');
-insert into t_role_permission values ('3', '1', '20102');
-insert into t_role_permission values ('4', '1', '20103');
-insert into t_role_permission values ('5', '1', '20104');
-insert into t_role_permission values ('6', '1', '20105');
-insert into t_role_permission values ('7', '1', '20106');
-insert into t_role_permission values ('8', '1', '20107');
-insert into t_role_permission values ('9', '1', '20108');
-insert into t_role_permission values ('10', '1', '20109');
-insert into t_role_permission values ('11', '1', '20110');
-insert into t_role_permission values ('12', '1', '20111');
-insert into t_role_permission values ('13', '1', '20112');
-insert into t_role_permission values ('14', '1', '30101');
-insert into t_role_permission values ('15', '1', '30102');
-insert into t_role_permission values ('16', '1', '30103');
-insert into t_role_permission values ('17', '1', '30104');
-insert into t_role_permission values ('18', '1', '30201');
-insert into t_role_permission values ('19', '1', '30202');
-insert into t_role_permission values ('20', '1', '30203');
-insert into t_role_permission values ('21', '1', '30204');
+insert into t_role_permission
+values ('1', '1', '10101');
+insert into t_role_permission
+values ('2', '1', '20101');
+insert into t_role_permission
+values ('3', '1', '20102');
+insert into t_role_permission
+values ('4', '1', '20103');
+insert into t_role_permission
+values ('5', '1', '20104');
+insert into t_role_permission
+values ('6', '1', '20105');
+insert into t_role_permission
+values ('7', '1', '20106');
+insert into t_role_permission
+values ('8', '1', '20107');
+insert into t_role_permission
+values ('9', '1', '20108');
+insert into t_role_permission
+values ('10', '1', '20109');
+insert into t_role_permission
+values ('11', '1', '20110');
+insert into t_role_permission
+values ('12', '1', '20111');
+insert into t_role_permission
+values ('13', '1', '20112');
+insert into t_role_permission
+values ('14', '1', '30101');
+insert into t_role_permission
+values ('15', '1', '30102');
+insert into t_role_permission
+values ('16', '1', '30103');
+insert into t_role_permission
+values ('17', '1', '30104');
+insert into t_role_permission
+values ('18', '1', '30201');
+insert into t_role_permission
+values ('19', '1', '30202');
+insert into t_role_permission
+values ('20', '1', '30203');
+insert into t_role_permission
+values ('21', '1', '30204');
 
 insert into t_user
 values ('1', 'esion', 'e10adc3949ba59abbe56e057f20f883e', '超级管理员', '1', '0', '1998-08-06 00:00:00', '0',

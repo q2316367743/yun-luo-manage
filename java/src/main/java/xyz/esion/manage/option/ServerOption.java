@@ -22,6 +22,8 @@ public class ServerOption implements Serializable {
 
     private String version;
 
+    private String applicationName;
+
     @JsonIgnore
     private String userId;
 

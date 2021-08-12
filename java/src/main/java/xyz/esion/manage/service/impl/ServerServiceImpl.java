@@ -1,7 +1,9 @@
 package xyz.esion.manage.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.RuntimeUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +43,22 @@ public class ServerServiceImpl implements ServerService {
         List<Server> servers = serverMapper.selectList(new QueryWrapper<Server>()
                 .eq("is_delete", 0).orderByDesc("create_time"));
         return servers.stream()
-                .map(item -> BeanUtil.copyProperties(item, ServerListView.class))
+                .map(item -> {
+                    ServerListView view = BeanUtil.copyProperties(item, ServerListView.class);
+                    view.setStatus(false);
+                    // 判断状态
+                    String applicationName = item.getApplicationName();
+                    if (StrUtil.isNotBlank(applicationName)){
+                        String[] commands = {"/bin/sh","-c","ps -aux | grep " + applicationName};
+                        List<String> lines = RuntimeUtil.execForLines(commands);
+                        for (String line : lines) {
+                            if (!line.contains("grep")){
+                                view.setStatus(true);
+                            }
+                        }
+                    }
+                    return view;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -57,6 +74,16 @@ public class ServerServiceImpl implements ServerService {
                 .eq("server_id", id));
         ServerInfoView view = new ServerInfoView();
         BeanUtil.copyProperties(server, view);
+        String applicationName = view.getApplicationName();
+        if (StrUtil.isNotBlank(applicationName)){
+            String[] commands = {"/bin/sh","-c","ps -aux | grep " + applicationName};
+            List<String> lines = RuntimeUtil.execForLines(commands);
+            for (String line : lines) {
+                if (!line.contains("grep")){
+                    view.setStatus(true);
+                }
+            }
+        }
         view.setCommands(serverCommands.stream()
                 .map(item -> BeanUtil.copyProperties(item, ServerCommandView.class))
                 .collect(Collectors.toList()));
@@ -81,6 +108,7 @@ public class ServerServiceImpl implements ServerService {
         server.setIsDelete(0);
         server.setCreateId(option.getUserId());
         server.setUpdateId(option.getUserId());
+        server.setApplicationName(option.getApplicationName());
         serverMapper.insert(server);
 
     }
@@ -93,6 +121,7 @@ public class ServerServiceImpl implements ServerService {
         server.setType(option.getType());
         server.setVersion(option.getVersion());
         server.setUpdateId(option.getUserId());
+        server.setApplicationName(option.getApplicationName());
         serverMapper.updateById(server);
     }
 

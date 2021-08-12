@@ -24,7 +24,7 @@ import java.util.List;
 public class FileTest {
 
     public static void main(String[] args) {
-        state();
+        ps();
     }
 
     public static void jdk(){
@@ -60,6 +60,16 @@ public class FileTest {
                 "Change: 2021-07-30 14:09:33.544315100 +0800",
                 " Birth: -");
         Console.log(JSONUtil.parseObj(FileInfoView.parse(list)).toJSONString(4));
+    }
+
+    public static void ps(){
+        String[] command = {"/bin/sh","-c","ps -aux | grep python"};
+        List<String> lines = RuntimeUtil.execForLines(command);
+        for (String line : lines) {
+            if (!line.contains("grep python")){
+                Console.log(line);
+            }
+        }
     }
 
 }
