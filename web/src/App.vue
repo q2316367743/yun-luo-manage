@@ -180,7 +180,6 @@ export default {
 		consist(list, keyword) {
 			for (let item of list) {
 				if (item.indexOf(keyword) != -1) {
-					console.log(item, keyword, item.indexOf(keyword));
 					return true;
 				}
 			}

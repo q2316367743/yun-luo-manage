@@ -2,6 +2,7 @@ package xyz.esion.manage.config;
 
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.fun.SaFunction;
+import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
 import cn.dev33.satoken.router.SaRouterUtil;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.io.IoUtil;
@@ -64,37 +65,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 权限拦截
-        registry.addInterceptor(new HandlerInterceptor(){
-            @Override
-            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-                if (OPTIONS.equals(request.getMethod())){
-                    return true;
-                }else {
-                    try {
-                        StpUtil.checkLogin();
-                    }catch (NotLoginException exception){
-                        response.setCharacterEncoding("utf-8");
-                        response.setContentType("text/json;charset=UTF-8 ");
-                        if(exception.getType().equals(NotLoginException.NOT_TOKEN)) {
-                            try {
-                                response.getWriter().print(JSONUtil.toJsonStr(Result.fail(Result.ResultCode.UN_AUTHENTICATION)));
-                                return false;
-                            } catch (IOException ignored) {
-                            }
-                        }
-                        else if(exception.getType().equals(NotLoginException.INVALID_TOKEN) || exception.getType().equals(NotLoginException.TOKEN_TIMEOUT)) {
-                            try {
-                                response.getWriter().print(JSONUtil.toJsonStr(Result.fail(Result.ResultCode.INVALID)));
-                                return false;
-                            } catch (IOException ignored) {
-                            }
-                        }
-                    }
-                }
-                // 通过验证
-                return true;
-            }
-        }).addPathPatterns("/api/**").excludePathPatterns("/api/common/login");
+        registry.addInterceptor(new SaAnnotationInterceptor())
+                .addPathPatterns("/api/**").excludePathPatterns("/api/common/login");
     }
 
     /**

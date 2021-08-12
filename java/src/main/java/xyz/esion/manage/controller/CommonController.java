@@ -1,5 +1,6 @@
 package xyz.esion.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import xyz.esion.manage.view.UserView;
 @RestController
 @RequestMapping("api/common")
 @RequiredArgsConstructor
+@SaCheckLogin
 public class CommonController {
 
     private final CommonService commonService;

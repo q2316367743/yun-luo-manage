@@ -1,5 +1,6 @@
 package xyz.esion.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.hutool.json.JSONObject;
 import cn.hutool.system.oshi.OshiUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import xyz.esion.manage.service.DatabaseService;
 @RestController
 @RequestMapping("api/home")
 @RequiredArgsConstructor
+@SaCheckLogin
 public class HomeController {
 
     private final DatabaseService databaseService;

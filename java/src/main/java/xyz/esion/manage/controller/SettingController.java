@@ -1,5 +1,6 @@
 package xyz.esion.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,5 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("api/setting")
+@SaCheckLogin
 public class SettingController {
 }

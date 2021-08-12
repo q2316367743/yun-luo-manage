@@ -1,5 +1,6 @@
 package xyz.esion.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.entity.Database;
 import xyz.esion.manage.global.Result;
@@ -13,6 +14,7 @@ import xyz.esion.manage.service.DatabaseService;
  */
 @RestController
 @RequestMapping("api/database")
+@SaCheckLogin
 public class DatabaseController {
 
     private DatabaseService databaseService;

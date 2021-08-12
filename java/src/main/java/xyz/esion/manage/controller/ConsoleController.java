@@ -1,5 +1,6 @@
 package xyz.esion.manage.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.hutool.core.util.RuntimeUtil;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.global.Result;
@@ -12,6 +13,7 @@ import xyz.esion.manage.global.Result;
  */
 @RestController
 @RequestMapping("api/console")
+@SaCheckLogin
 public class ConsoleController {
 
     @PostMapping("execForStr")
