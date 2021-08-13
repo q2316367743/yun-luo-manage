@@ -37,13 +37,22 @@ public interface FileService {
     String open(String path, String charset) throws FileException;
 
     /**
-     * 打开一个文件，返回文件的字节数组。
+     * 打开一个文件，返回文件的字节数组，不考虑大小。
      *
      * @param path 目录
      * @return 结果
      * @throws FileException 文件操作异常
      * */
     byte[] show(String path) throws FileException;
+
+    /**
+     * 下载一个文件夹，不能超过100M，返回文件的字节数组。
+     *
+     * @param path 目录
+     * @return 结果
+     * @throws FileException 文件操作异常
+     * */
+    byte[] download(String path) throws FileException;
 
     /**
      * 返回文件/夹详细信息

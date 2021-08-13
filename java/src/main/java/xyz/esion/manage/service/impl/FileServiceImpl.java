@@ -68,6 +68,17 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public byte[] download(String path) throws FileException {
+        File file = FileUtil.file(path);
+        if (!file.isDirectory()){
+            throw new FileException("目录不是文件夹或不存在");
+        }
+        // 压缩文件夹到临时目录，文件名：试驾戳.zip
+        // 将临时文件下载
+        return new byte[0];
+    }
+
+    @Override
     public FileInfoView stat(String path) throws FileException {
         String command = "stat ";
         if (!FileUtil.exist(path)){
