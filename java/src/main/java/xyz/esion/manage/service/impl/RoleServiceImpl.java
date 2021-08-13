@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import xyz.esion.manage.entity.Role;
 import xyz.esion.manage.entity.RolePermission;
 import xyz.esion.manage.exception.UserException;
-import xyz.esion.manage.mapper.PermissionMapper;
 import xyz.esion.manage.mapper.RoleMapper;
 import xyz.esion.manage.mapper.RolePermissionMapper;
 import xyz.esion.manage.option.RoleOption;
@@ -30,7 +29,6 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleMapper roleMapper;
-    private final PermissionMapper permissionMapper;
     private final RolePermissionMapper rolePermissionMapper;
 
     @Override

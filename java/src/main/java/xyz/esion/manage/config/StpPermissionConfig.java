@@ -11,7 +11,6 @@ import xyz.esion.manage.mapper.RoleMapper;
 import xyz.esion.manage.mapper.UserMapper;
 import xyz.esion.manage.mapper.UserPermissionMapper;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;

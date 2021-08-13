@@ -9,6 +9,6 @@ public class Constant {
     /**
      * Nginx基础下载连接
      */
-    private static final String NGINX_BASE_URL = "http://nginx.org/download/nginx-";
+//    private static final String NGINX_BASE_URL = "http://nginx.org/download/nginx-";
 
 }

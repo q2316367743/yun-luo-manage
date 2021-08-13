@@ -1,15 +1,21 @@
 package xyz.esion.manage.exception;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Esion
  * @since 2021/7/24
  */
-@Data
+@Setter
+@Getter
 public class BasicException extends Exception {
 
-    private String message;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1762042697201451288L;
+	private String message;
 
     public BasicException(String message) {
         this.message = message;

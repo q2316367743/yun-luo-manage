@@ -6,7 +6,12 @@ package xyz.esion.manage.exception;
  */
 public class TaskException extends BasicException {
 
-    public TaskException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -8551010616237239460L;
+
+	public TaskException(String message) {
         super(message);
     }
 

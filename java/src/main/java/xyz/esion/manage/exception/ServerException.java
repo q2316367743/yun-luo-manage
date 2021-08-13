@@ -6,7 +6,12 @@ package xyz.esion.manage.exception;
  */
 public class ServerException extends BasicException {
 
-    public ServerException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2066145202572528898L;
+
+	public ServerException(String message) {
         super(message);
     }
 

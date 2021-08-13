@@ -19,7 +19,7 @@ public class Permission implements Serializable {
     /**
      * 
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**

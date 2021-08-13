@@ -19,7 +19,7 @@ public interface TaskService {
      * @param task 任务
      * @return 任务ID
      * */
-    Long add(Task task);
+    Long add(Task<?> task);
 
     /**
      * 查询当前进行中的任务

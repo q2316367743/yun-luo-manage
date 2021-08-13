@@ -1,7 +1,5 @@
 package xyz.esion.manage.exception;
 
-import lombok.Data;
-
 /**
  * @author Esion
  * @since 2021/7/24
@@ -9,7 +7,12 @@ import lombok.Data;
 public class FileException extends BasicException {
 
 
-    public FileException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 22470307062860594L;
+
+	public FileException(String message) {
         super(message);
     }
 }
