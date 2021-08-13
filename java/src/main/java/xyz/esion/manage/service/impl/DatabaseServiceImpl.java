@@ -34,7 +34,7 @@ public class DatabaseServiceImpl implements DatabaseService {
     /**
      * 存放内存中数据库连接，状态，连接字符串
      * */
-    private final static Map<String, DatabaseBase> DATABASE_STATUS_MAP = new ConcurrentHashMap<>();
+    private final static Map<String, DatabaseBase<Database4MySql>> DATABASE_STATUS_MAP = new ConcurrentHashMap<>();
 
     /**
      * 本身数据库存放的信息
@@ -77,7 +77,7 @@ public class DatabaseServiceImpl implements DatabaseService {
         List<DatabaseListView> result = new ArrayList<>();
         for (Database database : databases) {
             DatabaseListView databaseListView = BeanUtil.copyProperties(database, DatabaseListView.class);
-            DatabaseBase databaseBase = DATABASE_STATUS_MAP.get(database.getId());
+            DatabaseBase<Database4MySql> databaseBase = DATABASE_STATUS_MAP.get(database.getId());
             if (databaseBase != null){
                 databaseListView.setStatus(databaseBase.getStatus().getValue());
             }

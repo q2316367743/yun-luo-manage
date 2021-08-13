@@ -7,7 +7,7 @@
 - 众多主题
 
 [Gitee](https://gitee.com/qiaoshengda/yun-luo-manage)
-[Get Started](#参考)
+[Get Started](#介绍)
 
 <!-- 背景图片 -->
 

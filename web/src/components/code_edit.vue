@@ -183,8 +183,8 @@ export default {
 						this.content = res.data.item;
 					}
 				},
-				() => {
-					this.content = "内容获取失败";
+				(message) => {
+					this.content = "内容获取失败，" + message;
 				}
 			);
 		},

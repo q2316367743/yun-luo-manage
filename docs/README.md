@@ -1,6 +1,6 @@
-> 本项目部分功能基于Linux命令实现，请在linux系统下运行
+# 介绍
 
-基于springboot+vue，数据库存储为sqlite存储，只需要有java运行环境即可运行
+云落Linux管理是一个Linux服务器管理软件，支持系统信息查看，文件管理，服务器管理，nginx管理，tomcat管理等很多方便实用的Linux运维功能
 
 # 参考
 
@@ -10,7 +10,9 @@
 
 # 安装
 
-## 自行打包
+> 本项目部分功能基于Linux命令实现，请在linux系统下运行
+
+## 自行编译
 
 ```bash
 git pull https://gitee.com/qiaoshengda/yun-luo-manage.git
@@ -21,7 +23,7 @@ npm run build
 cd ../java
 mvn package -Dmaven.test.skip=true
 cd target
-java -jar manage-1.0.jar
+java -jar manage-1.0.jar --spring.active.profile=pro
 ```
 
 访问地址：<localhost:7743>
@@ -34,13 +36,37 @@ java -jar manage-1.0.jar
 
 软件运行基础：Java
 
-下载发行版
+1. 下载发行版
 
-使用`java -jar manage-1.0.0`运行
+2. 使用`sudo nohup java -jar manage-1.0.jar --spring.active.profile=pro > /dev/null &`运行
+
+**注意：**请将项目jar包放在单独的文件夹中，因为会生成一些配置文件，项目安装的软件也在安装目录下
+
+**注意：**尽量使用root命令运行，否则可能出现权限不足的情况
 
 访问地址：<localhost:7743>
 
 初始用户名：esion，初始密码：123456
+
+# 主要技术
+
+基于springboot+vue，数据库存储为sqlite存储，只需要有java运行环境即可运行
+
+## 前台
+
+- [vue](https://cn.vuejs.org/)
+- [vuex](https://vuex.vuejs.org/zh/)
+- [vue-router](https://router.vuejs.org/zh/)
+- [Element-UI](https://element.eleme.cn/#/zh-CN)
+- axios
+- [codemirror](https://codemirror.net/index.html)
+
+## 后台
+
+- [springboot](https://spring.io/projects/spring-boot/)
+- [sa-token](http://sa-token.dev33.cn/)
+- [mybatis-plus](https://mp.baomidou.com/)
+- [Hutool](https://www.hutool.cn/)
 
 # 功能
 

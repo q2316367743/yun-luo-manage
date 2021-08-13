@@ -1,14 +1,9 @@
 package xyz.esion.manage.config;
 
-import cn.dev33.satoken.exception.NotLoginException;
-import cn.dev33.satoken.fun.SaFunction;
 import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
-import cn.dev33.satoken.router.SaRouterUtil;
-import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.db.sql.SqlExecutor;
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -16,15 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import xyz.esion.manage.global.Result;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -46,7 +37,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Value("${spring.profiles.active}")
     private String active;
     private final static String PROFILES = "dev";
-    private final static String OPTIONS = "OPTIONS";
 
     private DataSource dataSource;
 

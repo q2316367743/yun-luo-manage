@@ -26,7 +26,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Long add(Task task) {
+    public Long add(Task<?> task) {
+    	executorService.submit(task);
         return null;
     }
 

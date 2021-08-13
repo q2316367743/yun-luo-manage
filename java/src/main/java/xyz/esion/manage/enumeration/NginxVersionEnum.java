@@ -1,6 +1,5 @@
 package xyz.esion.manage.enumeration;
 
-import xyz.esion.manage.exception.BasicException;
 import xyz.esion.manage.exception.ServerException;
 
 /**

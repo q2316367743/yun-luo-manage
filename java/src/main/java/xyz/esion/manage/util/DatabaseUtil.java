@@ -1,7 +1,5 @@
 package xyz.esion.manage.util;
 
-import cn.hutool.core.lang.Console;
-import cn.hutool.json.JSONUtil;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import xyz.esion.manage.entity.Database;
@@ -27,7 +25,7 @@ import java.util.List;
  */
 public class DatabaseUtil {
 
-    private final static String QUERY_DATABASE_NAME = "select database() as name;";
+//    private final static String QUERY_DATABASE_NAME = "select database() as name;";
     private final static String QUERY_TABLE = "show table status";
     private final static String QUERY_VIEW = "select * from information_schema.VIEWS";
     private final static String QUERY_FIELD = "SHOW FULL COLUMNS FROM ";

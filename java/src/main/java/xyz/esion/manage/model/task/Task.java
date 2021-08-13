@@ -1,12 +1,14 @@
 package xyz.esion.manage.model.task;
 
+import java.util.concurrent.Callable;
+
 import xyz.esion.manage.exception.TaskException;
 
 /**
  * @author Esion
  * @since 2021/7/27
  */
-public interface Task {
+public interface Task<T> extends Callable<T> {
 
     /**
      * 执行任务
