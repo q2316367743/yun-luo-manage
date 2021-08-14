@@ -51,7 +51,11 @@ export default {
         },
         to_path_temp: '',
         to_path_status: false,
-        suffix: ''
+        suffix: '',
+        mui_player: null,
+        info_status: false,
+        info: {},
+        info_index: 'base'
     }),
     created() {
         // 获取用户目录
@@ -187,8 +191,8 @@ export default {
                     area: ['800px', '501px'],
                     shadeClose: false,
                     content: '<div id="mui-player"></div>',
-                    success() {
-                        new MuiPlayer({
+                    success: () => {
+                        this.mui_player = new MuiPlayer({
                             container: '#mui-player',
                             title: name,
                             src: src,
@@ -213,8 +217,8 @@ export default {
                     title: name,
                     shadeClose: false,
                     content: '<div id="mui-player"></div>',
-                    success() {
-                        new MuiPlayer({
+                    success: () => {
+                        this.mui_player = new MuiPlayer({
                             container: '#mui-player',
                             title: name,
                             src: src,
@@ -334,7 +338,6 @@ export default {
             this.clear_check();
         },
         paste() {
-            console.log(this.mv_paths, this.cp_paths, this.path);
             if (this.mv_paths.length > 0) {
                 file.mv(this.mv_paths, this.path, res => {
                     if (res.success) {
@@ -372,12 +375,13 @@ export default {
             this.menu_temp_path = file.path;
             let menu = document.getElementById('file-menu');
             menu.style.display = 'block';
-            menu.style.left = e.layerX + 10 + 'px'
-            menu.style.top = e.layerY + 10 + 'px';
+            menu.style.left = e.pageX - 212 + 'px'
+            menu.style.top = e.pageY - 52 + 'px';
             document.getElementById('file-menu-bg').style.display = 'block';
         },
         close_menu() {
             document.getElementById('file-menu').style.display = 'none';
+            document.getElementById('option-menu').style.display = 'none';
             document.getElementById('file-menu-bg').style.display = 'none';
             this.menu_index = -1;
             this.menu_file = null;
@@ -413,11 +417,20 @@ export default {
             this.code = true;
             this.code_path = this.menu_file.path;
         },
-        download(path, name) {
-            file.show(path, res => {
+        download(f) {
+            let name = '';
+            // 如果是文件，则为文件名
+            if (f.type === 'FILE') {
+                name = f.name;
+            }
+            // 如果是文件夹，则为文件名.zip
+            if (f.type === 'FOLDER') {
+                name = f.name + '.zip';
+            }
+            file.download([f.path], res => {
                 dl(res, name)
-            }, () => {
-                this.$message.error('文件下载失败')
+            }, (message) => {
+                this.$message.error('文件下载失败，' + message)
             })
         },
         open_remote_download() {
@@ -428,9 +441,12 @@ export default {
             }
         },
         multi_download() {
-            this.$message({
-                message: '暂不可用',
-                type: 'warning'
+            file.download(this.paths, res => {
+                dl(res, new Date().getTime() + '.zip');
+                // 清除选择
+                this.clear_check();
+            }, (message) => {
+                this.$message.error('文件下载失败，' + message)
             })
         },
         on_upload(event) {
@@ -491,6 +507,26 @@ export default {
         },
         cancel_path_input() {
             this.to_path_status = false;
+        },
+        stat() {
+            // 查询文件属性
+            file.stat(this.menu_temp_path, res => {
+                if (res.success) {
+                    console.log(res.data.item)
+                    this.info_status = true
+                    this.info = res.data.item;
+                }
+            }, message => {
+                this.$message.error('获取文件/夹属性错误，' + message)
+            })
+        },
+        option_menu_open(e) {
+            this.menu_temp_path = this.path;
+            let menu = document.getElementById('option-menu');
+            menu.style.display = 'block';
+            menu.style.left = e.pageX - 212 + 'px'
+            menu.style.top = e.pageY - 52 + 'px';
+            document.getElementById('file-menu-bg').style.display = 'block';
         }
     }
 }

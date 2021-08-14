@@ -6,7 +6,9 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.ZipUtil;
 import cn.hutool.http.HttpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
@@ -15,8 +17,9 @@ import xyz.esion.manage.view.FileInfoView;
 import xyz.esion.manage.view.FileListSimpleView;
 import xyz.esion.manage.view.FileListView;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,10 +30,13 @@ import java.util.stream.Collectors;
  * @since 2021/7/21
  */
 @Service
+@Slf4j
 public class FileServiceImpl implements FileService {
 
     private final static Long UNIT = 1024L;
-    private final static Integer MAX = 5;
+    private final static Integer MAX_FILE = 5;
+    private final static Integer MAX_FOLDER = 100;
+    private final static String TEMP_PATH = System.getProperty("java.io.tmpdir");
 
     @Override
     public List<FileListView> ls(String path) throws FileException {
@@ -49,7 +55,7 @@ public class FileServiceImpl implements FileService {
         if (!file.isFile()){
             throw new FileException("目录不是文件或不存在");
         }
-        if (file.length() > UNIT * UNIT * MAX){
+        if (file.length() > UNIT * UNIT * MAX_FILE){
             throw new FileException("文件大于5M，请下载后打开");
         }
         if (StrUtil.isEmpty(charset)){
@@ -68,23 +74,46 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public byte[] download(String path) throws FileException {
-        File file = FileUtil.file(path);
-        if (!file.isDirectory()){
-            throw new FileException("目录不是文件夹或不存在");
+    public byte[] download(List<String> paths) throws FileException {
+        if (paths.isEmpty()){
+            throw new FileException("没有目录");
+        }
+        log.debug("下载文件数目：{}", paths.size());
+        // 单个且为文件，直接下载
+        if (paths.size() == 1){
+            String path = paths.get(0);
+            File file = FileUtil.file(path);
+            if (file.isFile()){
+                return IoUtil.readBytes(FileUtil.getInputStream(file));
+            }
         }
         // 压缩文件夹到临时目录，文件名：试驾戳.zip
+        List<File> files = paths.stream()
+                .map(FileUtil::file)
+                .filter(File::exists)
+                .collect(Collectors.toList());
+        log.debug("实际下载文件数目：{}", files.size());
+        if (files.isEmpty()){
+            throw new FileException("目录错误");
+        }
+        File target = FileUtil.file(TEMP_PATH, System.currentTimeMillis() + ".zip");
+        log.debug("文件压缩目录：{}", target.getAbsolutePath());
+        long length = 0L;
+        File[] src = new File[files.size()];
+        for (int i = 0; i < files.size(); i++) {
+            src[i] = files.get(i);
+        }
         // 将临时文件下载
-        return new byte[0];
+        return IoUtil.readBytes(FileUtil.getInputStream(ZipUtil.zip(target, StandardCharsets.UTF_8, true, src)));
     }
 
     @Override
     public FileInfoView stat(String path) throws FileException {
-        String command = "stat ";
+        String command = "stat -c \"|%n|%s|%G|%U|%a|%A|%W|%X|%Y|%Z|\" ";
         if (!FileUtil.exist(path)){
             throw new FileException("目标路径不存在，" + path);
         }
-        return FileInfoView.parse(RuntimeUtil.execForLines(command + path));
+        return FileInfoView.parse(RuntimeUtil.execForStr(command + path));
     }
 
     @Override

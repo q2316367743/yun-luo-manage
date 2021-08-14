@@ -5,7 +5,7 @@ import setting from '@/setting'
 
 const instance = axios.create({
     baseURL: setting.base_url,
-    timeout: 3000
+    timeout: 6000
 })
 
 
@@ -16,7 +16,9 @@ instance.interceptors.request.use(
         if (sessionStorage.getItem('token')) {
             config.headers['token'] = sessionStorage.getItem('token');
         } else if (config.url !== '/common/login') {
-            router.push("/login")
+            if (!window.location.href.indexOf('/login?redict') != -1) {
+                router.push(`/login?redict=${window.location.href.split('#')[1]}`)
+            }
             throw new axios.Cancel('Operation canceled by the user.');
         }
         return config

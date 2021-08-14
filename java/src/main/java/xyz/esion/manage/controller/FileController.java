@@ -45,9 +45,16 @@ public class FileController {
                 .body(fileService.show(option.getPath()));
     }
 
+    @GetMapping("download")
+    public ResponseEntity<byte[]> download(FileOption option) throws FileException {
+        return ResponseEntity.status(200)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(fileService.download(option.getPaths()));
+    }
+
     @GetMapping("stat")
     public Result stat(FileOption option) throws FileException {
-        return Result.success().items(fileService.stat(option.getPath()));
+        return Result.success().item(fileService.stat(option.getPath()));
     }
 
     @PostMapping("mv")

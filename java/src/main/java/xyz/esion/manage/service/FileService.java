@@ -46,19 +46,20 @@ public interface FileService {
     byte[] show(String path) throws FileException;
 
     /**
-     * 下载一个文件夹，不能超过100M，返回文件的字节数组。
+     * 下载文件/夹，文件夹不能超过100M，返回文件的字节数组。
      *
-     * @param path 目录
+     * @param paths 目录
      * @return 结果
      * @throws FileException 文件操作异常
      * */
-    byte[] download(String path) throws FileException;
+    byte[] download(List<String> paths) throws FileException;
 
     /**
      * 返回文件/夹详细信息
      *
      * @param path 文件/夹路径
      * @return 详细信息
+     * @throws FileException 文件操作异常
      */
     FileInfoView stat(String path) throws FileException;
 

@@ -21,7 +21,7 @@ import java.util.List;
 public class FileTest {
 
     public static void main(String[] args) {
-        ps();
+        state();
     }
 
     public static void jdk(){
@@ -47,16 +47,10 @@ public class FileTest {
     }
 
     public static void state(){
-        List<String> list = Arrays.asList(
-                "  File: banner_linux.png",
-                "  Size: 26631           Blocks: 56         IO Block: 4096   regular file",
-                "Device: 2h/2d   Inode: 30680772462057261  Links: 1",
-                "Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)",
-                "Access: 2021-08-10 18:33:52.636817400 +0800",
-                "Modify: 2021-07-30 14:09:33.544315100 +0800",
-                "Change: 2021-07-30 14:09:33.544315100 +0800",
-                " Birth: -");
-        Console.log(JSONUtil.parseObj(FileInfoView.parse(list)).toJSONString(4));
+//        Console.log(RuntimeUtil.execForStr("stat -c \"|%n|%s|%G|%U|%a|%A|%W|%X|%Y|%Z|\" /home"));
+        Console.log(JSONUtil
+                .parseObj(FileInfoView.parse(RuntimeUtil.execForStr("stat -c \"|%n|%s|%G|%U|%a|%A|%W|%X|%Y|%Z|\" /home")))
+                .toJSONString(4));
     }
 
     public static void ps(){
@@ -67,6 +61,10 @@ public class FileTest {
                 Console.log(line);
             }
         }
+    }
+
+    public static void tempPath(){
+        Console.log(System.getProperty("java.io.tmpdir"));
     }
 
 }

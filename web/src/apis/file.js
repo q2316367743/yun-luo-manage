@@ -58,10 +58,17 @@ export default {
     show(path, success, error) {
         getObject(file_model + '/show', { path }, success, error);
     },
+    download(paths, success, error) {
+        let target = paths.join(',');
+        getObject(file_model + '/download', { paths: target }, success, error);
+    },
     upload(data, success, error) {
         postObject(file_model + '/upload', data, success, error);
     },
     remote_download(path, name, url, success, error) {
         get(file_model + '/remote_download', { path, name, url }, success, error)
+    },
+    stat(path, success, error) {
+        get(`${file_model}/stat`, { path }, success, error)
     }
 }

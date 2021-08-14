@@ -1,5 +1,6 @@
 package xyz.esion.manage.view;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,17 +23,9 @@ public class FileInfoView implements Serializable {
 
     private String size;
 
-    private String blocks;
+    private String group;
 
-    private String ioBlock;
-
-    private String type;
-
-    private String device;
-
-    private String inode;
-
-    private String links;
+    private String user;
 
     /**
      * 访问权限 - 字符串
@@ -45,10 +38,6 @@ public class FileInfoView implements Serializable {
     private String accessValue;
 
     private Access access;
-
-    private String uid;
-
-    private String gid;
 
     private String accessTime;
 
@@ -102,34 +91,20 @@ public class FileInfoView implements Serializable {
      * @param info 文件/夹详情list
      * @return 文件/夹详情
      */
-    public static FileInfoView parse(List<String> info){
+    public static FileInfoView parse(String info){
+        String[] items = info.split("\\|");
         FileInfoView view = new FileInfoView();
-        view.setName(info.get(0).split(":")[1].trim());
-        String one = info.get(1);
-        int sizeIndex = one.indexOf("Size: ");
-        int blockIndex = one.indexOf("Blocks: ");
-        int ioBlockIndex = one.indexOf("IO Block: ");
-        int typeIndex = one.lastIndexOf(" ", ioBlockIndex + 14);
-        String sizeString = one.substring(sizeIndex, blockIndex).substring(6).trim();
-        view.setSize(FileUtil.beautify(sizeString));
-        view.setBlocks(one.substring(blockIndex, ioBlockIndex).substring(8).trim());
-        view.setIoBlock(one.substring(ioBlockIndex, typeIndex).substring(10).trim());
-        view.setType(one.substring(typeIndex).trim());
-        String two = info.get(2);
-        int deviceIndex = two.indexOf("Device: ");
-        int inodeIndex = two.indexOf("Inode: ");
-        int linksIndex = two.indexOf("Links: ");
-        view.setDevice(two.substring(deviceIndex, inodeIndex).substring(8).trim());
-        view.setInode(two.substring(inodeIndex, linksIndex).substring(7).trim());
-        view.setLinks(two.substring(linksIndex).substring(7).trim());
-        String three = info.get(3);
-        int accessIndex = three.indexOf("Access: ");
-        int uidIndex = three.indexOf("Uid: ");
-        int gidIndex = three.indexOf("Gid: ");
-        String accessString = three.substring(accessIndex, uidIndex).substring(8).trim();
-        view.setAccessString(accessString.substring(6, 16));
-        view.setAccessValue(accessString.substring(1, 5));
-        char[] accessChars = accessString.substring(6, 16).toCharArray();
+        view.setName(items[1]);
+        view.setSize(FileUtil.beautify(items[2]));
+        view.setGroup(items[3]);
+        view.setUser(items[4]);
+        view.setAccessValue(items[5]);
+        view.setAccessString(items[6]);
+        view.setBirth(DateUtil.date(Long.parseLong(items[7]) * 1000).toString("yyyy-MM-dd hh:mm:ss"));
+        view.setAccessTime(DateUtil.date(Long.parseLong(items[8]) * 1000).toString("yyyy-MM-dd hh:mm:ss"));
+        view.setModifyTime(DateUtil.date(Long.parseLong(items[9]) * 1000).toString("yyyy-MM-dd hh:mm:ss"));
+        view.setChangeTime(DateUtil.date(Long.parseLong(items[10]) * 1000).toString("yyyy-MM-dd hh:mm:ss"));
+        char[] accessChars = view.getAccessString().toCharArray();
         Access access = new Access();
         access.setOwner(Permission.builder()
                 .read(accessChars[1] == 'r')
@@ -147,12 +122,6 @@ public class FileInfoView implements Serializable {
                 .execute(accessChars[9] == 'x')
                 .build());
         view.setAccess(access);
-        view.setUid(three.substring(uidIndex, gidIndex).substring(5).trim());
-        view.setGid(three.substring(gidIndex).substring(5).trim());
-        view.setAccessTime(info.get(4).substring(8).trim().substring(0, 19));
-        view.setModifyTime(info.get(5).substring(8).trim().substring(0, 19));
-        view.setChangeTime(info.get(6).substring(8).trim().substring(0, 19));
-        view.setBirth(info.get(7).substring(8).trim());
         return view;
     }
 

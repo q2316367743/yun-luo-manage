@@ -94,7 +94,7 @@
 					>取消{{ mv_paths.length > 0 ? "移动" : "复制" }}</el-button
 				>
 			</div>
-			<div>
+			<div class="file-show" @contextmenu.prevent="option_menu_open">
 				<div class="file-head">
 					<div class="file-name">
 						<el-checkbox
@@ -107,74 +107,37 @@
 					</div>
 					<div class="file-item-center">文件大小</div>
 					<div>修改时间</div>
-					<div>权限</div>
-					<div>所有者</div>
-					<div>操作</div>
 				</div>
-				<el-checkbox-group
-					v-model="paths"
-					@change="handleCheckedChange"
-				>
-					<div class="file-content">
-						<div
-							class="file-content-item"
-							v-for="(file, index) in file_list"
-							:key="index"
-							@dblclick="open(file)"
-							@contextmenu.prevent="
-								open_menu(index, file, $event)
-							"
-							:class="{
-								'file-content-hover': index === menu_index,
-							}"
-						>
-							<div class="file-name">
-								<el-checkbox :label="file.path">
-									<i
-										class="el-icon-folder-opened"
-										v-if="file.type === 'FOLDER'"
-									></i>
-									<i
-										class="el-icon-document"
-										v-else-if="file.type === 'FILE'"
-									></i>
-								</el-checkbox>
-								<span>{{ file.name }}</span>
-							</div>
-							<div class="file-item-center">{{ file.size }}</div>
-							<div>{{ file.update_time }}</div>
-							<div>{{ file.permission }}</div>
-							<div>{{ file.group }} {{ file.owner }}</div>
-							<div>
-								<el-button
-									type="text"
-									size="mini"
-									@click="rm(file.path, false)"
-									>删除</el-button
-								>
-								<el-button
-									type="text"
-									size="mini"
-									@click="rm(file.path, true)"
-									>强制删除</el-button
-								>
-								<el-button
-									type="text"
-									size="mini"
-									@click="rename(file.name)"
-									>重命名</el-button
-								>
-								<el-button
-									v-if="file.type === 'FILE'"
-									type="text"
-									size="mini"
-									@click="download(file.path, file.name)"
-									>下载</el-button
-								>
-							</div>
+				<div class="file-content">
+					<div
+						class="file-content-item"
+						v-for="(file, index) in file_list"
+						:key="index"
+						@dblclick="open(file)"
+						@contextmenu.prevent.stop="
+							open_menu(index, file, $event)
+						"
+						:class="{
+							'file-content-hover': index === menu_index,
+						}"
+					>
+						<div class="file-name">
+							<el-checkbox v-model="paths" :label="file.path">
+								<i
+									class="el-icon-folder-opened"
+									v-if="file.type === 'FOLDER'"
+								></i>
+								<i
+									class="el-icon-document"
+									v-else-if="file.type === 'FILE'"
+								></i>
+							</el-checkbox>
+							<span>{{ file.name }}</span>
 						</div>
+						<div class="file-item-center">{{ file.size }}</div>
+						<div>{{ file.update_time }}</div>
 					</div>
-				</el-checkbox-group>
+				</div>
 			</div>
 		</div>
 		<div
@@ -182,7 +145,7 @@
 			@click="close_menu"
 			@contextmenu.prevent="close_menu"
 		></div>
-		<div id="file-menu">
+		<div id="file-menu" class="my-menu">
 			<div @click="menu_open">打开</div>
 			<div
 				v-if="this.menu_file && this.menu_file.type === 'FILE'"
@@ -218,10 +181,9 @@
 				视频格式打开
 			</div>
 			<div
-				v-if="this.menu_file && this.menu_file.type === 'FILE'"
 				@click="
 					() => {
-						download(this.menu_file.path, this.menu_file.name);
+						download(this.menu_file);
 						close_menu();
 					}
 				"
@@ -241,7 +203,7 @@
 			<div
 				@click="
 					() => {
-						rm(menu_file.path, false);
+						rm(menu_file.path, true);
 						close_menu();
 					}
 				"
@@ -257,6 +219,69 @@
 				"
 			>
 				重命名
+			</div>
+			<div
+				@click="
+					() => {
+						stat();
+						close_menu();
+					}
+				"
+			>
+				属性
+			</div>
+		</div>
+		<div id="option-menu" class="my-menu">
+			<div
+				@click="
+					() => {
+						touch();
+						close_menu();
+					}
+				"
+			>
+				新建文件
+			</div>
+			<div
+				@click="
+					() => {
+						mkdir();
+						close_menu();
+					}
+				"
+			>
+				新建文件夹
+			</div>
+			<div
+				@click="
+					() => {
+						refresh();
+						close_menu();
+					}
+				"
+			>
+				刷新
+			</div>
+			<div
+				v-if="mv_paths.length > 0 || cp_paths.length > 0"
+				@click="
+					() => {
+						paste();
+						close_menu();
+					}
+				"
+			>
+				粘贴
+			</div>
+			<div
+				@click="
+					() => {
+						stat();
+						close_menu();
+					}
+				"
+			>
+				属性
 			</div>
 		</div>
 		<el-dialog
@@ -312,6 +337,87 @@
 					>下 载</el-button
 				>
 			</span>
+		</el-dialog>
+		<el-dialog
+			title="属性"
+			:visible.sync="info_status"
+			:modal-append-to-body="false"
+			destroy-on-close
+			:close-on-click-modal="false"
+			width="30%"
+			@close="
+				() => {
+					this.info_index = 'base';
+					this.info_status = false;
+				}
+			"
+		>
+			<el-tabs v-model="info_index" stretch>
+				<el-tab-pane label="基本信息" name="base"> </el-tab-pane>
+				<el-tab-pane label="权限" name="access"></el-tab-pane>
+				<div v-if="info_index === 'base'" style="margin-top: 12px">
+					<el-form label-width="100px">
+						<el-form-item label="文件路径：">
+							{{ info.name }}
+						</el-form-item>
+						<el-form-item label="创建时间：">
+							{{ info.birth }}
+						</el-form-item>
+						<el-form-item label="最近访问：">
+							{{ info.access_time }}
+						</el-form-item>
+						<el-form-item label="最近更改：">
+							{{ info.modify_time }}
+						</el-form-item>
+						<el-form-item label="最近改动：">
+							{{ info.change_time }}
+						</el-form-item>
+					</el-form>
+				</div>
+				<div v-if="info_index === 'access'" style="margin-top: 12px">
+					<el-form label-width="100px">
+						<el-form-item label="所属组：">
+							{{ info.group }}
+						</el-form-item>
+						<el-form-item label="所属用户：">
+							{{ info.user }}
+						</el-form-item>
+						<el-form-item label="组权限：">
+							<el-checkbox v-model="info.access.group.write"
+								>写入</el-checkbox
+							>
+							<el-checkbox v-model="info.access.group.read"
+								>读取</el-checkbox
+							>
+							<el-checkbox v-model="info.access.group.execute"
+								>执行</el-checkbox
+							>
+						</el-form-item>
+						<el-form-item label="用户权限：">
+							<el-checkbox v-model="info.access.owner.write"
+								>写入</el-checkbox
+							>
+							<el-checkbox v-model="info.access.owner.read"
+								>读取</el-checkbox
+							>
+							<el-checkbox v-model="info.access.owner.execute"
+								>执行</el-checkbox
+							>
+						</el-form-item>
+						<el-form-item label="其他权限：">
+							<el-checkbox v-model="info.access.other.write"
+								>写入</el-checkbox
+							>
+							<el-checkbox v-model="info.access.other.read"
+								>读取</el-checkbox
+							>
+							<el-checkbox v-model="info.access.other.execute"
+								>执行</el-checkbox
+							>
+						</el-form-item>
+					</el-form>
+				</div>
+			</el-tabs>
 		</el-dialog>
 	</div>
 </template>

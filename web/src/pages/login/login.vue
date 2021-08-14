@@ -45,7 +45,11 @@ export default {
 					sessionStorage.setItem("token", res.data.item.token);
 					this.$store.commit("SET_NICKNAME", res.data.item.nickname);
 					this.$store.commit("SET_MENU", res.data.item.permissions);
-					this.$router.push("/");
+					if (this.$route.query.redict) {
+						this.$router.push(this.$route.query.redict);
+					} else {
+						this.$router.push("/");
+					}
 				}
 			});
 		},
