@@ -12,7 +12,7 @@
 
 ## 说明
 
-文档地址：<https://esion.xyz>
+文档地址：<https://esion.xyz/docs>
 
 
 
