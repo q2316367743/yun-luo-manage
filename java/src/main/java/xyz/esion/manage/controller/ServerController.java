@@ -63,49 +63,49 @@ public class ServerController {
     }
 
     @PostMapping("command/add")
-    @SaCheckPermission("server-own$command&a")
+    @SaCheckPermission("server-own&u")
     public Result commandAdd(@RequestBody ServerCommandOption option){
         serverService.commandAdd(option);
         return Result.success();
     }
 
     @PostMapping("command/update/{id}")
-    @SaCheckPermission("server-own$command&u")
+    @SaCheckPermission("server-own&u")
     public Result commandUpdate(@PathVariable("id") String id, @RequestBody ServerCommandOption option){
         serverService.commandUpdate(id, option);
         return Result.success();
     }
 
     @PostMapping("command/remove/{id}")
-    @SaCheckPermission("server-own$command&d")
+    @SaCheckPermission("server-own&u")
     public Result commandRemove(@PathVariable("id") String id){
         serverService.commandRemove(id);
         return Result.success();
     }
 
     @PostMapping("config/add")
-    @SaCheckPermission("server-own$config&a")
+    @SaCheckPermission("server-own&u")
     public Result configAdd(@RequestBody ServerConfigOption option){
         serverService.configAdd(option);
         return Result.success();
     }
 
     @PostMapping("config/update/{id}")
-    @SaCheckPermission("server-cown$onfig&u")
+    @SaCheckPermission("server-own&u")
     public Result configUpdate(@PathVariable("id") String id, @RequestBody ServerConfigOption option){
         serverService.configUpdate(id, option);
         return Result.success();
     }
 
     @PostMapping("config/remove/{id}")
-    @SaCheckPermission("server-own$config&d")
+    @SaCheckPermission("server-own&u")
     public Result configRemove(@PathVariable("id") String id){
         serverService.configRemove(id);
         return Result.success();
     }
 
     @GetMapping("command/exec/{id}")
-    @SaCheckPermission("server-own$command&e")
+    @SaCheckPermission("server-own&u")
     public Result execCommand(@PathVariable("id") String id) throws ServerException{
         return Result.success().item(serverService.commandExec(id));
     }

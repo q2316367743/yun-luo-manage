@@ -23,7 +23,7 @@ npm run build
 cd ../java
 mvn package -Dmaven.test.skip=true
 cd target
-java -jar manage-1.0.jar --spring.active.profile=pro
+java -jar manage-2.1.0.jar --spring.profiles.active=pro
 ```
 
 访问地址：<localhost:7743>
@@ -38,7 +38,7 @@ java -jar manage-1.0.jar --spring.active.profile=pro
 
 1. 下载发行版
 
-2. 使用`sudo nohup java -jar manage-1.0.jar --spring.active.profile=pro > /dev/null &`运行
+2. 使用`sudo nohup java -jar manage-2.1.0.jar --spring.profiles.active=pro > /dev/null 2&>1 &`运行
 
 **注意：**请将项目jar包放在单独的文件夹中，因为会生成一些配置文件，项目安装的软件也在安装目录下
 
