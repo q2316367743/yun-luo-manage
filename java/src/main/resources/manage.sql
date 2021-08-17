@@ -125,20 +125,6 @@ values ('20104', '服务器管理 - 自定义服务器 & 删除', 'server-own&d'
 insert into t_permission
 values ('20105', '服务器管理 - 自定义服务器 & 详情', 'server-own&i');
 insert into t_permission
-values ('20106', '服务器管理 - 自定义服务器 $ 命令 & 新增', 'server-own$command&a');
-insert into t_permission
-values ('20107', '服务器管理 - 自定义服务器 $ 命令 & 修改', 'server-own$command&u');
-insert into t_permission
-values ('20108', '服务器管理 - 自定义服务器 $ 命令 & 删除', 'server-own$command&d');
-insert into t_permission
-values ('20109', '服务器管理 - 自定义服务器 $ 命令 & 执行', 'server-own$command&e');
-insert into t_permission
-values ('20110', '服务器管理 - 自定义服务器 $ 配置 & 新增', 'server-own$config&a');
-insert into t_permission
-values ('20111', '服务器管理 - 自定义服务器 $ 配置 & 修改', 'server-own$config&u');
-insert into t_permission
-values ('20112', '服务器管理 - 自定义服务器 $ 配置 & 删除', 'server-own$config&d');
-insert into t_permission
 values ('30101', '系统管理 - 角色管理 & 列表', 'system-role&l');
 insert into t_permission
 values ('30102', '系统管理 - 角色管理 & 新增', 'system-role&a');
@@ -171,35 +157,21 @@ values ('5', '1', '20104');
 insert into t_role_permission
 values ('6', '1', '20105');
 insert into t_role_permission
-values ('7', '1', '20106');
+values ('7', '1', '30101');
 insert into t_role_permission
-values ('8', '1', '20107');
+values ('8', '1', '30102');
 insert into t_role_permission
-values ('9', '1', '20108');
+values ('9', '1', '30103');
 insert into t_role_permission
-values ('10', '1', '20109');
+values ('10', '1', '30104');
 insert into t_role_permission
-values ('11', '1', '20110');
+values ('11', '1', '30201');
 insert into t_role_permission
-values ('12', '1', '20111');
+values ('12', '1', '30202');
 insert into t_role_permission
-values ('13', '1', '20112');
+values ('13', '1', '30203');
 insert into t_role_permission
-values ('14', '1', '30101');
-insert into t_role_permission
-values ('15', '1', '30102');
-insert into t_role_permission
-values ('16', '1', '30103');
-insert into t_role_permission
-values ('17', '1', '30104');
-insert into t_role_permission
-values ('18', '1', '30201');
-insert into t_role_permission
-values ('19', '1', '30202');
-insert into t_role_permission
-values ('20', '1', '30203');
-insert into t_role_permission
-values ('21', '1', '30204');
+values ('14', '1', '30204');
 
 insert into t_user
 values ('1', 'esion', 'e10adc3949ba59abbe56e057f20f883e', '超级管理员', '1', '0', '1998-08-06 00:00:00', '0',

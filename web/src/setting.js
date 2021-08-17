@@ -4,5 +4,6 @@ export default {
         code: ['java', 'py', 'txt', 'conf', 'vue', 'html', 'css', 'js', 'md', 'sql'],
         img: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
         video: ['mp4', 'flv']
-    }
+    },
+    token: sessionStorage.getItem('token')
 }

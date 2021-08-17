@@ -21,9 +21,14 @@
 			</div>
 			<div class="file-option">
 				<el-upload
-					action=""
+					:action="`${setting.base_url}/file/upload`"
 					:show-file-list="false"
-					:http-request="on_upload"
+					multiple
+					:headers="{ token: setting.token }"
+					:data="{ path: path }"
+					name="files"
+					:on-success="on_upload_success"
+					:on-error="on_upload_error"
 				>
 					<el-button size="mini" type="primary">上传</el-button>
 				</el-upload>
@@ -109,34 +114,37 @@
 					<div>修改时间</div>
 				</div>
 				<div class="file-content">
-					<div
-						class="file-content-item"
-						v-for="(file, index) in file_list"
-						:key="index"
-						@dblclick="open(file)"
-						@contextmenu.prevent.stop="
-							open_menu(index, file, $event)
-						"
-						:class="{
-							'file-content-hover': index === menu_index,
-						}"
-					>
-						<div class="file-name">
-							<el-checkbox v-model="paths" :label="file.path">
-								<i
-									class="el-icon-folder-opened"
-									v-if="file.type === 'FOLDER'"
-								></i>
-								<i
-									class="el-icon-document"
-									v-else-if="file.type === 'FILE'"
-								></i>
-							</el-checkbox>
-							<span>{{ file.name }}</span>
+					<div class="file-content-items">
+						<div
+							class="file-content-item"
+							v-for="(file, index) in file_list"
+							:key="index"
+							@dblclick="open(file)"
+							@contextmenu.prevent.stop="
+								open_menu(index, file, $event)
+							"
+							:class="{
+								'file-content-hover': index === menu_index,
+							}"
+						>
+							<div class="file-name">
+								<el-checkbox v-model="paths" :label="file.path">
+									<i
+										class="el-icon-folder-opened"
+										v-if="file.type === 'FOLDER'"
+									></i>
+									<i
+										class="el-icon-document"
+										v-else-if="file.type === 'FILE'"
+									></i>
+								</el-checkbox>
+								<span>{{ file.name }}</span>
+							</div>
+							<div class="file-item-center">{{ file.size }}</div>
+							<div>{{ file.update_time }}</div>
 						</div>
-						<div class="file-item-center">{{ file.size }}</div>
-						<div>{{ file.update_time }}</div>
 					</div>
+					<div></div>
 				</div>
 			</div>
 		</div>

@@ -94,7 +94,7 @@ public class FileController {
 
     @PostMapping("upload")
     public Result upload(FileOption option) throws FileException, IOException {
-        return Result.choose(fileService.upload(option.getPath(), option.getFile()));
+        return Result.choose(fileService.upload(option.getPath(), option.getFiles()));
     }
 
     /**

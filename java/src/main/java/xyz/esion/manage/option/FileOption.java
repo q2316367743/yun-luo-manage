@@ -45,6 +45,6 @@ public class FileOption implements Serializable {
     /**
      * 文件上传的文件
      * */
-    private MultipartFile file;
+    private List<MultipartFile> files;
 
 }

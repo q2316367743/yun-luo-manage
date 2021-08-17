@@ -16,13 +16,13 @@
 				</el-menu-item>
 				<el-menu-item
 					index="/file"
-					v-if="permissions.consists('file&a')"
+					v-if="permissions.startWith('file')"
 				>
 					<span slot="title">文件管理</span>
 				</el-menu-item>
 				<el-submenu
 					index="/server"
-					v-if="permissions.consists('server-own&l')"
+					v-if="permissions.startWith('server')"
 				>
 					<template slot="title">
 						<span>服务器管理</span>
@@ -35,10 +35,7 @@
 				</el-submenu>
 				<el-submenu
 					index="/system"
-					v-if="
-						permissions.consists('system-role&l') ||
-						permissions.consists('system-user&l')
-					"
+					v-if="permissions.startWith('system')"
 				>
 					<template slot="title">
 						<span>系统管理</span>

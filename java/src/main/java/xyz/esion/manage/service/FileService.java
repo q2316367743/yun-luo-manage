@@ -142,12 +142,12 @@ public interface FileService {
      * 文件上传
      *
      * @param path 上传文件的路径
-     * @param file 文件
+     * @param files 全部文件
      * @return 结果
      * @throws FileException 文件操作异常
      * @throws IOException IO异常
      */
-    boolean upload(String path, MultipartFile file) throws FileException, IOException;
+    boolean upload(String path, List<MultipartFile> files) throws FileException, IOException;
 
     /**
      * 远程下载

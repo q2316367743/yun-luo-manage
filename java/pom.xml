@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>xyz.esion</groupId>
     <artifactId>manage</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.0</version>
     <name>java</name>
     <description>云落管理系统</description>
 

@@ -33,16 +33,20 @@
     top: 30px;
     left: 0;
     bottom: 0;
-    width: 1000px;
+    right: 0;
     overflow: auto;
 }
 
-.file-content>div {
+.file-content-items {
+    width: 1000px;
+}
+
+.file-content-items>div {
     height: 45px;
     align-items: center;
 }
 
-.file-content>div:hover {
+.file-content-items>div:hover {
     background-color: var(--em-color);
 }
 
@@ -54,6 +58,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-left: 12px;
 }
 
 .file-name>.el-checkbox {

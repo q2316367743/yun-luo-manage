@@ -50,7 +50,7 @@
 					<el-form-item label="状态：" v-if="!is_update">
 						<div>{{ server.status ? "运行中" : "停止" }}</div>
 					</el-form-item>
-					<el-form-item v-if="permissions.consists('server-own&u')">
+					<el-form-item>
 						<el-button @click="is_update = !is_update"
 							>{{ is_update ? "取消" : "修改" }}
 						</el-button>
@@ -82,25 +82,16 @@
 							<el-button
 								type="text"
 								@click="command_exec(scope.row.id)"
-								v-if="
-									permissions.consists('server-own$command&e')
-								"
 								>执行</el-button
 							>
 							<el-button
 								type="text"
 								@click="open_command_dialog(true, scope.row)"
-								v-if="
-									permissions.consists('server-own$command&u')
-								"
 								>修改</el-button
 							>
 							<el-button
 								type="text"
 								@click="command_remove(scope.row.id)"
-								v-if="
-									permissions.consists('server-own$command&d')
-								"
 								>删除</el-button
 							>
 						</template>
@@ -116,19 +107,10 @@
 					</el-table-column>
 					<el-table-column label="操作" width="180">
 						<template slot-scope="scope">
-							<el-button
-								type="text"
-								v-if="
-									permissions.consists('server-own$config&u')
-								"
-								>修改</el-button
-							>
+							<el-button type="text">修改</el-button>
 							<el-button
 								type="text"
 								@click="config_remove(scope.row.id)"
-								v-if="
-									permissions.consists('server-own$config&d')
-								"
 								>删除</el-button
 							>
 						</template>
@@ -185,20 +167,14 @@
 			v-if="index === 'command' || index === 'config'"
 		>
 			<el-button
-				v-if="
-					index === 'command' &&
-					permissions.consists('server-own$command&a')
-				"
+				v-if="index === 'command'"
 				icon="el-icon-plus"
 				circle
 				@click="open_command_dialog(false)"
 				style="font-size: 34px"
 			></el-button>
 			<el-button
-				v-if="
-					index === 'config' &&
-					permissions.consists('server-own$config&a')
-				"
+				v-if="index === 'config'"
 				icon="el-icon-plus"
 				circle
 				@click="open_config_dialog(false)"
@@ -210,7 +186,6 @@
 
 <script>
 import server_api from "@/apis/server";
-import { mapGetters } from "vuex";
 import file_explore from "@/components/file_explore";
 export default {
 	name: "info",
@@ -250,9 +225,6 @@ export default {
 	created() {
 		this.id = this.$route.params.id;
 		this.get_server_info();
-	},
-	computed: {
-		...mapGetters(["permissions"]),
 	},
 	methods: {
 		go_back() {

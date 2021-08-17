@@ -222,7 +222,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public boolean upload(String path, MultipartFile file) throws FileException, IOException {
+    public boolean upload(String path, List<MultipartFile> files) throws FileException, IOException {
         File filePath = FileUtil.file(path);
         if (!filePath.exists()){
             throw new FileException("路径不存在");
@@ -231,11 +231,13 @@ public class FileServiceImpl implements FileService {
         if (!filePath.isDirectory()){
             throw new FileException("路径不是文件夹，" + path);
         }
-        String name = file.getOriginalFilename();
-        if (StrUtil.isBlank(name)){
-            name = String.valueOf(System.currentTimeMillis());
+        for (MultipartFile file : files) {
+            String name = file.getOriginalFilename();
+            if (StrUtil.isBlank(name)){
+                name = String.valueOf(System.currentTimeMillis());
+            }
+            IoUtil.copy(file.getInputStream(), FileUtil.getOutputStream(new File(filePath, name)));
         }
-        IoUtil.copy(file.getInputStream(), FileUtil.getOutputStream(new File(filePath, name)));
         return true;
     }
 

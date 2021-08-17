@@ -31,6 +31,7 @@ export default {
         "code-edit": code_edit
     },
     data: () => ({
+        setting,
         path: '/',
         show_path: [],
         file_list: [],
@@ -147,7 +148,7 @@ export default {
             // 判断是否是文本类型
             for (let item of setting.file_type.code) {
                 if (lastWith(name, item)) {
-                    this.open_by_code(name, item)
+                    this.open_by_code(path, item)
                     return;
                 }
             }
@@ -449,19 +450,14 @@ export default {
                 this.$message.error('文件下载失败，' + message)
             })
         },
-        on_upload(event) {
-            let formData = new FormData();
-            formData.set("path", this.path);
-            formData.set("file", event.file);
-            file.upload(formData, res => {
-                if (res.success) {
-                    this.$message.success('上传成功');
-                    // 重新加载目录
-                    this.toP(this.path);
-                }
-            }, () => {
-                this.$message.error('上传失败');
-            })
+        on_upload_success() {
+            this.$message.success('上传成功');
+            // 重新加载目录
+            this.toP(this.path);
+
+        },
+        on_upload_error() {
+            this.$message.error('文件上传失败')
 
         },
         refresh() {

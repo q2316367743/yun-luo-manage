@@ -96,13 +96,6 @@
 											'20103',
 											'20104',
 											'20105',
-											'20106',
-											'20107',
-											'20108',
-											'20109',
-											'20110',
-											'20111',
-											'20112',
 										])
 									"
 									>列表</el-checkbox
@@ -126,70 +119,7 @@
 								><el-checkbox
 									v-model="permission_check"
 									label="20105"
-									@change="
-										check_remove($event, '20101', [
-											'20106',
-											'20107',
-											'20108',
-											'20109',
-											'20110',
-											'20111',
-											'20112',
-										])
-									"
 									>详情</el-checkbox
-								>
-								<el-checkbox
-									v-model="permission_check"
-									label="20106"
-									@change="
-										check_remove($event, '20101', '20105')
-									"
-									>新增</el-checkbox
-								><el-checkbox
-									v-model="permission_check"
-									label="20107"
-									@change="
-										check_remove($event, '20101', '20105')
-									"
-									>修改</el-checkbox
-								>
-								<el-checkbox
-									v-model="permission_check"
-									label="20108"
-									@change="
-										check_remove($event, '20101', '20105')
-									"
-									>删除</el-checkbox
-								><el-checkbox
-									v-model="permission_check"
-									label="20109"
-									@change="
-										check_remove($event, '20101', '20105')
-									"
-									>执行</el-checkbox
-								><el-checkbox
-									v-model="permission_check"
-									label="20110"
-									@change="
-										check_remove($event, '20101', '20105')
-									"
-									>新增</el-checkbox
-								><el-checkbox
-									v-model="permission_check"
-									label="20111"
-									@change="
-										check_remove($event, '20101', '20105')
-									"
-									>修改</el-checkbox
-								>
-								<el-checkbox
-									v-model="permission_check"
-									label="20112"
-									@change="
-										check_remove($event, '20101', '20105')
-									"
-									>删除</el-checkbox
 								>
 							</td>
 						</tr>

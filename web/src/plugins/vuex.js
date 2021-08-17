@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 import router from './router';
 
 import file from "../pages/file/file.vue";
-import server from "../pages/server/server.vue";
-import server_info from '@/pages/server/info.vue'
+import server from "../pages/server/own/server.vue";
+import server_info from '@/pages/server/own/info.vue'
 import system_role from '@/pages/system/role/role.vue'
 import system_user from '@/pages/system/user/user.vue'
 
