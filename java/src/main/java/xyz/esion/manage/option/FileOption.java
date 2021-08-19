@@ -1,7 +1,10 @@
 package xyz.esion.manage.option;
 
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.system.SystemUtil;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
+import xyz.esion.manage.exception.FileException;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,5 +49,19 @@ public class FileOption implements Serializable {
      * 文件上传的文件
      * */
     private List<MultipartFile> files;
+
+    public void verify() throws FileException {
+        // 目录不能是，目录也不能包含
+        if (StrUtil.isNotBlank(this.path) && this.path.contains(SystemUtil.getUserInfo().getCurrentDir())) {
+            throw new FileException("目录不能是也不能包含项目所在目录");
+        }
+        if (this.paths != null && !this.paths.isEmpty()){
+            for (String path : paths) {
+                if (path.contains(SystemUtil.getUserInfo().getCurrentDir())) {
+                    throw new FileException("目录不能是也不能包含项目所在目录");
+                }
+            }
+        }
+    }
 
 }

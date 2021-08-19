@@ -30,8 +30,14 @@ export default {
     config_add(data, success, error) {
         post(`${server_model}/config/add`, data, success, error);
     },
+    config_update(id, data, success, error) {
+        post(`${server_model}/config/update/${id}`, data, success, error);
+    },
     config_remove(id, success, error) {
         post(`${server_model}/config/remove/${id}`, null, success, error);
+    },
+    config_write(path, charset, content, success, error) {
+        post(`${server_model}/config/write`, { path, charset, content }, success, error)
     },
     command_exec(id, success, error) {
         getJSON(`${server_model}/command/exec/${id}`, success, error);

@@ -115,15 +115,15 @@ where r.is_delete = 0;
 insert into t_permission
 values ('10101', '文件管理 & 全部', 'file&a');
 insert into t_permission
-values ('20101', '服务器管理 - 自定义服务器 & 列表', 'server-own&l');
+values ('20101', '服务器管理 & 列表', 'server&l');
 insert into t_permission
-values ('20102', '服务器管理 - 自定义服务器 & 新增', 'server-own&a');
+values ('20102', '服务器管理 & 新增', 'server&a');
 insert into t_permission
-values ('20103', '服务器管理 - 自定义服务器 & 修改', 'server-own&u');
+values ('20103', '服务器管理 & 修改', 'server&u');
 insert into t_permission
-values ('20104', '服务器管理 - 自定义服务器 & 删除', 'server-own&d');
+values ('20104', '服务器管理 & 删除', 'server&d');
 insert into t_permission
-values ('20105', '服务器管理 - 自定义服务器 & 详情', 'server-own&i');
+values ('20105', '服务器管理 & 详情', 'server&i');
 insert into t_permission
 values ('30101', '系统管理 - 角色管理 & 列表', 'system-role&l');
 insert into t_permission

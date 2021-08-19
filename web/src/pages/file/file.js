@@ -71,9 +71,10 @@ export default {
         toP(path) {
             let old = this.path;
             this.path = path;
-            this.toPath(() => {
+            this.toPath((message) => {
                 this.path = old;
                 this.parse_path();
+                this.$message.error(message)
             });
             this.clear_check();
             this.parse_path();

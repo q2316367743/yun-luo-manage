@@ -56,7 +56,7 @@ export default {
             this.$message.success("安装服务器，类型：" + type);
         },
         open_info(id) {
-            this.$router.push(`/server/own/${id}`);
+            this.$router.push(`/server/${id}`);
         },
         remove(id) {
             this.$confirm('此操作将永久删除该服务器, 是否继续?', '提示', {

@@ -20,19 +20,12 @@
 				>
 					<span slot="title">文件管理</span>
 				</el-menu-item>
-				<el-submenu
+				<el-menu-item
 					index="/server"
-					v-if="permissions.startWith('server')"
+					v-if="permissions.consists('server&l')"
 				>
-					<template slot="title">
-						<span>服务器管理</span>
-					</template>
-					<el-menu-item
-						index="/server/own"
-						v-if="permissions.consists('server-own&l')"
-						>自定义服务器</el-menu-item
-					>
-				</el-submenu>
+					<span slot="title">服务器管理</span>
+				</el-menu-item>
 				<el-submenu
 					index="/system"
 					v-if="permissions.startWith('system')"

@@ -110,7 +110,7 @@ export default {
 				suffix: ["js", "java"],
 			},
 			{
-				value: "html",
+				value: "xml",
 				label: "XML/HTML",
 				suffix: ["html", "xml"],
 			},

@@ -51,16 +51,20 @@
 						<div>{{ server.status ? "运行中" : "停止" }}</div>
 					</el-form-item>
 					<el-form-item>
-						<el-button @click="is_update = !is_update"
+						<el-button
+							@click="is_update = !is_update"
+							v-if="permissions.consists('server&u')"
 							>{{ is_update ? "取消" : "修改" }}
 						</el-button>
-						<el-button @click="reset" v-if="is_update"
+						<el-button
+							@click="reset"
+							v-if="is_update && permissions.consists('server&u')"
 							>重置</el-button
 						>
 						<el-button
 							type="primary"
 							@click="update"
-							v-if="is_update"
+							v-if="is_update && permissions.consists('server&u')"
 							>修改</el-button
 						>
 					</el-form-item>
@@ -82,16 +86,19 @@
 							<el-button
 								type="text"
 								@click="command_exec(scope.row.id)"
+								v-if="permissions.consists('server&u')"
 								>执行</el-button
 							>
 							<el-button
 								type="text"
 								@click="open_command_dialog(true, scope.row)"
+								v-if="permissions.consists('server&u')"
 								>修改</el-button
 							>
 							<el-button
 								type="text"
 								@click="command_remove(scope.row.id)"
+								v-if="permissions.consists('server&u')"
 								>删除</el-button
 							>
 						</template>
@@ -107,10 +114,22 @@
 					</el-table-column>
 					<el-table-column label="操作" width="180">
 						<template slot-scope="scope">
-							<el-button type="text">修改</el-button>
+							<el-button
+								type="text"
+								@click="open_config_edit(scope.row.path)"
+								v-if="permissions.consists('server&u')"
+								>编辑</el-button
+							>
+							<el-button
+								type="text"
+								@click="open_config_dialog(true, scope.row.id)"
+								v-if="permissions.consists('server&u')"
+								>修改</el-button
+							>
 							<el-button
 								type="text"
 								@click="config_remove(scope.row.id)"
+								v-if="permissions.consists('server&u')"
 								>删除</el-button
 							>
 						</template>
@@ -167,30 +186,55 @@
 			v-if="index === 'command' || index === 'config'"
 		>
 			<el-button
-				v-if="index === 'command'"
+				v-if="index === 'command' && permissions.consists('server&u')"
 				icon="el-icon-plus"
 				circle
 				@click="open_command_dialog(false)"
 				style="font-size: 34px"
 			></el-button>
 			<el-button
-				v-if="index === 'config'"
+				v-if="index === 'config' && permissions.consists('server&u')"
 				icon="el-icon-plus"
 				circle
 				@click="open_config_dialog(false)"
 				style="font-size: 34px"
 			></el-button>
 		</div>
+		<el-dialog
+			title="代码编辑器"
+			:visible.sync="config_code"
+			:modal-append-to-body="false"
+			destroy-on-close
+			:close-on-click-modal="false"
+			width="70%"
+			top="10vh"
+		>
+			<code-edit
+				v-if="config_code"
+				:path="config_temp_path"
+				:suffix="config_temp_suffix"
+				ref="code_edit"
+			></code-edit>
+			<span slot="footer" class="dialog-footer">
+				<el-button @click="config_code = false">取 消</el-button>
+				<el-button type="primary" @click="write_code_charset"
+					>修 改</el-button
+				>
+			</span>
+		</el-dialog>
 	</el-card>
 </template>
 
 <script>
 import server_api from "@/apis/server";
 import file_explore from "@/components/file_explore";
+import code_edit from "@/components/code_edit";
+import { mapGetters } from "vuex";
 export default {
 	name: "info",
 	components: {
 		"file-explore": file_explore,
+		"code-edit": code_edit,
 	},
 	data: () => ({
 		id: -1,
@@ -221,14 +265,21 @@ export default {
 		},
 		config_dialog: false,
 		config_is_update: false,
+		config_temp_id: "",
+		config_temp_path: "",
+		config_temp_suffix: "",
+		config_code: false,
 	}),
+	computed: {
+		...mapGetters(["permissions"]),
+	},
 	created() {
 		this.id = this.$route.params.id;
 		this.get_server_info();
 	},
 	methods: {
 		go_back() {
-			this.$router.push("/server/own");
+			this.$router.push("/server");
 		},
 		get_server_info() {
 			// 获取信息
@@ -349,29 +400,49 @@ export default {
 				);
 			});
 		},
-		open_config_dialog(config_is_update) {
+		open_config_dialog(config_is_update, id) {
 			this.config_dialog = true;
 			this.config_is_update = config_is_update;
+			this.config_temp_id = id;
 		},
 		config_dialog_submit() {
 			let explore = this.$refs.explore;
 			if (!explore.get_is_directory()) {
-				server_api.config_add(
-					{
-						path: explore.get_path(),
-						server_id: this.id,
-					},
-					(res) => {
-						if (res.success) {
-							this.config_dialog = false;
-							this.$message.success("新增配置文件成功");
-							this.get_server_info();
+				if (this.config_is_update) {
+					server_api.config_update(
+						this.config_temp_id,
+						{
+							path: explore.get_path(),
+						},
+						(res) => {
+							if (res.success) {
+								this.config_dialog = false;
+								this.$message.success("修改配置文件成功");
+								this.get_server_info();
+							}
+						},
+						(message) => {
+							this.$message.error("修改配置文件失败，" + message);
 						}
-					},
-					(message) => {
-						this.$message.error("新增配置文件失败，" + message);
-					}
-				);
+					);
+				} else {
+					server_api.config_add(
+						{
+							path: explore.get_path(),
+							server_id: this.id,
+						},
+						(res) => {
+							if (res.success) {
+								this.config_dialog = false;
+								this.$message.success("新增配置文件成功");
+								this.get_server_info();
+							}
+						},
+						(message) => {
+							this.$message.error("新增配置文件失败，" + message);
+						}
+					);
+				}
 			} else {
 				this.$message.error("请选择文件！");
 			}
@@ -420,6 +491,30 @@ export default {
 				},
 				(message) => {
 					this.$message.error("执行失败，" + message);
+				}
+			);
+		},
+		open_config_edit(path) {
+			this.config_temp_path = path;
+			let paths = path.split(".");
+			this.config_temp_suffix = paths[paths.length - 1];
+			this.config_code = true;
+		},
+		write_code_charset() {
+			// 以指定的编码写入
+			server_api.config_write(
+				this.config_temp_path,
+				this.$refs.code_edit.get_charset(),
+				this.$refs.code_edit.get_content(),
+				(res) => {
+					if (res.success) {
+						// 关闭对话框
+						this.config_code = false;
+						this.$message.success("修改成功");
+					}
+				},
+				(message) => {
+					this.$message.error("修改失败，" + message);
 				}
 			);
 		},

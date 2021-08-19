@@ -29,13 +29,13 @@
 							type="text"
 							size="mini"
 							@click="open_info(scope.row.id)"
-							v-if="permissions.consists('server-own&i')"
+							v-if="permissions.consists('server&i')"
 							>查看</el-button
 						>
 						<el-button
 							type="text"
 							size="mini"
-							v-if="permissions.consists('server-own&d')"
+							v-if="permissions.consists('server&d')"
 							@click="remove(scope.row.id)"
 							>删除</el-button
 						>
@@ -84,7 +84,7 @@
 				>
 			</span>
 		</el-dialog>
-		<div class="add_button" v-if="permissions.consists('server-own&a')">
+		<div class="add_button" v-if="permissions.consists('server&a')">
 			<el-button
 				icon="el-icon-plus"
 				circle

@@ -29,16 +29,19 @@ public class FileController {
 
     @GetMapping("ls")
     public Result ls(FileOption option) throws FileException {
+        option.verify();
         return Result.success().items(fileService.ls(option.getPath()));
     }
 
     @GetMapping("open")
     public Result open(FileOption option) throws FileException {
+        option.verify();
         return Result.success().item(fileService.open(option.getPath(), option.getCharset()));
     }
 
     @GetMapping("show")
     public ResponseEntity<byte[]> show(FileOption option) throws FileException {
+        option.verify();
         return ResponseEntity
                 .status(200)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
@@ -47,6 +50,7 @@ public class FileController {
 
     @GetMapping("download")
     public ResponseEntity<byte[]> download(FileOption option) throws FileException {
+        option.verify();
         return ResponseEntity.status(200)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .body(fileService.download(option.getPaths()));
@@ -54,46 +58,55 @@ public class FileController {
 
     @GetMapping("stat")
     public Result stat(FileOption option) throws FileException {
+        option.verify();
         return Result.success().item(fileService.stat(option.getPath()));
     }
 
     @PostMapping("mv")
     public Result mv(@RequestBody FileOption option) throws FileException {
+        option.verify();
         return Result.choose(fileService.mv(option.getPaths(), option.getTarget(), option.getIsForce()));
     }
 
     @PostMapping("cp")
     public Result cp(@RequestBody FileOption option) throws FileException {
+        option.verify();
         return Result.choose(fileService.cp(option.getPaths(), option.getTarget()));
     }
 
     @PostMapping("rename")
     public Result rename(@RequestBody FileOption option) throws FileException {
+        option.verify();
         return Result.choose(fileService.rename(option.getPath(), option.getName(), option.getTarget()));
     }
 
     @PostMapping("rm")
     public Result rm(@RequestBody FileOption option) throws FileException {
+        option.verify();
         return Result.choose(fileService.rm(option.getPaths(), option.getIsForce()));
     }
 
     @PostMapping("touch")
     public Result touch(@RequestBody FileOption option) throws FileException {
+        option.verify();
         return Result.choose(fileService.touch(option.getPath(), option.getName()));
     }
 
     @PostMapping("mkdir")
     public Result mkdir(@RequestBody FileOption option) throws FileException {
+        option.verify();
         return Result.choose(fileService.mkdir(option.getPath(), option.getName()));
     }
 
     @PostMapping("write")
     public Result write(@RequestBody FileOption option) throws FileException {
+        option.verify();
         return Result.choose(fileService.write(option.getPath(), option.getCharset(), option.getContent()));
     }
 
     @PostMapping("upload")
     public Result upload(FileOption option) throws FileException, IOException {
+        option.verify();
         return Result.choose(fileService.upload(option.getPath(), option.getFiles()));
     }
 
@@ -107,12 +120,14 @@ public class FileController {
 
     @GetMapping("remote_download")
     public Result remoteDownload(FileOption option) throws FileException {
+        option.verify();
         return Result.choose(fileService.remoteDownload(option.getPath(), option.getName(), option.getUrl()));
     }
 
     @GetMapping("simple_ls")
-    public Result simpleLs(String path){
-        return Result.success().items(fileService.simpleLs(path));
+    public Result simpleLs(FileOption option) throws FileException {
+        option.verify();
+        return Result.success().items(fileService.simpleLs(option.getPath()));
     }
 
 }
