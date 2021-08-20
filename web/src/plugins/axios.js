@@ -18,6 +18,8 @@ instance.interceptors.request.use(
         } else if (config.url !== '/common/login') {
             if (window.location.href.indexOf('/login?redict') != -1) {
                 router.push(`/login?redict=${window.location.href.split('#')[1]}`)
+            } else {
+                router.push(`/login`)
             }
             throw new axios.Cancel('Operation canceled by the user.');
         }
