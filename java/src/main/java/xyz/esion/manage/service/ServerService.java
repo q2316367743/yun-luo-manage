@@ -4,8 +4,8 @@ import xyz.esion.manage.exception.ServerException;
 import xyz.esion.manage.option.ServerOption;
 import xyz.esion.manage.option.ServerCommandOption;
 import xyz.esion.manage.option.ServerConfigOption;
-import xyz.esion.manage.view.ServerInfoView;
-import xyz.esion.manage.view.ServerListView;
+import xyz.esion.manage.view.server.ServerInfoView;
+import xyz.esion.manage.view.server.ServerListView;
 
 import java.util.List;
 

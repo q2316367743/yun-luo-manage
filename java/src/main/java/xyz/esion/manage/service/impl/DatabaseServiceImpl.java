@@ -14,8 +14,8 @@ import xyz.esion.manage.option.DatabaseOption;
 import xyz.esion.manage.service.DatabaseService;
 import xyz.esion.manage.model.database.DatabaseInfo;
 import xyz.esion.manage.util.DatabaseUtil;
-import xyz.esion.manage.view.DatabaseInfoView;
-import xyz.esion.manage.view.DatabaseListView;
+import xyz.esion.manage.view.database.DatabaseInfoView;
+import xyz.esion.manage.view.database.DatabaseListView;
 
 import javax.sql.DataSource;
 import java.sql.*;

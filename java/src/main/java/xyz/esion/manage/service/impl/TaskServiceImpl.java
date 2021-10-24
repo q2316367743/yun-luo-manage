@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import xyz.esion.manage.model.task.Task;
 import xyz.esion.manage.service.TaskService;
-import xyz.esion.manage.view.TaskInfoView;
-import xyz.esion.manage.view.TaskListView;
+import xyz.esion.manage.view.task.TaskInfoView;
+import xyz.esion.manage.view.task.TaskListView;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;

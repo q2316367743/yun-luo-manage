@@ -1,4 +1,4 @@
-package xyz.esion.manage.view;
+package xyz.esion.manage.view.task;
 
 import lombok.Data;
 import xyz.esion.manage.enumeration.TaskStatusEnum;

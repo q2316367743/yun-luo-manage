@@ -5,8 +5,8 @@ import xyz.esion.manage.entity.Database;
 import xyz.esion.manage.exception.DatabaseException;
 import xyz.esion.manage.model.database.DatabaseInfo;
 import xyz.esion.manage.option.DatabaseOption;
-import xyz.esion.manage.view.DatabaseInfoView;
-import xyz.esion.manage.view.DatabaseListView;
+import xyz.esion.manage.view.database.DatabaseInfoView;
+import xyz.esion.manage.view.database.DatabaseListView;
 
 import java.util.List;
 import java.util.Map;

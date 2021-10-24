@@ -1,13 +1,16 @@
-package xyz.esion.manage.view;
+package xyz.esion.manage.view.database;
 
 import lombok.Data;
+import xyz.esion.manage.model.database.DatabaseInfo;
+
+import java.util.List;
 
 /**
  * @author Esion
- * @since 2021/7/17
+ * @since 2021/7/16
  */
 @Data
-public class DatabaseListView {
+public class DatabaseInfoView {
 
     private String id;
 
@@ -34,5 +37,17 @@ public class DatabaseListView {
      * <p>2：连接成功</p>
      */
     private Integer status;
+
+    /**
+     * 表
+     * */
+    List<TableView> tables;
+
+    List<ViewView> views;
+
+    public static DatabaseInfoView parse(DatabaseInfo databaseInfo) {
+        DatabaseInfoView view = new DatabaseInfoView();
+        return view;
+    }
 
 }

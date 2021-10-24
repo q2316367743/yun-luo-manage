@@ -3,7 +3,7 @@ package xyz.esion.manage.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.option.UserOption;
-import xyz.esion.manage.view.UserListView;
+import xyz.esion.manage.view.user.UserListView;
 
 /**
  * @author Esion

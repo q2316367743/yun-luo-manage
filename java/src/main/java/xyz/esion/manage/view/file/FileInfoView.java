@@ -1,4 +1,4 @@
-package xyz.esion.manage.view;
+package xyz.esion.manage.view.file;
 
 import cn.hutool.core.date.DateUtil;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import xyz.esion.manage.util.FileUtil;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @author Esion

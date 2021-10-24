@@ -13,7 +13,7 @@ import xyz.esion.manage.mapper.UserMapper;
 import xyz.esion.manage.mapper.UserPermissionMapper;
 import xyz.esion.manage.option.CommonOption;
 import xyz.esion.manage.service.CommonService;
-import xyz.esion.manage.view.UserView;
+import xyz.esion.manage.view.user.UserView;
 
 import java.util.*;
 import java.util.stream.Collectors;

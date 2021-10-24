@@ -12,7 +12,7 @@ import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.mapper.UserMapper;
 import xyz.esion.manage.option.UserOption;
 import xyz.esion.manage.service.UserService;
-import xyz.esion.manage.view.UserListView;
+import xyz.esion.manage.view.user.UserListView;
 
 import java.util.List;
 import java.util.stream.Collectors;

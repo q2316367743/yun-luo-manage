@@ -2,9 +2,9 @@ package xyz.esion.manage.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import xyz.esion.manage.exception.FileException;
-import xyz.esion.manage.view.FileInfoView;
-import xyz.esion.manage.view.FileListSimpleView;
-import xyz.esion.manage.view.FileListView;
+import xyz.esion.manage.view.file.FileInfoView;
+import xyz.esion.manage.view.file.FileListSimpleView;
+import xyz.esion.manage.view.file.FileListView;
 
 import java.io.IOException;
 import java.util.List;

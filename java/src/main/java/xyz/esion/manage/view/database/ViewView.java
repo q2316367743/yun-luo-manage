@@ -1,4 +1,4 @@
-package xyz.esion.manage.view;
+package xyz.esion.manage.view.database;
 
 /**
  * 视图

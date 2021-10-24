@@ -2,8 +2,8 @@ package xyz.esion.manage.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import xyz.esion.manage.model.task.Task;
-import xyz.esion.manage.view.TaskInfoView;
-import xyz.esion.manage.view.TaskListView;
+import xyz.esion.manage.view.task.TaskInfoView;
+import xyz.esion.manage.view.task.TaskListView;
 
 import java.util.List;
 

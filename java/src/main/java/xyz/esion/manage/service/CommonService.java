@@ -2,7 +2,7 @@ package xyz.esion.manage.service;
 
 import xyz.esion.manage.exception.UserException;
 import xyz.esion.manage.option.CommonOption;
-import xyz.esion.manage.view.UserView;
+import xyz.esion.manage.view.user.UserView;
 
 /**
  * 用户登录
