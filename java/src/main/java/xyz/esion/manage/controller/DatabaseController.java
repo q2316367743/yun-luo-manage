@@ -1,9 +1,12 @@
 package xyz.esion.manage.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import xyz.esion.manage.entity.Database;
+import xyz.esion.manage.exception.DatabaseException;
 import xyz.esion.manage.global.Result;
+import xyz.esion.manage.option.DatabaseOption;
 import xyz.esion.manage.service.DatabaseService;
 
 /**
@@ -15,19 +18,20 @@ import xyz.esion.manage.service.DatabaseService;
 @RestController
 @RequestMapping("api/database")
 @SaCheckLogin
+@RequiredArgsConstructor
 public class DatabaseController {
 
-    private DatabaseService databaseService;
+    private final DatabaseService databaseService;
 
     /**
      * 新增一个数据库信息，新增时自动连接
      *
-     * @param database 数据库信息
+     * @param option 数据库信息
      * @return 操作结果
      * */
-    @PostMapping("add")
-    public Result add(@RequestBody Database database){
-        return Result.choose(databaseService.add(database));
+    @PostMapping("save")
+    public Result add(@RequestBody DatabaseOption option){
+        return Result.choose(databaseService.save(option));
     }
 
     /**
@@ -70,8 +74,8 @@ public class DatabaseController {
      * @param id 数据库ID
      * @return 操作结果
      * */
-    @PostMapping("connect")
-    public Result refresh(String id){
+    @PostMapping("connect/{id}")
+    public Result refresh(@PathVariable("id") String id){
         return Result.success().item(databaseService.refresh(id));
     }
 
@@ -93,7 +97,7 @@ public class DatabaseController {
      * @param sql SQL
      * @return 结果
      * */
-    @PostMapping("executeQuery/{id}")
+    @PostMapping("execute_query/{id}")
     public Result executeQuery(@PathVariable("id") String id, @RequestBody String sql){
         return Result.success().items(databaseService.executeQuery(id, sql));
     }
@@ -105,11 +109,8 @@ public class DatabaseController {
      * @return 详细信息
      * */
     @GetMapping("info/{id}")
-    public Result info(@PathVariable("id") String id){
+    public Result info(@PathVariable("id") String id) throws DatabaseException {
         return Result.success().item(databaseService.info(id));
     }
 
-    public DatabaseController(DatabaseService databaseService) {
-        this.databaseService = databaseService;
-    }
 }

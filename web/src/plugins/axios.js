@@ -16,7 +16,7 @@ instance.interceptors.request.use(
         if (sessionStorage.getItem('token')) {
             config.headers['token'] = sessionStorage.getItem('token');
         } else if (config.url !== '/common/login') {
-            if (window.location.href.indexOf('/login?redict') != -1) {
+            if (window.location.href.indexOf('/login?redict') !== -1) {
                 router.push(`/login?redict=${window.location.href.split('#')[1]}`)
             } else {
                 router.push(`/login`)
@@ -71,7 +71,7 @@ instance.interceptors.response.use(
         }
     },
     (error) => {
-        console.error(error);
+        console.error(error, error.response);
         return {
             success: false,
         }

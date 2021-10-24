@@ -5,15 +5,22 @@ import xyz.esion.manage.entity.Database;
 import xyz.esion.manage.enumeration.DatabaseStatusEnum;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 /**
- * 记录数据库连接时的基本信息
+ * 记录数据库连接时的基本信息<br />
+ * 仅支持MySQL数据库
  *
  * @author Esion
  * @since 2021/7/17
  */
 @Data
-public class DatabaseBase<T> {
+public class DatabaseInfo {
+
+    /**
+     * 数据库名称
+     */
+    private String name;
 
     /**
      * 数据源
@@ -26,9 +33,11 @@ public class DatabaseBase<T> {
     private Database database;
 
     /**
-     * 数据库的信息
+     * 表
      * */
-    private T information;
+    private List<Table> tables;
+
+    private List<View> views;
 
     /**
      * 获取数据连接状态

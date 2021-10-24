@@ -2,10 +2,15 @@ package xyz.esion.manage.service;
 
 import cn.hutool.core.lang.Dict;
 import xyz.esion.manage.entity.Database;
+import xyz.esion.manage.exception.DatabaseException;
+import xyz.esion.manage.model.database.DatabaseInfo;
+import xyz.esion.manage.option.DatabaseOption;
 import xyz.esion.manage.view.DatabaseInfoView;
 import xyz.esion.manage.view.DatabaseListView;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>本地数据库只记录数据库基本信息；</p>
@@ -18,12 +23,17 @@ import java.util.List;
 public interface DatabaseService {
 
     /**
+     * 存放内存中数据库连接，状态，连接字符串
+     * */
+    Map<String, DatabaseInfo> DATABASE_STATUS_MAP = new ConcurrentHashMap<>();
+
+    /**
      * 新增一个数据库信息，新增时自动连接
      *
      * @param database 数据库信息
      * @return 操作结果
      * */
-    boolean add(Database database);
+    boolean save(DatabaseOption database);
 
     /**
      * 查询全部的数据库信息
@@ -54,7 +64,7 @@ public interface DatabaseService {
      * @param id 数据库信息ID
      * @return 刷新结果
      * */
-    DatabaseListView refresh(String id);
+    DatabaseInfoView refresh(String id);
 
     /**
      * 获取一个数据库的状态
@@ -79,7 +89,7 @@ public interface DatabaseService {
      * @param id 数据库ID
      * @return 详细信息
      * */
-    DatabaseInfoView info(String id);
+    DatabaseInfoView info(String id) throws DatabaseException;
 
     /**
      * 获取本机数据库中存储的数据库数量

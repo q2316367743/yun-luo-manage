@@ -58,13 +58,6 @@ public class Database implements Serializable {
     private String password;
 
     /**
-     * 数据库类型
-     *
-     * @see xyz.esion.manage.enumeration.DatabaseTypeEnum
-     */
-    private Integer type;
-
-    /**
      *
      */
     private String createId;
@@ -89,6 +82,7 @@ public class Database implements Serializable {
     /**
      * 
      */
+    @TableLogic
     private Integer isDelete;
 
     @TableField(exist = false)

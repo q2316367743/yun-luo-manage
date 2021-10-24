@@ -1,4 +1,4 @@
-package xyz.esion.manage.model.database.mysql;
+package xyz.esion.manage.model.database;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2021/7/18
  */
 @Data
-public class View4MySql {
+public class View {
 
     public static final String[] COLUMN = new String[]{"TABLE_SCHEMA", "TABLE_NAME", "VIEW_DEFINITION", "CHECK_OPTION",
             "IS_UPDATABLE", "SECURITY_TYPE", "CHARACTER_SET_CLIENT", "COLLATION_CONNECTION"

@@ -1,6 +1,7 @@
 package xyz.esion.manage.view;
 
 import lombok.Data;
+import xyz.esion.manage.model.database.DatabaseInfo;
 
 import java.util.List;
 
@@ -41,5 +42,12 @@ public class DatabaseInfoView {
      * 表
      * */
     List<TableView> tables;
+
+    List<ViewView> views;
+
+    public static DatabaseInfoView parse(DatabaseInfo databaseInfo) {
+        DatabaseInfoView view = new DatabaseInfoView();
+        return view;
+    }
 
 }

@@ -1,4 +1,4 @@
-package xyz.esion.manage.model.database.mysql;
+package xyz.esion.manage.model.database;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @since 2021/7/17
  */
 @Data
-public class Table4MySql{
+public class Table {
 
     public static final String[] COLUMNS = new String[]{"Name", "Engine", "Version", "Row_format", "Rows",
             "Avg_row_length", "Data_length", "Max_data_length", "Index_length", "Data_free", "Auto_increment",
@@ -58,6 +58,6 @@ public class Table4MySql{
     /**
      * 这个表所包含的字段
      * */
-    private List<Field4MySql> fields;
+    private List<Field> fields;
 
 }

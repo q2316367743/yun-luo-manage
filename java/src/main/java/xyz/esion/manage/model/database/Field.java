@@ -1,4 +1,4 @@
-package xyz.esion.manage.model.database.mysql;
+package xyz.esion.manage.model.database;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import lombok.Data;
  * @since 2021/7/17
  */
 @Data
-public class Field4MySql{
+public class Field {
 
     public static final String[] COLUMN = new String[]{"Field", "Type", "Collation", "Null", "Key", "Default",
             "Extra", "Privileges", "Comment"};
